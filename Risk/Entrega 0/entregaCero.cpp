@@ -125,9 +125,9 @@ int main()
         }
         else if (command == "inicializar <nombre_archivo>")
         {
-            if (empezado == true){
-                // esto sucede ya que se in
-                std::cout <<"El juego ya ha sido inicializado" << std::endl;
+            if (empezado == false){
+                // aqui se debe llamar una funcion o desarrollar un proceso para recuperar una partida ya iniciada y guardada previamente
+                std::cout <<"El juego ya ha sido inicializado" << std::endl; // mensaje de confirmacion de que la partida solicitada ya fue inicializada
             }
 
             // Para el caso (Archivo vacío o incompleto) como aun no se han creado los archivos para guardar
@@ -137,14 +137,20 @@ int main()
         else if(command == "costo_conquista <territorio>")
         {
             if (empezado == false){
+                // esto aparece cuando se trata de uasr el comando y la partida no habia empezado
+                // esto es asi ya que no se puede calcular el costo de una conquista sin la informacion de una partida
                 std::cout <<"Esta partida no ha sido inicializada correctament" << std::endl;
             }
             if (finalizado == true){
+                // esto aparece cuando se trarta de usar el comando y la partida ya ha finalizado "terminado"
+                // esto es asi ya que  no se puede calcular el costo de una conquista si la partida ya ha terminado
                 std::cout <<"Esta partida ya tuvo un ganador" << std::endl;
             }
             if (empezado == true){
-                // Se realizan los calculos para saber el costo de conquista de un territorio especifico dado por el usuario
+                // aqui se debe llamar una funcion o desarrollar un proceso para realizar los calculos para saber el costo de conquista de un territorio especifico dado por el usuario
+                // el siguiente cout seria el foramato del mensaje de salida que tocaria mostrar en pantalla
                 std::cout <<"Para conquistar el territorio <territorio>, debe atacar desde <territorio_1>, pasando por los territorios <territorio_2>, <territorio_3>, ..., <territorio_m>. Debe conquistar <n> unidades de ejército" << std::endl;
+                // esto solo se puede hacer cuando la partida este mepezada y en curso ya que es la unica forma de tener los datos para hacer los calculos 
             }
         }
         else if (command == "conquista_mas_barata")
@@ -156,7 +162,7 @@ int main()
                 std::cout <<"Esta partida ya tuvo un ganador" << std::endl;
             }
             if (empezado == true){
-                // Se realizan los calculos para saber cual es la conquista mas varata
+                // aqui se debe llamar una funcion o desarrollar un proceso para saber cual es la conquista mas varata
                 std::cout <<"La conquista más barata es avanzar sobre el territorio <territorio_1> desde el territorio <territorio_2>. Para conquistar el territorio <territorio_1>, debe atacar desde <territorio_2>, pasando por los territorios <territorio_3>, <territorio_4>, ..., <territorio_m>. Debe conquistar <n> unidades de ejército" << std::endl;
             }
         }
