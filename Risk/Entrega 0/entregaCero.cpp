@@ -11,7 +11,7 @@ bool finalizado; // variable global que siver para establecer si una partida ya 
 void iniciar_partida(); // funcion para inicializar una partida
 bool tieneTerritoriosDisponibles(const std::vector<std::string>& continente); // funcion que verifica los territorios disponibles para la repaticion inicial
 
-int main() 
+int main(int argc, char **argv) 
 {
     std::string command; // variable tipo string que tomara valores ingresados por teclado; esta se utiliza para los comandos
     bool esta = false; // variable boolean que se utilizara para almacenar el valor que retornara una funcion que determina si un jugador esta "registrado" en una partida
@@ -179,13 +179,14 @@ int main()
     }
 }
 
-void iniciar_partida()
+void iniciar_partida() // funcion para incilizar la partida 
 {
-    int conta_terr = 0;
-    int cant_j = 0;
-    int eleccion1;
-    int eleccion2;
+    int conta_terr = 0; // contador para determinar cuantos territorios se han repartido
+    int cant_j = 0; // variable que tomara el valor de la cantidad de jugadores 
+    int eleccion1; // variable que toma los valores que representan el contienete elegido en cierto momento
+    int eleccion2; // variable que toma los valores que representan el territorio elegido en cierto momento
 
+    // vectores de strings que lamacenan los territorios disponibles de cada continente
     std::vector<std::string> AmericaNorte = {"Alaska", "Alberta", "America Central", "Estados Unidos Orientales", "Groenlandia", "Territorio Noroccidental", "Ontario", "Quebec", "Estados Unidos Orientales"};
     std::vector<std::string> AmericaSur = {"Argentina", "Brasil", "Peru", "Venezuela"};
     std::vector<std::string> Europa = {"Gran Bretaña", "Islandia", "Europa del Norte", "Escandinavia", "Europa del Sur", "Ucrania", "Europa Occidental"};
@@ -193,23 +194,23 @@ void iniciar_partida()
     std::vector<std::string> Asia = {"Afghanistán", "China", "India", "Irkutsk", "Japón", "Kamchatka", "Medio Oriente", "Mongolia", "Siam", "Siberia", "Ural", "Yakutsk"};
     std::vector<std::string> Australia = {"Australia","Indonesia","Nueva Guinea","Australia Occidental"};
 
-    do
+    do // ciclo para asegurarnos se que la cantidad de los jugadores ingresada esta entre 3 y 6 ni mas ni menos
     {
         std::cout << "Cuantas personas van a jugar? (min 3 - max 6): ";
         std::cin >> cant_j;
     } while (cant_j < 3 || cant_j > 6);
 
-    std::vector<std::string> jugadores(cant_j);
+    std::vector<std::string> jugadores(cant_j); // se crea el vector jugadores que almacenara los nombres "id" de los jugadores 
 
-    for (int i = 0; i < cant_j; i++)
+    for (int i = 0; i < cant_j; i++) // este ciclo lo utilizamos para el ingreso y registro de los nombres de los jugadores 
     {
         std::cout << "Jugador " << i + 1 << " ingrese su nombre: ";
         std::cin >> jugadores[i];
     }
 
-    //for (int i = 0; i < 42; i++) // Toca cambiarlo porque si 
-    while (conta_terr<42)
+    while (conta_terr<42) // este ciclo se utiliza para realizar las preguntas para la reparticion inicial de los territorios. Este ciclo termina cuando todos los territorios han sido repartidos
     {
+        // se muestra el menu de las opciones de continentes
         std::cout << "Elija uno de los siguientes continetes:" << std::endl;
         std::cout << "1. America del Norte" << std::endl;
         std::cout << "2. América del Sur" << std::endl;
@@ -220,32 +221,35 @@ void iniciar_partida()
         std::cout << "Ingrese el número del continente seleccionado: ";
         std::cin >> eleccion1;
 
-        switch (eleccion1)
+        switch (eleccion1) // se utiliza este switch para mostrar los territorios disponibles del continente seleccionado y que el usuario elija uno
         {
         case 1:
         {
             if (!tieneTerritoriosDisponibles(AmericaNorte)) {
+                // esto sucede cuando el usuario elige un contienente que ya no tiene territorios disponibles
                 std::cout << "No hay territorios disponibles en América del Norte." << std::endl;
                 break;
             }
-            
+            // cuando se elige un contienente que SI tiene territorios disponibles 
             std::cout << "Territorios disponibles en América del Norte:" << std::endl;
-            for (size_t j = 0; j < AmericaNorte.size(); j++)
+            for (size_t j = 0; j < AmericaNorte.size(); j++) // se imprimen los territorios disponibles del continente eligido
             {
                 std::cout << j + 1 << ". " << AmericaNorte[j] << std::endl;
             }
 
-            std::cout << "Ingrese el número del territorio seleccionado: ";
+            std::cout << "Ingrese el número del territorio seleccionado: "; // se pregunta por el territorio que se quiere elegir
             std::cin >> eleccion2;
 
             if (eleccion2 >= 1 && eleccion2 <= AmericaNorte.size())
             {
-                std::cout << "Territorio elegido: " << AmericaNorte[eleccion2 - 1] << std::endl;
-                AmericaNorte.erase(AmericaNorte.begin() + eleccion2 - 1);
-                conta_terr++;
+                // si el identificador del territorio ingresado es valido pasa esto 
+                std::cout << "Territorio elegido: " << AmericaNorte[eleccion2 - 1] << std::endl; // se muestra en pantalla el territorio elegido
+                AmericaNorte.erase(AmericaNorte.begin() + eleccion2 - 1); // se borra del arreglo de territorios disponibles de este continente el territorio elegido por el usuario 
+                conta_terr++; // se umenta el contador de territorios asignados
             }
             else
             {
+                // esto sucede cuando el identificador del territorio ingresado NO es valido
                 std::cout << "Número de territorio inválido." << std::endl;
             }
 
