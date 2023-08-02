@@ -4,18 +4,18 @@
 #include <vector>
 #include <string>
 
-bool empezado = false;
-bool finalizado;
+bool empezado = false; // variable global que sirve para establecer si una partida ha sido iniciada; se inicializa en false y cambiaria a true una vez se inicialice una partida correctamente
+bool finalizado; // variable global que siver para establecer si una partida ya ha finalizado
 
 
-void iniciar_partida();
-bool tieneTerritoriosDisponibles(const std::vector<std::string>& continente);
+void iniciar_partida(); // funcion para inicializar una partida
+bool tieneTerritoriosDisponibles(const std::vector<std::string>& continente); // funcion que verifica los territorios disponibles para la repaticion inicial
 
-int main() //
+int main() 
 {
-    std::string command;
-    bool esta = false;
-    bool ver_turno =false;
+    std::string command; // variable tipo string que tomara valores ingresados por teclado; esta se utiliza para los comandos
+    bool esta = false; // variable boolean que se utilizara para almacenar el valor que retornara una funcion que determina si un jugador esta "registrado" en una partida
+    bool ver_turno =false; //variable booleana que se utilizara para determinar si el turno de un jugador especifico
 
 
     std::cout << "El presente juego fue realizado por los estudiantes de la carrera de ingenieria de sistemas: " << std::endl;
@@ -35,58 +35,70 @@ int main() //
     
     
     while (true) {
-        std::cout << "$ "; // Indicador de línea de comando
+        std::cout << "$ "; // esto es para que el indicador de línea de comando sea $
 
         if (!std::getline(std::cin, command) || command == "salir") {
             // Si el usuario ingresa "exit", el programa finaliza el bucle y sale.
             break;
         }
         else if (command == "inicializar") {
+            // Si el usuario ingresa "inicializar" pasa esto 
             if (empezado == true){
+                // esto sucede cuando la partida ya habia sido inicializada
                 std::cout <<"El juego ya ha sido inicializado" << std::endl;
             }else{
-                iniciar_partida();
-                std::cout<<"Se ha inizializado la partida correctamente"<<std::endl;
+                // esto sucede cuando no habia una partida iniciada
+                iniciar_partida(); // se llama a la funcion para incializar una partida
+                std::cout<<"Se ha inizializado la partida correctamente"<<std::endl; // mensaje de confirmacion de inicializacion correcta
                 empezado = true;
             }
         } 
         else if (command == "turno <id_jugador>"){
+            // Esto sucede cuando no se ha inicializado una partida
             if (empezado == false){
                 std::cout <<"Esta partida no ha sido inicializada correctamente" << std::endl;
             }
             if (empezado == true && finalizado == true){
+                // esto sucede cuando se trata de usar este comando y la partida ya ha finalizado
                 std::cout <<"Esta partida ya tuvo un ganador" << std::endl;
             }
 
             if (empezado == true && esta==false){
+                // esto sucede cuando se trata de usar este comando pero el solicitado no esta registrado en la partida iniciada 
                 std::cout <<"El jugador <id_jugador> no forma parte de esta partida" << std::endl;
             }
 
             if (empezado == true && ver_turno==false){
+                // esto es cuando el jugador buscado esta registrado en la partida inicada pero no es su turno
                 std::cout <<"No es el turno del jugador <id_jugador>" << std::endl;
             }
             if (empezado == true && ver_turno==true){
-                // se llama la funcion para ejecutar las acciones que se llevan a cavo en un turno
+                // esto es cuando el jugador buscado esta registrado en la partida inicada y es su turno
                 std::cout <<"El turno del jugador <id_jugador> ha terminado." << std::endl;
             }
         }
         else if (command == "ayuda"){
+            // se muestra la lista de comandos 
             std::cout << " ------------------ LISTA DE COMANDOS ------------------"<< std::endl;
             std::cout << "| -> inicializar                                        |" << std::endl;
-            std::cout << "| -> guardar <nombre_del_archivo>                       |" << std::endl;
+            std::cout << "| -> guardar <nombre_archivo>                           |" << std::endl;
             std::cout << "| -> guardar_comprimido <nombre_archivo>                |" << std::endl;
             std::cout << "| -> inicializar <nombre_archivo>                       |" << std::endl;
             std::cout << "| -> costo_conquista <territorio>                       |" << std::endl;
             std::cout << "| -> conquista_mas_barata                               |" << std::endl;
-            std::cout << "| -> turno <nombre_del_jugador>                         |" << std::endl;
+            std::cout << "| -> turno <id_jugador>                                 |" << std::endl;
             std::cout << "--------------------------------------------------------" << std::endl;          
         }
         else if (command == "guardar <nombre_archivo>")
         {
             if (empezado == false){
+                // esto aparece cuando se trata de usar el comando y no se ha inializado una partida
+                // esto sucede porque no se puede guardar una partida que no se ha iniciado (no hay nada que guardar)
                 std::cout <<"Esta partida no ha sido inicializada correctamente" << std::endl;
             }
             if (empezado == true){
+                // esto aparece caundo se trata de usar el comando y si se ha inicializado una partida
+                // esto si se deja gurdar porque ahora si hay algo que guardar "salvar" para poder recuperar la partida
                 std::cout <<"La partida ha sido guardada correctamente" << std::endl;
             }
             
@@ -97,9 +109,13 @@ int main() //
         else if (command == "guardar_comprimido <nombre_archivo>")
         {
             if (empezado == false){
+                // esto aparece cuando se trata de usar el comando y no se ha inializado una partida
+                // esto sucede porque no se puede guardar una partida que no se ha iniciado (no hay nada que guardar) 
                 std::cout <<"Esta partida no ha sido inicializada correctamente" << std::endl;
             }
             if (empezado == true){
+                // esto aparece caundo se trata de usar el comando y si se ha inicializado una partida
+                // esto si se deja gurdar porque ahora si hay algo que guardar "salvar" para poder recuperar la partida
                 std::cout <<"La partida ha sido codificada y guardada correctamente" << std::endl;
             }
 
@@ -109,7 +125,8 @@ int main() //
         }
         else if (command == "inicializar <nombre_archivo>")
         {
-            if (empezado == false){
+            if (empezado == true){
+                // esto sucede ya que se in
                 std::cout <<"El juego ya ha sido inicializado" << std::endl;
             }
 
