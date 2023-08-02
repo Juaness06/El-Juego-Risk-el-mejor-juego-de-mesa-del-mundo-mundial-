@@ -117,6 +117,9 @@ en el cual se declara como ganador. Dependiendo de la variante del juego, se pue
 un jugador haya cumplido su misión (dada por la tarjeta de Misión Secreta entregada al principio del juego), en
 3 cuyo caso éste se declara como ganador.
 
+Las partes del juego se guardaran en el repositorio con el nombre de Entrega <Un numero> y estas partes estaran
+almacenadas en la carpeta llamada Risk
+
 
 
 
