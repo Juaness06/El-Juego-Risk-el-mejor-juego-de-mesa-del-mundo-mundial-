@@ -156,18 +156,24 @@ int main()
         else if (command == "conquista_mas_barata")
         {
             if (empezado == false){
+                // esto aparece cuando se trata de uasar el comando y la partida no habia empezado
+                // esto es asi ya que no se puede calcular la conquista mas barata sin la informacion de una partida
                 std::cout <<"Esta partida no ha sido inicializada correctamente" << std::endl;
             }
             if (finalizado == true){
+                // esto aparece cuando se trarta de usar el comando y la partida ya ha finalizado "terminado"
+                // esto es asi ya que  no se puede calcular la conquista mas varata de una partida ya ha terminado
                 std::cout <<"Esta partida ya tuvo un ganador" << std::endl;
             }
             if (empezado == true){
                 // aqui se debe llamar una funcion o desarrollar un proceso para saber cual es la conquista mas varata
+                // el siguiente cout seria el foramato del mensaje de salida que tocaria mostrar en pantalla
                 std::cout <<"La conquista más barata es avanzar sobre el territorio <territorio_1> desde el territorio <territorio_2>. Para conquistar el territorio <territorio_1>, debe atacar desde <territorio_2>, pasando por los territorios <territorio_3>, <territorio_4>, ..., <territorio_m>. Debe conquistar <n> unidades de ejército" << std::endl;
             }
         }
         else 
         {
+            // esto es para cuando se ingrsa un comando invalido
             std::cout << "Comando desconocido. Inténtalo nuevamente" << std::endl;
         }
     }
