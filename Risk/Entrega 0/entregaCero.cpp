@@ -32,6 +32,7 @@ int main(int argc, char **argv)
     std::cout << "              RRRR  RRRR      IIIIII      SSS  SS     KKKK  KKKK              " << std::endl;
     std::cout << "              RRRR  RRRR      IIIIII       SSSSS      KKKK  KKKK              " << std::endl;
     std::cout << std::endl;
+    std::cout << "Bienvvenido, recuerde que el juego funciona por comandos, si no sabe los comandos escriba ayuda" << std::endl;
     
     
     while (true) {
