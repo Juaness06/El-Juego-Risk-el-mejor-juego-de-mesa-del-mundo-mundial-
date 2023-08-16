@@ -1,9 +1,9 @@
 # :warning: RISK TAKER - FUNN MAKER :joy:
 
 ## :man_technologist: Desarrolladores :man_technologist:
-[¿Quienes son los desarrolladores?](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/😎¿Quiénes-somos%3F😎)
+[¿Quienes somos?](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/😎¿Quiénes-somos%3F😎)
 
-## :dart: Objetivo:
+## :dart: Objetivo del Proyecto:
 __Construir un sistema de apoyo para el juego Risk. El sistema se implementará
 como una aplicación que recibe comandos textuales, agrupados en componentes con funcionalidades específicas.__ 
 
