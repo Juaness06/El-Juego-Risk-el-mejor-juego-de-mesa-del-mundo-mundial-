@@ -1,11 +1,27 @@
-# Este es nuestro Reposotorio RISK TAKER, FUN MAKER
+# :warning: RISK TAKER - FUNN MAKER :joy:
 
-Este respositorio esta enfocado al mejor juego de mesa del mundo mundial 	**RISK**
+## :man_technologist: Desarrolladores :man_technologist:
+[¿Quienes son los desarrolladores?](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/😎¿Quiénes-somos%3F😎)
 
-Información del repositorio:
-  1. [¿Quienes son los brillantes desarrolladores de este juego?](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/😎¿Quiénes-somos%3F😎#hermann-hernández)
-  2. [¿Como se juega?](https://github.com/Juaness06/Risk_taker-fun_maker/blob/main/Documentos/Instrucciones.md)
+## :dart: Objetivo:
+__Construir un sistema de apoyo para el juego Risk. El sistema se implementará
+como una aplicación que recibe comandos textuales, agrupados en componentes con funcionalidades específicas.__ 
 
-Contenido del Repositorio:
-  * [Documentación](https://github.com/Juaness06/Risk_taker-fun_maker/blob/main/Contenido%20del%20juego/Documentación%20completa.md)
-  * [Código en C++](https://github.com/Juaness06/Risk_taker-fun_maker/blob/main/Contenido%20del%20juego/JuegoRisk.cpp)
+## Componentes del proyecto :gear:
+
+### 1. Configuración del juego :earth_americas:
+#### :dart: Objetivo:
+* __Los algoritmos implementados en este componente servirán para gestionar la inicialización del juego,
+así como el desarrollo por turnos del mismo.__
+* _Comandos para su implementacion: LINK DE LA WIKI_
+
+### 2. Almacenamiento de partidas :floppy_disk:
+#### :dart: Objetivo:
+* __Los algoritmos implementados en este componente servirán para guardar y recuperar juegos del disco,
+utilizando un proceso de compresión/decompresión basado en el algoritmo de codificación de Huffman.__
+* _Comandos para su implementacion: LINK DE LA WIKI_
+
+### 3. Estrategias de juego :chess_pawn:
+#### :dart: Objetivo:
+* _Los algoritmos implementados en este componente servirán para ayudar a un jugador a tomar decisiones._
+* _Comandos para su implementacion: LINK DE LA WIKI_
