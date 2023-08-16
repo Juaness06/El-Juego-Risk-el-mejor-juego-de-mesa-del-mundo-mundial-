@@ -1,4 +1,4 @@
-# Entrega 0
+# JUEGO RISK
 
 Descripción del objetivo de la entrega:
 
