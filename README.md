@@ -21,4 +21,4 @@ utilizando un proceso de compresión/decompresión basado en el algoritmo de cod
 
 ### 3. Estrategias de juego :chess_pawn:
 #### :dart: Objetivo:
-* _Los algoritmos implementados en este componente servirán para ayudar a un jugador a tomar decisiones._
+* __Los algoritmos implementados en este componente servirán para ayudar a un jugador a tomar decisiones.__
