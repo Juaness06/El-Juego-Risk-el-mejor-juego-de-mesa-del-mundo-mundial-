@@ -24,7 +24,7 @@ utilizando un proceso de compresión/decompresión basado en el algoritmo de cod
 * __Los algoritmos implementados en este componente servirán para ayudar a un jugador a tomar decisiones.__
 
 ## Información de contexto :earth_americas:
-### 👉 [Instrucciones del juego](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/Instrucciones-Del-Juego-Risk)
+### 👉 [Instrucciones del juego](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/Reglas-del-Juego-%E2%80%90-Risk)
 ### 👉 [Manual de usuario]
 
 ## Desarrollo 🖥
