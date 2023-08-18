@@ -22,3 +22,12 @@ utilizando un proceso de compresión/decompresión basado en el algoritmo de cod
 ### 3. Estrategias de juego :chess_pawn:
 #### :dart: Objetivo:
 * __Los algoritmos implementados en este componente servirán para ayudar a un jugador a tomar decisiones.__
+
+## Información de contexto :earth_americas:
+### 👉 [Instrucciones del juego](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/Instrucciones-Del-Juego-Risk)
+### 👉 [Manual de usuario]
+
+## Desarrollo 🖥
+#### :dart: Objetivo:
+#### 📎
+
