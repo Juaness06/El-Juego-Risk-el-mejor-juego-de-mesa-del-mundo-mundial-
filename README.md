@@ -1,11 +1,17 @@
 # :warning: RISK TAKER - FUNN MAKER :joy:
 
+***
+
 ## :man_technologist: Desarrolladores :man_technologist:
-[¿Quienes somos?](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/😎¿Quiénes-somos%3F😎)
+__[¿Quienes somos?](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/😎¿Quiénes-somos%3F😎)__
+
+***
 
 ## :dart: Objetivo del Proyecto:
 __Construir un sistema de apoyo para el juego Risk. El sistema se implementará
 como una aplicación que recibe comandos textuales, agrupados en componentes con funcionalidades específicas.__ 
+
+***
 
 ## Componentes del proyecto :gear:
 
@@ -23,11 +29,15 @@ utilizando un proceso de compresión/decompresión basado en el algoritmo de cod
 #### :dart: Objetivo:
 * __Los algoritmos implementados en este componente servirán para ayudar a un jugador a tomar decisiones.__
 
+***
+
 ## Información de contexto :earth_americas:
 ### 👉 [Reglas del juego](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/Reglas-del-Juego-%E2%80%90-Risk)
 ### 👉 [Manual de usuario]
 
+***
+
 ## Desarrollo 🖥
-#### :dart: [Programa](https://github.com/Juaness06/Risk_taker-fun_maker/tree/main/Contenido%20del%20juego)
-#### 📎[Documentación](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/Documentación-Proyecto-Risk)
+### :dart: [Programa](https://github.com/Juaness06/Risk_taker-fun_maker/tree/main/Contenido%20del%20juego)
+### :page_facing_up: [Documentación](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/Documentación-Proyecto-Risk)
 
