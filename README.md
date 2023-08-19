@@ -39,5 +39,5 @@ utilizando un proceso de compresión/decompresión basado en el algoritmo de cod
 
 ## Desarrollo 🖥
 ### :dart: [Programa](https://github.com/Juaness06/Risk_taker-fun_maker/tree/main/Contenido%20del%20juego)
-### :page_facing_up: [Documentación](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/Documentación-Proyecto-Risk)
+### :page_facing_up: [Documentación](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/Documentación-del-Proyecto-‐-Risk)
 
