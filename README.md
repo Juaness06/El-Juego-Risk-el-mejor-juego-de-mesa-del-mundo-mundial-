@@ -33,7 +33,7 @@ utilizando un proceso de compresión/decompresión basado en el algoritmo de cod
 
 ## Información de contexto :earth_americas:
 ### 👉 [Reglas del juego](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/Reglas-del-Juego-%E2%80%90-Risk)
-### 👉 [Manual de usuario]
+### 👉 [Manual de usuario](https://github.com/Juaness06/Risk_taker-fun_maker/wiki/Manual-de-Uso)
 
 ***
 
