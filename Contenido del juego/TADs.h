@@ -1,5 +1,5 @@
-#ifndef __MISION__H__
-#define __MISION__H__
+#ifndef MISIONH
+#define MISIONH
 
 #include <list>
 #include <queue>
@@ -21,8 +21,8 @@ class Mision
 };
 #endif
 
-#ifndef __TARJETA__H__
-#define __TARJETA__H__
+#ifndef TARJETAH
+#define TARJETAH
 
 #include <list>
 #include <queue>
@@ -43,8 +43,8 @@ class Tarjeta
 };
 #endif
 
-#ifndef __JUGADOR__H__
-#define __JUGADOR__H__
+#ifndef JUGADORH
+#define JUGADORH
 
 #include <list>
 #include <queue>
@@ -63,12 +63,14 @@ class Jugador
 
   public:
     Jugador(int,char,std::string);
+    void miMision(std::string);
+    
 
 };
 #endif
 
-#ifndef __TERRITORIO__H__
-#define __TERRITORIO__H__
+#ifndef TERRITORIOH
+#define TERRITORIOH
 
 #include <list>
 #include <queue>
@@ -90,8 +92,8 @@ class Territorio
 };
 #endif
 
-#ifndef __CONTINENTE__H__
-#define __CONTINENTE__H__
+#ifndef CONTINENTEH
+#define CONTINENTEH
 
 #include <list>
 #include <queue>
@@ -103,15 +105,15 @@ class Continente
 {
     public:
         std::string nombreCont;
-        std::vector<Territorio>territorios;
+        std::vector<Territorio*>territorios;
     public:
         Continente(std::string);
         Territorio* buscaT (std::string);
 };
 #endif
 
-#ifndef __PARTIDA__H__
-#define __PARTIDA__H__
+#ifndef PARTIDAH
+#define PARTIDAH
 
 #include <list>
 #include <queue>
@@ -123,8 +125,9 @@ class Partida
 {
   public:
     bool empezada;
+    bool terminada;
     int idPartida;
-    std::queue<Jugador> jugadores;
+    std::queue<Jugador*> jugadores;
     Continente* continentes[6];
     char modoJuego;
     Jugador* jugadorActual;
@@ -134,14 +137,15 @@ class Partida
     Jugador* buscaJ (std::string);
     Continente* buscaC (std::string);
     void asignaTerri(Continente*, std::string, Jugador*);
+    //void accionesTurno (std::string);
     
       
 };
 #endif
 
 
-#ifndef __SISTEMAAPOYORISK__H__
-#define __SISTEMAAPOYORISK__H__
+#ifndef SISTEMAAPOYORISKH
+#define SISTEMAAPOYORISKH
 
 #include <list>
 #include <queue>
@@ -152,14 +156,12 @@ class Partida
 class SistemaApoyo
 {
     public:
-      std::list<Partida>partidas;
+      std::list<Partida*>partidas;
     public:
       SistemaApoyo();
       void crearPartida();
       void escojerTerris();
+      
 
 };
 #endif
-
-
-
