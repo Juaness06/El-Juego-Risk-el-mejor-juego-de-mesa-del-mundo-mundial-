@@ -248,24 +248,22 @@ void comandos(SistemaApoyo sistemaApoyo)
         else if (command == "turno " + resto) // resto representa <id_jugador>
         {
 
-/*
-            Partida* partidaAct = &sistemaApoyo.partidas.back();
+            Partida* partidaAct = sistemaApoyo.partidas.back();
 
-            std::string turnoActual = partidaAct->jugadores.front().color;
+            std::string turnoActual = partidaAct->jugadores.front()->color;
 
             if(turnoActual == resto)
             {
-                std::cout << "Buena crack, si es tu turno" << std::endl;
-                // se llama a la funcion que da las acciones a realizar en un turno
+                // se llama a la funcion que llama a las funciones para las distintas acciones de un turno
+                //partidaAct
             }
-*/
-
+            else if (turnoActual == resto)
+            {
+                std::cout << "Lo siento, no es tuturno, el turno actual es de:";
+                std::cout <<turnoActual << std::endl;
+            }
             
 
-            
-
-
-            
         }
 
 
