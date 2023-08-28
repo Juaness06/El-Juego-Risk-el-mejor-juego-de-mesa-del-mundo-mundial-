@@ -22,20 +22,21 @@ Mision::Mision(std::string colorJ) : nomTerris()
                             "Congo", "Africa Oriental", "Egipto", "Madagascar", "Africa del Norte", "Africa del Sur",
                             "Gran Bretana", "Islandia", "Europa del Norte", "Escandinavia", "Europa del Sur", "Ucrania", "Europa Occidental",
                             "Australia Oriental", "Indonesia", "Nueva Guinea", "Australia Occidental"};
-  
+
   completada = false;
-  cantTerri = std::rand() % 6 + 10; // de 10 a 15 
-  uniEjer = std::rand() % 7 + 3; // de 3 a 9
+  cantTerri = std::rand() % 6 + 10; // de 10 a 15
+  uniEjer = std::rand() % 7 + 3;    // de 3 a 9
 
   for (int i = 0; i < 42; i++)
   {
     randTerri.push_back(i);
   }
   std::random_shuffle(randTerri.begin(), randTerri.end());
-  for (int i = 0; i < cantTerri; ++i) {
+  for (int i = 0; i < cantTerri; ++i)
+  {
     int cual = randTerri[i];
     nomTerris.push_back(terris[cual]);
-  } 
+  }
 
   std::cout << std::endl;
   std::cout << std::endl;
@@ -47,9 +48,10 @@ Mision::Mision(std::string colorJ) : nomTerris()
   std::cout << cantTerri;
   std::cout << " territorios." << std::endl;
   std::cout << "- Para ser mas especificos: " << std::endl;
-  for(std::vector<std::string>::iterator miIterador = nomTerris.begin(); miIterador != nomTerris.end(); miIterador++){
+  for (std::vector<std::string>::iterator miIterador = nomTerris.begin(); miIterador != nomTerris.end(); miIterador++)
+  {
     std::cout << "  - ";
-    std::cout << *miIterador << " "  << std::endl;
+    std::cout << *miIterador << " " << std::endl;
   }
   std::cout << std::endl;
   std::cout << "Adicionalmente, hay que establecer cuantas unidades de ejercito, por cada uno de los contientes anteriores," << std::endl;
@@ -61,7 +63,6 @@ Mision::Mision(std::string colorJ) : nomTerris()
   std::cin >> confirmacion;
   std::cout << std::endl;
   std::cout << std::endl;
-
 }
 
 Jugador::Jugador(int _cantJugadores, char _modoPartida, std::string _color) : ejercito(), tarjetas()
@@ -103,9 +104,10 @@ void Jugador::miMision(std::string _color) // Constructor de Territorio
   std::cout << "- Conquistar: " + cuantosTerri;
   std::cout << " territorios." << std::endl;
   std::cout << "- Los territorios que debe conquistar son:" << std::endl;
-  for(std::vector<std::string>::iterator miIterador = cualesTerri.begin(); miIterador != cualesTerri.end(); miIterador++){
+  for (std::vector<std::string>::iterator miIterador = cualesTerri.begin(); miIterador != cualesTerri.end(); miIterador++)
+  {
     std::cout << "  - ";
-    std::cout << *miIterador << " "  << std::endl;
+    std::cout << *miIterador << " " << std::endl;
   }
   std::cout << "- Cada uno de los anteriores territorios debe tener: " + cantasUniEjer;
   std::cout << " unidades de ejercito." << std::endl;
@@ -148,35 +150,34 @@ Continente::Continente(std::string _nombreCont) : nombreCont(_nombreCont), terri
   {
     for (int i = 0; i < 12; i++)
     {
-      territorios.push_back(new Territorio (terrisASIA[i]));
+      territorios.push_back(new Territorio(terrisASIA[i]));
     }
   }
   else if (nombreCont == "Africa")
   {
     for (int i = 0; i < 6; i++)
     {
-      
-      territorios.push_back(new Territorio (terrisAFRC[i]));
+
+      territorios.push_back(new Territorio(terrisAFRC[i]));
     }
   }
   else if (nombreCont == "Europa")
   {
     for (int i = 0; i < 7; i++)
     {
-      
-      territorios.push_back(new Territorio (terrisEROP[i]));
+
+      territorios.push_back(new Territorio(terrisEROP[i]));
     }
   }
   else if (nombreCont == "Australia")
   {
     for (int i = 0; i < 4; i++)
     {
-      
-      territorios.push_back(new Territorio (terrisASTR[i]));
+
+      territorios.push_back(new Territorio(terrisASTR[i]));
     }
   }
 }
-
 
 Territorio *Continente::buscaT(std::string nombTerri)
 {
@@ -188,9 +189,7 @@ Territorio *Continente::buscaT(std::string nombTerri)
     }
   }
   return nullptr; // Si no se encuentra el territorio
-
 }
-
 
 Partida::Partida(char _modoJuego, int cantJugadores) : jugadores(), continentes(), modoJuego(_modoJuego) // Constructor de partida
 {
@@ -221,10 +220,10 @@ Partida::Partida(char _modoJuego, int cantJugadores) : jugadores(), continentes(
 
 Jugador *Partida::buscaJ(const std::string color)
 {
-  std::queue<Jugador*> jugadoresTemp = jugadores; // Copia la cola original
+  std::queue<Jugador *> jugadoresTemp = jugadores; // Copia la cola original
   while (!jugadoresTemp.empty())
   {
-    Jugador* jugadorObj = jugadoresTemp.front();
+    Jugador *jugadorObj = jugadoresTemp.front();
     if (jugadorObj->color == color)
     {
       return jugadorObj; // Devuelve el puntero al jugador con el color especificado
@@ -250,17 +249,17 @@ Continente *Partida::buscaC(std::string nombreC)
 
 void Partida::asignaTerri(Continente *elConti, std::string nomTerri, Jugador *elPlayer)
 {
-  Territorio *elTerri = elConti->buscaT(nomTerri);
+  //Territorio *elTerri = elConti->buscaT(nomTerri);
+  Territorio *elTerri = new Territorio(nomTerri);
   elTerri->duenoAct = elPlayer->color;
 
   elTerri->uniInfanteria = 1;
   elPlayer->ejercito[0] = elPlayer->ejercito[0] - 1;
 }
 
-
 SistemaApoyo::SistemaApoyo()
 {
-  partidas = std::list<Partida*>();
+  partidas = std::list<Partida *>();
 }
 
 // POSIBLE CAMBIO devolver el puntero de la cartida recien creada
@@ -290,7 +289,7 @@ void SistemaApoyo::crearPartida()
 
   std::cout << "El juego ya ha sido inicializado" << std::endl;
   std::cout << std::endl;
-    std::cout << std::endl;
+  std::cout << std::endl;
 }
 
 void SistemaApoyo::escojerTerris()
@@ -557,7 +556,7 @@ void SistemaApoyo::escojerTerris()
       }
     }
   }
-  std::cout<<"Se ha inizializado la partida correctamente"<<std::endl;
+  std::cout << "Se ha inizializado la partida correctamente" << std::endl;
   std::cout << std::endl;
   std::cout << std::endl;
 }
