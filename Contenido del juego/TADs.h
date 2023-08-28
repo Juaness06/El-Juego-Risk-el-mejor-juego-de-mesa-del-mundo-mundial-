@@ -1,4 +1,4 @@
-#ifndef MISIONH
+#ifndef _MISIONH
 #define MISIONH
 
 #include <list>
@@ -137,7 +137,7 @@ class Partida
     Jugador* buscaJ (std::string);
     Continente* buscaC (std::string);
     void asignaTerri(Continente*, std::string, Jugador*);
-    //void accionesTurno (std::string);
+    void accionesTurno (std::string);
     
       
 };
