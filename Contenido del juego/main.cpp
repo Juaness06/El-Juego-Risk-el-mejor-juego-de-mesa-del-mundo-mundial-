@@ -52,16 +52,22 @@ void tituloIntro()
     std::cout << std::endl;
 }
 
-//void comandos(SistemaApoyo _sistemaApoyo)
+
 void comandos(SistemaApoyo sistemaApoyo)
 {
-    // SistemaApoyo sistemaApoyo = _sistemaApoyo;
     std::string command;
 
     while (true)
     {
         std::cout << "$ "; // Indicador de línea de comando
         std::getline(std::cin, command);
+
+        std::string resto;
+        std::size_t primerEspacio = command.find(' ');
+        
+        if (primerEspacio != std::string::npos) {
+            resto = command.substr(primerEspacio + 1);
+        }
 
         if (command == "ayuda")
         {
@@ -110,8 +116,12 @@ void comandos(SistemaApoyo sistemaApoyo)
             
             sistemaApoyo.escojerTerris();
 
+            // lanzariamos el primer turno de la partida recine creada
+
+            
+
         } 
-        else if (command == "inicializar <nombre_archivo>")
+        else if (command == "inicializar " + resto) // el resto representaria el <nombre_archivo>
         {
 
             // Si no esta en una partida
@@ -133,7 +143,7 @@ void comandos(SistemaApoyo sistemaApoyo)
             std::cout << "guardar <nombre_del_archivo>" << std::endl;
             std::cout << "--------------------------------------------------------" << std::endl;
         }
-        else if (command == "guardar <nombre_archivo>")
+        else if (command == "guardar " + resto) // el resto representa <nombre_archivo>
         {
             
             // Si no esta en una partida
@@ -160,7 +170,7 @@ void comandos(SistemaApoyo sistemaApoyo)
             std::cout << "guardar_comprimido <nombre_del_archivo>" << std::endl;
             std::cout << "--------------------------------------------------------" << std::endl;
         }
-        else if (command == "guardar_comprimido <nombre_archivo>")
+        else if (command == "guardar_comprimido " + resto) // el resto representa <nombre_archivo>
         {
             // Si no esta en una partida
             std::cout <<"Esta partida no ha sido inicializada correctamente" << std::endl;
@@ -185,7 +195,7 @@ void comandos(SistemaApoyo sistemaApoyo)
             std::cout << "costo_conquista <territorio>" << std::endl;
             std::cout << "--------------------------------------------------------" << std::endl;
         }
-        else if(command == "costo_conquista <territorio>")
+        else if(command == "costo_conquista " + resto) // el resto representa <territorio>
         {
             
             // Si no esta en una partida saldia esto
@@ -223,6 +233,42 @@ void comandos(SistemaApoyo sistemaApoyo)
             // Si esta en una partida ya inicida se realizan los calculos para saber cual es la conquista mas barata
             std::cout <<"La conquista más barata es avanzar sobre el territorio <territorio_1> desde el territorio <territorio_2>. Para conquistar el territorio <territorio_1>, debe atacar desde <territorio_2>, pasando por los territorios <territorio_3>, <territorio_4>, ..., <territorio_m>. Debe conquistar <n> unidades de ejército" << std::endl;
         }
+
+
+        else if (command == "turno?") 
+        {
+            std::cout << "--------------------------------------------------------" << std::endl;
+            std::cout << "El comando turno sirve para: termina la ejecución de    " << std::endl;
+            std::cout << "la aplicación.                                          " << std::endl;
+            std::cout << "--------------------------------------------------------" << std::endl;
+            std::cout << "- Para utilizarlo escriba:" << std::endl;
+            std::cout << "salir" << std::endl;
+            std::cout << "--------------------------------------------------------" << std::endl;
+        }
+        else if (command == "turno " + resto) // resto representa <id_jugador>
+        {
+
+/*
+            Partida* partidaAct = &sistemaApoyo.partidas.back();
+
+            std::string turnoActual = partidaAct->jugadores.front().color;
+
+            if(turnoActual == resto)
+            {
+                std::cout << "Buena crack, si es tu turno" << std::endl;
+                // se llama a la funcion que da las acciones a realizar en un turno
+            }
+*/
+
+            
+
+            
+
+
+            
+        }
+
+
         else if (command == "salir?") 
         {
             std::cout << "--------------------------------------------------------" << std::endl;
