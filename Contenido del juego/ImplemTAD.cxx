@@ -93,11 +93,29 @@ Jugador::Jugador(int _cantJugadores, char _modoPartida, std::string _color) : ej
   }
 }
 
+void Jugador::miMision(std::string _color) // Constructor de Territorio
+{
+  int cuantosTerri = mision->cantTerri;
+  int cantasUniEjer = mision->uniEjer;
+  std::vector<std::string> cualesTerri = mision->nomTerris;
+
+  std::cout << "La mision del jugador (" + _color + ") es:" << std::endl;
+  std::cout << "- Conquistar: " + cuantosTerri;
+  std::cout << " territorios." << std::endl;
+  std::cout << "- Los territorios que debe conquistar son:" << std::endl;
+  for(std::vector<std::string>::iterator miIterador = cualesTerri.begin(); miIterador != cualesTerri.end(); miIterador++){
+    std::cout << "  - ";
+    std::cout << *miIterador << " "  << std::endl;
+  }
+  std::cout << "- Cada uno de los anteriores territorios debe tener: " + cantasUniEjer;
+  std::cout << " unidades de ejercito." << std::endl;
+}
+//
+
 Territorio::Territorio(std::string _nombreTerri) // Constructor de Territorio
 {
   nombreTerri = _nombreTerri;
 }
-//
 
 Continente::Continente(std::string _nombreCont) : nombreCont(_nombreCont), territorios() // Constructor de Continente
 {
@@ -114,8 +132,7 @@ Continente::Continente(std::string _nombreCont) : nombreCont(_nombreCont), terri
   {
     for (int i = 0; i < 9; i++)
     {
-      Territorio actTerri(terrisANOR[i]);
-      territorios.push_back(actTerri);
+      territorios.push_back(new Territorio(terrisANOR[i]));
     }
   }
   else if (nombreCont == "America Del Sur")
@@ -123,54 +140,57 @@ Continente::Continente(std::string _nombreCont) : nombreCont(_nombreCont), terri
     for (int i = 0; i < 4; i++)
     {
       Territorio actTerri(terrisASUR[i]);
-      territorios.push_back(actTerri);
+
+      territorios.push_back(new Territorio(terrisASUR[i]));
     }
   }
   else if (nombreCont == "Asia")
   {
     for (int i = 0; i < 12; i++)
     {
-      Territorio actTerri(terrisASIA[i]);
-      territorios.push_back(actTerri);
+      territorios.push_back(new Territorio (terrisASIA[i]));
     }
   }
   else if (nombreCont == "Africa")
   {
     for (int i = 0; i < 6; i++)
     {
-      Territorio actTerri(terrisAFRC[i]);
-      territorios.push_back(actTerri);
+      
+      territorios.push_back(new Territorio (terrisAFRC[i]));
     }
   }
   else if (nombreCont == "Europa")
   {
     for (int i = 0; i < 7; i++)
     {
-      Territorio actTerri(terrisEROP[i]);
-      territorios.push_back(actTerri);
+      
+      territorios.push_back(new Territorio (terrisEROP[i]));
     }
   }
   else if (nombreCont == "Australia")
   {
     for (int i = 0; i < 4; i++)
     {
-      Territorio actTerri(terrisASTR[i]);
-      territorios.push_back(actTerri);
+      
+      territorios.push_back(new Territorio (terrisASTR[i]));
     }
   }
 }
 
+
 Territorio *Continente::buscaT(std::string nombTerri)
 {
-  for (Territorio &terriObj : territorios)
+  for (Territorio *terriObj : territorios)
   {
-    if (terriObj.nombreTerri == nombTerri)
+    if (terriObj && terriObj->nombreTerri == nombTerri)
     {
-      return &terriObj; // Devuelve el puntero al territorio con el nombre especificado
+      return terriObj; // Devuelve el puntero al territorio con el nombre especificado
     }
   }
   return nullptr; // Si no se encuentra el territorio
+
 }
+
 
 Partida::Partida(char _modoJuego, int cantJugadores) : jugadores(), continentes(), modoJuego(_modoJuego) // Constructor de partida
 {
@@ -179,11 +199,11 @@ Partida::Partida(char _modoJuego, int cantJugadores) : jugadores(), continentes(
   idPartida = rand() % 10000;
 
   empezada = true;
+  terminada = false;
 
   for (int i = 0; i < cantJugadores; i++)
   {
-    Jugador nuevoJ(cantJugadores, modoJuego, coloresJ[i]);
-    jugadores.push(nuevoJ);
+    jugadores.push(new Jugador(cantJugadores, modoJuego, coloresJ[i]));
   }
 
   continentes[0] = new Continente("America Del Norte");
@@ -195,19 +215,19 @@ Partida::Partida(char _modoJuego, int cantJugadores) : jugadores(), continentes(
 
   if (!jugadores.empty())
   {
-    jugadorActual = &jugadores.front(); // Inicializa el puntero al primer jugador
+    jugadorActual = jugadores.front(); // Inicializa el puntero al primer jugador
   }
 }
 
 Jugador *Partida::buscaJ(const std::string color)
 {
-  std::queue<Jugador> jugadoresTemp = jugadores; // Copia la cola original
+  std::queue<Jugador*> jugadoresTemp = jugadores; // Copia la cola original
   while (!jugadoresTemp.empty())
   {
-    Jugador &jugadorObj = jugadoresTemp.front();
-    if (jugadorObj.color == color)
+    Jugador* jugadorObj = jugadoresTemp.front();
+    if (jugadorObj->color == color)
     {
-      return &jugadorObj; // Devuelve el puntero al jugador con el color especificado
+      return jugadorObj; // Devuelve el puntero al jugador con el color especificado
     }
     jugadoresTemp.pop(); // Desencola el jugador actual
   }
@@ -237,11 +257,13 @@ void Partida::asignaTerri(Continente *elConti, std::string nomTerri, Jugador *el
   elPlayer->ejercito[0] = elPlayer->ejercito[0] - 1;
 }
 
+
 SistemaApoyo::SistemaApoyo()
 {
-  partidas = std::list<Partida>();
+  partidas = std::list<Partida*>();
 }
 
+// POSIBLE CAMBIO devolver el puntero de la cartida recien creada
 void SistemaApoyo::crearPartida()
 {
 
@@ -264,7 +286,7 @@ void SistemaApoyo::crearPartida()
     std::cin >> modoJuego;
   } while (modoJuego != 'm' && modoJuego != 'n');
 
-  partidas.push_back(Partida(modoJuego, cantJugadores));
+  partidas.push_back(new Partida(modoJuego, cantJugadores));
 
   std::cout << "El juego ya ha sido inicializado" << std::endl;
   std::cout << std::endl;
@@ -273,7 +295,7 @@ void SistemaApoyo::crearPartida()
 
 void SistemaApoyo::escojerTerris()
 {
-  Partida *partidaAct = &partidas.back();
+  Partida *partidaAct = partidas.back();
 
   std::vector<std::string> AmericaNorte = {"Alaska", "Alberta", "America Central", "Estados Unidos Orientales", "Groenlandia", "Territorio Noroccidental", "Ontario", "Quebec", "Estados Unidos Orientales"};
   std::vector<std::string> AmericaSur = {"Argentina", "Brasil", "Peru", "Venezuela"};
