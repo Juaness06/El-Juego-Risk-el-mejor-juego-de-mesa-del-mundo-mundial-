@@ -18,8 +18,6 @@ int main()
     SistemaApoyo sistemaApoyo;
     comandos(sistemaApoyo);
 
-     // Crear un objeto de la clase SistemaApoyo
-    sistemaApoyo.crearPartida(); // Llamar al método crearPartida en el objeto creado
     return 0; // Devolver 0 al finalizar el programa
 }
 
