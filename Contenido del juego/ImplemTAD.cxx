@@ -294,8 +294,8 @@ void SistemaApoyo::crearPartida()
   } while (cantJugadores < 3 || cantJugadores > 6);
 
   std::cout << "Risk, tiene dos formas de jugar: " << std::endl;
-  std::cout << "Para el modo por Misiones, ingrese la tecla 'M' " << std::endl;
-  std::cout << "Para el modo Normal, ingrese la tecla 'N' " << std::endl;
+  std::cout << "Para el modo por Misiones, ingrese la tecla 'm' " << std::endl;
+  std::cout << "Para el modo Normal, ingrese la tecla 'n' " << std::endl;
 
   do
   {

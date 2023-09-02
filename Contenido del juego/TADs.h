@@ -1,4 +1,4 @@
-#ifndef _MISIONH
+#ifndef MISIONH
 #define MISIONH
 
 #include <list>
