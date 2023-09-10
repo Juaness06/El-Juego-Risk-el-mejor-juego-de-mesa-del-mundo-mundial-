@@ -9,6 +9,14 @@
 #include <array>
 #include <algorithm>
 
+#define red "\033[31m"
+#define blue "\033[34m"
+#define yellow "\033[33m"
+#define orange "\033[38;5;208m"
+#define green "\033[32m"
+#define magenta "\033[35m"
+#define reset "\033[0m"
+
 bool tieneTerriDisp(const std::vector<std::string> &continente);
 
 Mision::Mision(std::string colorJ) : nomTerris()
@@ -264,7 +272,7 @@ void accionesTurno (std::string _colJugador)
   std::cout << "2. Atacar" << std::endl;
   std::cout << "3. fortificar" << std::endl;
 
-  // Menu donde dependiendo de la opcion elegida se llama a la funcion ára hacer la respectiva accion
+  // Menu donde dependiendo de la opcion elegida se llama a la funcion ara hacer la respectiva accion
    
     // Caso 1 -> se llama a la funcion para verificar las tarjetas del jugador y ver si puede reclamar unidades de ejercito adicionales
     // Caso 2 -> se llama a la funcion para iniciar un ataque
@@ -289,6 +297,7 @@ void SistemaApoyo::crearPartida()
 
   do
   {
+    std::cout<<std::endl;
     std::cout << "Cuantas personas van a jugar? (min 3 - max 6): ";
     std::cin >> cantJugadores;
   } while (cantJugadores < 3 || cantJugadores > 6);
@@ -317,8 +326,8 @@ void SistemaApoyo::escojerTerris()
   std::vector<std::string> AmericaNorte = {"Alaska", "Alberta", "America Central", "Estados Unidos Orientales", "Groenlandia", "Territorio Noroccidental", "Ontario", "Quebec", "Estados Unidos Orientales"};
   std::vector<std::string> AmericaSur = {"Argentina", "Brasil", "Peru", "Venezuela"};
   std::vector<std::string> Europa = {"Gran Bretaña", "Islandia", "Europa del Norte", "Escandinavia", "Europa del Sur", "Ucrania", "Europa Occidental"};
-  std::vector<std::string> Africa = {"Congo", "África Oriental", "Egipto", "Madagascar", "África del Norte", "África del Sur"};
-  std::vector<std::string> Asia = {"Afghanistán", "China", "India", "Irkutsk", "Japón", "Kamchatka", "Medio Oriente", "Mongolia", "Siam", "Siberia", "Ural", "Yakutsk"};
+  std::vector<std::string> Africa = {"Congo", "africa Oriental", "Egipto", "Madagascar", "africa del Norte", "africa del Sur"};
+  std::vector<std::string> Asia = {"Afghanistan", "China", "India", "Irkutsk", "Japon", "Kamchatka", "Medio Oriente", "Mongolia", "Siam", "Siberia", "Ural", "Yakutsk"};
   std::vector<std::string> Australia = {"Australia", "Indonesia", "Nueva Guinea", "Australia Occidental"};
 
   std::string salvaNomTerri;
@@ -328,6 +337,7 @@ void SistemaApoyo::escojerTerris()
   int eleccion1;
   int eleccion2;
   std::string colJugadores[6] = {"Rojo", "Azul", "Amarillo", "Naranja", "Verde", "Rasado"};
+  std::string coltext [6] = {red, blue, yellow, orange, green, magenta};
   std::string auxContis[6] = {"America Del Norte", "America Del Sur", "Asia", "Africa", "Europa", "Australia"};
 
   std::string aux[cantJ];
@@ -341,16 +351,17 @@ void SistemaApoyo::escojerTerris()
   {
     for (int i = 0; i < cantJ; i++)
     {
-      std::cout << "Jugador (" + aux[i] + ") es su turno para:" << std::endl;
+      std::cout << "Jugador "<<coltext[i]<<"(" + aux[i]+ ")"<<reset<<" es su turno para:" << std::endl;
       std::cout << "Elijir uno de los siguientes continetes:" << std::endl;
       std::cout << "1. America del Norte" << std::endl;
-      std::cout << "2. América del Sur" << std::endl;
+      std::cout << "2. America del Sur" << std::endl;
       std::cout << "3. Europa" << std::endl;
       std::cout << "4. Africa" << std::endl;
       std::cout << "5. Asia" << std::endl;
       std::cout << "6. Australia" << std::endl;
-      std::cout << "Ingrese el número del continente seleccionado: ";
+      std::cout << "Ingrese el numero del continente seleccionado: ";
       std::cin >> eleccion1;
+      std::cout << std::endl;
 
       switch (eleccion1)
       {
@@ -358,18 +369,18 @@ void SistemaApoyo::escojerTerris()
       {
         if (!tieneTerriDisp(AmericaNorte))
         {
-          std::cout << "No hay territorios disponibles en América del Norte." << std::endl;
+          std::cout << "No hay territorios disponibles en America del Norte." << std::endl;
           i = i-1;
           break;
         }
 
-        std::cout << "Territorios disponibles en América del Norte:" << std::endl;
+        std::cout << "Territorios disponibles en America del Norte:" << std::endl;
         for (size_t j = 0; j < AmericaNorte.size(); j++)
         {
           std::cout << j + 1 << ". " << AmericaNorte[j] << std::endl;
         }
 
-        std::cout << "Ingrese el número del territorio seleccionado: ";
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
         std::cin >> eleccion2;
 
         if (eleccion2 >= 1 && eleccion2 <= AmericaNorte.size())
@@ -380,12 +391,13 @@ void SistemaApoyo::escojerTerris()
           partidaAct->asignaTerri(conti, salvaNomTerri, player);
 
           std::cout << "Territorio elegido: " << AmericaNorte[eleccion2 - 1] << std::endl;
+          std::cout << std::endl;
           AmericaNorte.erase(AmericaNorte.begin() + eleccion2 - 1);
           conta_terr++;
         }
         else
         {
-          std::cout << "Número de territorio inválido." << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
         }
 
         break;
@@ -395,18 +407,18 @@ void SistemaApoyo::escojerTerris()
       {
         if (!tieneTerriDisp(AmericaSur))
         {
-          std::cout << "No hay territorios disponibles en América del Sur." << std::endl;
+          std::cout << "No hay territorios disponibles en America del Sur." << std::endl;
           i = i-1;
           break;
         }
 
-        std::cout << "Territorios disponibles en América del Sur:" << std::endl;
+        std::cout << "Territorios disponibles en America del Sur:" << std::endl;
         for (size_t j = 0; j < AmericaSur.size(); j++)
         {
           std::cout << j + 1 << ". " << AmericaSur[j] << std::endl;
         }
 
-        std::cout << "Ingrese el número del territorio seleccionado: ";
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
         std::cin >> eleccion2;
 
         if (eleccion2 >= 1 && eleccion2 <= AmericaSur.size())
@@ -422,7 +434,7 @@ void SistemaApoyo::escojerTerris()
         }
         else
         {
-          std::cout << "Número de territorio inválido." << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
         }
 
         break;
@@ -443,7 +455,7 @@ void SistemaApoyo::escojerTerris()
           std::cout << j + 1 << ". " << Europa[j] << std::endl;
         }
 
-        std::cout << "Ingrese el número del territorio seleccionado: ";
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
         std::cin >> eleccion2;
         if (eleccion2 >= 1 && eleccion2 <= Europa.size())
         {
@@ -458,7 +470,7 @@ void SistemaApoyo::escojerTerris()
         }
         else
         {
-          std::cout << "Número de territorio inválido." << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
         }
 
         break;
@@ -478,7 +490,7 @@ void SistemaApoyo::escojerTerris()
         {
           std::cout << j + 1 << ". " << Africa[j] << std::endl;
         }
-        std::cout << "Ingrese el número del territorio seleccionado: ";
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
         std::cin >> eleccion2;
 
         if (eleccion2 >= 1 && eleccion2 <= Africa.size())
@@ -494,7 +506,7 @@ void SistemaApoyo::escojerTerris()
         }
         else
         {
-          std::cout << "Número de territorio inválido." << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
         }
 
         break;
@@ -515,7 +527,7 @@ void SistemaApoyo::escojerTerris()
           std::cout << j + 1 << ". " << Asia[j] << std::endl;
         }
 
-        std::cout << "Ingrese el número del territorio seleccionado: ";
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
         std::cin >> eleccion2;
         if (eleccion2 >= 1 && eleccion2 <= Asia.size())
         {
@@ -530,7 +542,7 @@ void SistemaApoyo::escojerTerris()
         }
         else
         {
-          std::cout << "Número de territorio inválido." << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
         }
 
         break;
@@ -551,7 +563,7 @@ void SistemaApoyo::escojerTerris()
           std::cout << j + 1 << ". " << Australia[j] << std::endl;
         }
 
-        std::cout << "Ingrese el número del territorio seleccionado: ";
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
         std::cin >> eleccion2;
         if (eleccion2 >= 1 && eleccion2 <= Australia.size())
         {
@@ -566,7 +578,7 @@ void SistemaApoyo::escojerTerris()
         }
         else
         {
-          std::cout << "Número de territorio inválido." << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
         }
 
         break;
@@ -574,7 +586,7 @@ void SistemaApoyo::escojerTerris()
 
       default:
       {
-        std::cout << "Continente no válido. Intente nuevamente." << std::endl;
+        std::cout << "Continente no valido. Intente nuevamente." << std::endl;
         i = i-1;
         break;
       }
