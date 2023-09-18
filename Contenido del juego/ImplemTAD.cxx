@@ -325,7 +325,7 @@ void SistemaApoyo::escojerTerris()
 
   std::vector<std::string> AmericaNorte = {"Alaska", "Alberta", "America Central", "Estados Unidos Orientales", "Groenlandia", "Territorio Noroccidental", "Ontario", "Quebec", "Estados Unidos Orientales"};
   std::vector<std::string> AmericaSur = {"Argentina", "Brasil", "Peru", "Venezuela"};
-  std::vector<std::string> Europa = {"Gran Bretaña", "Islandia", "Europa del Norte", "Escandinavia", "Europa del Sur", "Ucrania", "Europa Occidental"};
+  std::vector<std::string> Europa = {"Gran Bretana", "Islandia", "Europa del Norte", "Escandinavia", "Europa del Sur", "Ucrania", "Europa Occidental"};
   std::vector<std::string> Africa = {"Congo", "africa Oriental", "Egipto", "Madagascar", "africa del Norte", "africa del Sur"};
   std::vector<std::string> Asia = {"Afghanistan", "China", "India", "Irkutsk", "Japon", "Kamchatka", "Medio Oriente", "Mongolia", "Siam", "Siberia", "Ural", "Yakutsk"};
   std::vector<std::string> Australia = {"Australia", "Indonesia", "Nueva Guinea", "Australia Occidental"};

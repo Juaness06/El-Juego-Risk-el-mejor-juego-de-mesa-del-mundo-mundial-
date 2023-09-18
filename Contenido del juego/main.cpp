@@ -11,7 +11,7 @@
 void tituloIntro();
 void comandos(SistemaApoyo sistemaApoyo);
 
-int main()
+int main(int argc, char* argv[])
 {
     tituloIntro();
 
