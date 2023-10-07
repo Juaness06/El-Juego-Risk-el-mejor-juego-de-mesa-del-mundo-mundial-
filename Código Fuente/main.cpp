@@ -290,7 +290,10 @@ void comandos(SistemaApoyo sistemaApoyo)
         }
         else if (command == "turno " + resto) // resto representa <id_jugador>
         {
+            std::cout << "El jugador por el que se pregunto es:" << resto << std::endl;
+            std::cout << "El jugador actual es:" << sistemaApoyo.partida->jugadorActual->color << std::endl; 
 
+            /*
             Partida* partidaAct = sistemaApoyo.partida;
 
             std::string turnoActual = partidaAct->jugadores.front()->color;
@@ -305,6 +308,7 @@ void comandos(SistemaApoyo sistemaApoyo)
                 std::cout << "Lo siento, no es tuturno, el turno actual es de:";
                 std::cout <<turnoActual << std::endl;
             }
+            */
             
 
         }
