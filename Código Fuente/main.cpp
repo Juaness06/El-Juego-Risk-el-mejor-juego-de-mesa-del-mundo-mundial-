@@ -118,51 +118,9 @@ void comandos(SistemaApoyo sistemaApoyo)
             // creamos un puntero partida que apunta a una nueva partida creada
             sistemaApoyo.crearPartida();
 
-            // La siguiente salida por pantalla seria despues de la reparticion de territorios
-            
             sistemaApoyo.escojerTerris(sistemaApoyo.partida);
 
-            /*
-            // recorrer con iterador la queue de jugadores y por cada jugador imprimir su color
-            std::queue<Jugador*> jugadoresTemp = sistemaApoyo.partida->jugadores;
-            while (!jugadoresTemp.empty())
-            {
-                Jugador* jugadorObj = jugadoresTemp.front();
-                std::cout << "El jugador: " << jugadorObj->color << std::endl;
-                jugadoresTemp.pop(); // Desencola el jugador actual
-            }
-            */
-
-           
-
-            // recorrer el arreglo de contientes y por cada continente recorrer el arreglo de territorios y imprimir el nombre de cada territorio y su dueno
-            for(Continente* continente : sistemaApoyo.partida->continentes)
-            {
-                std::cout << continente->nombreCont << std::endl;
-                for(Territorio* territorio : continente->territorios)
-                {
-                    std::cout << "--------------------------------------------------------" << std::endl;
-                    std::cout << "El territorio: " << territorio->nombreTerri << " es de: " << territorio->duenoAct->color << std::endl;
-                    std::cout << "Actualmente tiene: " << territorio->uniEjercito << " unidades de ejercito " << std::endl;
-                    
-                    std::cout << "--------------------------------------------------------" << std::endl;
-                }
-            }
-
             sistemaApoyo.repartirTropas(sistemaApoyo.partida);
-
-            for(Continente* continente : sistemaApoyo.partida->continentes)
-            {
-                std::cout << continente->nombreCont << std::endl;
-                for(Territorio* territorio : continente->territorios)
-                {
-                    std::cout << "--------------------------------------------------------" << std::endl;
-                    std::cout << "El territorio: " << territorio->nombreTerri << " es de: " << territorio->duenoAct->color << std::endl;
-                    std::cout << "Actualmente tiene: " << territorio->uniEjercito << " unidades de ejercito " << std::endl;
-                    
-                    std::cout << "--------------------------------------------------------" << std::endl;
-                }
-            }
 
         } 
         else if (command == "inicializar " + resto) // el resto representaria el <nombre_archivo>
