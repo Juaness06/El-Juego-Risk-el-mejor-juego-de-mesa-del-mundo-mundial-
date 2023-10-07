@@ -68,7 +68,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
   int cantJ = partidaAct->jugadores.size();
   int eleccion1;
   int eleccion2;
-  std::string colJugadores[6] = {"Rojo", "Azul", "Amarillo", "Naranja", "Verde", "Rasado"};
+  std::string colJugadores[6] = {"rojo", "azul", "amarillo", "naranja", "verde", "rosado"};
   std::string coltext [6] = {red, blue, yellow, orange, green, magenta};
   std::string auxContis[6] = {"America Del Norte", "America Del Sur", "Asia", "Africa", "Europa", "Australia"};
 
@@ -425,7 +425,7 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
   int cantJ = partidaAct->jugadores.size();
   int asignTrops = 0;
   
-  std::string colJugadores[6] = {"Rojo", "Azul", "Amarillo", "Naranja", "Verde", "Rasado"};
+  std::string colJugadores[6] = {"rojo", "azul", "amarillo", "naranja", "verde", "rosado"};
   std::string coltext [6] = {red, blue, yellow, orange, green, magenta};
   std::string aux[cantJ];
 

@@ -2,7 +2,7 @@
 
 Partida::Partida(char _modoJuego, int cantJugadores) : jugadores(), continentes(), modoJuego(_modoJuego) // Constructor de partida
 {
-  std::string coloresJ[6] = {"Rojo", "Azul", "Amarillo", "Naranja", "Verde", "Rasado"};
+  std::string coloresJ[6] = {"rojo", "azul", "amarillo", "naranja", "verde", "rosado"};
 
   estado = "En Curso"; // Posibles estados: "En Curso", "Terminada"
 

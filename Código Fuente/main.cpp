@@ -292,6 +292,7 @@ void comandos(SistemaApoyo sistemaApoyo)
         {
             std::cout << "El jugador por el que se pregunto es:" << resto << std::endl;
             std::cout << "El jugador actual es:" << sistemaApoyo.partida->jugadorActual->color << std::endl; 
+            
 
             /*
             Partida* partidaAct = sistemaApoyo.partida;
