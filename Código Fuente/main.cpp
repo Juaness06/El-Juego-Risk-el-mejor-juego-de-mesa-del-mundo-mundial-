@@ -118,6 +118,8 @@ void comandos(SistemaApoyo sistemaApoyo)
 
             sistemaApoyo.repartirTropas(sistemaApoyo.partida);
 
+            std::cout << "La partida ha sido inicializada correctamente" << std::endl;
+
         } 
         else if (command == "inicializar " + resto) // el resto representaria el <nombre_archivo>
         {

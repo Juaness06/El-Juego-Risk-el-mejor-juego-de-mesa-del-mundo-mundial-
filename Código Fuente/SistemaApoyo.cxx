@@ -30,8 +30,8 @@ void SistemaApoyo::crearPartida()
     std::cin >> cantJugadores;
   } while (cantJugadores < 3 || cantJugadores > 6);
 
-  std::cout << "Risk, tiene dos formas de jugar: " << std::endl;
   std::cout<<std::endl;
+  std::cout << "Risk, tiene dos formas de jugar: " << std::endl;
   std::cout << "Para el modo por Misiones, ingrese la tecla 'm' " << std::endl;
   std::cout << "Para el modo Normal, ingrese la tecla 'n' " << std::endl;
 
@@ -43,8 +43,6 @@ void SistemaApoyo::crearPartida()
 
   this->partida = new Partida(modoJuego, cantJugadores);
 
-  std::cout << "El juego ya ha sido inicializado" << std::endl;
-  std::cout << std::endl;
   std::cout << std::endl;
 
   std::cout << "Presione Enter para continuar..." << std::endl;
@@ -150,6 +148,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           {
             std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
+            std::cout<<std::endl;
             i = i-1;
           }
 
@@ -207,6 +206,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           {
             std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
+            std::cout<<std::endl;
             i = i-1;
           }
 
@@ -263,6 +263,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           {
             std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
+            std::cout<<std::endl;
             i = i-1;
           }
 
@@ -319,6 +320,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           {
             std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
+            std::cout<<std::endl;
             i = i-1;
           }
 
@@ -375,6 +377,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           {
             std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
+            std::cout<<std::endl;
             i = i-1;
           }
 
@@ -431,6 +434,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           {
             std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
+            std::cout<<std::endl;
             i = i-1;
           }
 
@@ -478,7 +482,8 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
     std::cout << "Turno del Jugador "<<coltext[h]<<"(" + aux[h]+ ")"<<reset<<" para distribuir tropas en los territorios que eligio:" << std::endl;
     for (int i = 0; i < 6; i++)
     {
-      std::cout << "En el continente dominas los siguientes territorios: " << partidaAct->continentes[i]->nombreCont << " tienes los siguientes territorios:" << std::endl;
+      std::cout<<std::endl;
+      std::cout << "En el continente " << partidaAct->continentes[i]->nombreCont << " dominas los siguientes territorios: " << std::endl;
       for (int j = 0; j < partidaAct->continentes[i]->territorios.size(); j++) //
       {
         if (partidaAct->continentes[i]->territorios[j]->duenoAct->color == aux[h])
@@ -493,7 +498,6 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
 
           std::cout << std::endl;
           std::cout << "Recuerda que justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
-          std::cout << std::endl;
 
           std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas"<< std::endl;
           std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
@@ -532,13 +536,17 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
     if (partidaAct->buscaJ(aux[h])->ejercito > 0) // 
     {
       std::cout << "Aun tienes tropas disponibles para repartir." << std::endl;
+      std::cout << std::endl;
       std::cout << "Presione Enter para continuar..." << std::endl;
       std::cin.ignore();
       std::cin.get();
       system("clear");
       h = h-1;
     }    
-    
+    std::cout << "Presione Enter para continuar..." << std::endl;
+    std::cin.ignore();
+    std::cin.get();
+    system("clear");
   }
 
 }
@@ -551,7 +559,6 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
   
   for(Continente* continente : partidaAct->continentes)
   {
-    std::cout << continente->nombreCont << std::endl;
     for(Territorio* territorio : continente->territorios)
     {
       if (partidaAct->jugadorActual->color == territorio->duenoAct->color)
@@ -561,6 +568,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
     }
   }
 
+  std::cout << std::endl;
   std::cout << "Como actualmente tienes " << uniEjerAdicionales << " continentes conquistados, vas a recibir: ";
 
   uniEjerAdicionales = uniEjerAdicionales / 3;
