@@ -31,6 +31,7 @@ void SistemaApoyo::crearPartida()
   } while (cantJugadores < 3 || cantJugadores > 6);
 
   std::cout << "Risk, tiene dos formas de jugar: " << std::endl;
+  std::cout<<std::endl;
   std::cout << "Para el modo por Misiones, ingrese la tecla 'm' " << std::endl;
   std::cout << "Para el modo Normal, ingrese la tecla 'n' " << std::endl;
 
@@ -103,6 +104,8 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           if (!tieneTerriDisp(AmericaNorte))
           {
             std::cout << "No hay territorios disponibles en America del Norte." << std::endl;
+            std::cout<<std::endl;
+
             i = i-1;
             break;
           }
@@ -131,6 +134,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
               }              
             }
 
+            std::cout<<std::endl;
             std::cout << "Territorio elegido: " << AmericaNorte[eleccion2 - 1] << std::endl;
             std::cout << std::endl;
             AmericaNorte.erase(AmericaNorte.begin() + eleccion2 - 1);
@@ -144,6 +148,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           }
           else
           {
+            std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
             i = i-1;
           }
@@ -156,6 +161,8 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           if (!tieneTerriDisp(AmericaSur))
           {
             std::cout << "No hay territorios disponibles en America del Sur." << std::endl;
+            std::cout<<std::endl;
+
             i = i-1;
             break;
           }
@@ -184,7 +191,10 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
               }              
             }
 
+            std::cout<<std::endl;
             std::cout << "Territorio elegido: " << AmericaSur[eleccion2 - 1] << std::endl;
+            std::cout<<std::endl;
+
             AmericaSur.erase(AmericaSur.begin() + eleccion2 - 1);
             conta_terr++;
 
@@ -195,6 +205,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           }
           else
           {
+            std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
             i = i-1;
           }
@@ -207,6 +218,8 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           if (!tieneTerriDisp(Europa))
           {
             std::cout << "No hay territorios disponibles en Europa." << std::endl;
+            std::cout<<std::endl;
+
             i = i-1;
             break;
           }
@@ -234,7 +247,10 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
               }              
             }
 
+            std::cout<<std::endl;
             std::cout << "Territorio elegido: " << Europa[eleccion2 - 1] << std::endl;
+            std::cout<<std::endl;
+
             Europa.erase(Europa.begin() + eleccion2 - 1);
             conta_terr++;
 
@@ -245,6 +261,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           }
           else
           {
+            std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
             i = i-1;
           }
@@ -257,6 +274,8 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           if (!tieneTerriDisp(Africa))
           {
             std::cout << "No hay territorios disponibles en Africa." << std::endl;
+            std::cout<<std::endl;
+
             i = i-1;
             break;
           }
@@ -284,7 +303,10 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
               }              
             }
 
+            std::cout<<std::endl;
             std::cout << "Territorio elegido: " << Africa[eleccion2 - 1] << std::endl;
+            std::cout<<std::endl;
+
             Africa.erase(Africa.begin() + eleccion2 - 1);
             conta_terr++;
 
@@ -295,6 +317,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           }
           else
           {
+            std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
             i = i-1;
           }
@@ -307,6 +330,8 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           if (!tieneTerriDisp(Asia))
           {
             std::cout << "No hay territorios disponibles en Asia." << std::endl;
+            std::cout<<std::endl;
+
             i = i-1;
             break;
           }
@@ -334,7 +359,10 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
               }              
             }
 
+            std::cout<<std::endl;
             std::cout << "Territorio elegido: " << Asia[eleccion2 - 1] << std::endl;
+            std::cout<<std::endl;
+
             Asia.erase(Asia.begin() + eleccion2 - 1);
             conta_terr++;
 
@@ -345,6 +373,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           }
           else
           {
+            std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
             i = i-1;
           }
@@ -357,6 +386,8 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           if (!tieneTerriDisp(Australia))
           {
             std::cout << "No hay territorios disponibles en Australia." << std::endl;
+            std::cout<<std::endl;
+
             i = i-1;
             break;
           }
@@ -384,7 +415,10 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
               }              
             }
 
+            std::cout<<std::endl;
             std::cout << "Territorio elegido: " << Australia[eleccion2 - 1] << std::endl;
+            std::cout<<std::endl;
+
             Australia.erase(Australia.begin() + eleccion2 - 1);
             conta_terr++;
 
@@ -395,6 +429,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           }
           else
           {
+            std::cout<<std::endl;
             std::cout << "Numero de territorio invalido." << std::endl;
             i = i-1;
           }
@@ -405,6 +440,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
         default:
         {
           std::cout << "Continente no valido. Intente nuevamente." << std::endl;
+          std::cout<<std::endl;
           i = i-1;
 
           break;
@@ -434,12 +470,15 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
     aux[i] = colJugadores[i];
   }
 
+  std::cout << "Ahora cada jugador debe repartir sus tropas en los territorios que eligio." << std::endl;
+  std::cout << std::endl;
+
   for (int h = 0; h < cantJ; h++)
   {
     std::cout << "Turno del Jugador "<<coltext[h]<<"(" + aux[h]+ ")"<<reset<<" para distribuir tropas en los territorios que eligio:" << std::endl;
     for (int i = 0; i < 6; i++)
     {
-      std::cout << "Del continente: " << partidaAct->continentes[i]->nombreCont << std::endl;
+      std::cout << "En el continente dominas los siguientes territorios: " << partidaAct->continentes[i]->nombreCont << " tienes los siguientes territorios:" << std::endl;
       for (int j = 0; j < partidaAct->continentes[i]->territorios.size(); j++) //
       {
         if (partidaAct->continentes[i]->territorios[j]->duenoAct->color == aux[h])
@@ -452,17 +491,24 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
             break; // si el jugador no tiene mas tropas disponibles, se pasa al siguiente jugador
           }  
 
-          std::cout << "Justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
-          std::cout << "El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << "va a tener 1 + ";
+          std::cout << std::endl;
+          std::cout << "Recuerda que justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
+          std::cout << std::endl;
+
+          std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas"<< std::endl;
+          std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
           std::cin >> asignTrops;
           std::cout << std::endl;
 
           while (asignTrops > partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito || asignTrops < 0)
           {
             std::cout << std::endl;
+            std::cout << "Cantidad de tropas invalida." << std::endl;
             std::cout << "Recuerda que tienes: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
-            std::cout << "Ingresa una cantidad de tropas valida para este territorio." << std::endl;
-            std::cout << "- El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener 1 + ";
+            std::cout << "Ingresa una cantidad de tropas no mayor ni menor a las que tienes disponibles" << std::endl;
+            std::cout << std::endl;
+            std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas"<< std::endl;
+          std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
             std::cin >> asignTrops;
             std::cout << std::endl;
           }          
