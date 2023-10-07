@@ -502,3 +502,4 @@ bool tieneTerriDisp(const std::vector<std::string> &continente)
 {
   return !continente.empty();
 }
+

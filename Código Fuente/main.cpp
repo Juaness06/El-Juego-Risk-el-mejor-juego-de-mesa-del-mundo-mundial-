@@ -289,7 +289,44 @@ void comandos(SistemaApoyo sistemaApoyo)
         else if (command == "turno " + resto) // resto representa <id_jugador>
         {
             std::cout << "El jugador por el que se pregunto es:" << resto << std::endl;
-            std::cout << "El jugador actual es:" << sistemaApoyo.partida->jugadorActual->color << std::endl; 
+            std::cout << "El jugador actual es:" << sistemaApoyo.partida->jugadorActual->color << std::endl;
+
+            if (sistemaApoyo.partida->estado == "En Curso")
+            {
+                std::queue<Jugador*> jugadoresTemp = sistemaApoyo.partida->jugadores; // Copia la cola original de jugadores
+                bool existe = false;                
+                while (!jugadoresTemp.empty())
+                {
+                    Jugador* jugadorObj = jugadoresTemp.front();
+                    if (jugadorObj->color == resto)
+                    {
+                        existe = true;
+                        break;
+                    }
+                    jugadoresTemp.pop(); // Desencola el jugador actual
+                }
+
+                if (existe)
+                {
+                    if (sistemaApoyo.partida->jugadorActual->color == resto)
+                    {
+                        std::cout << "Es tu turno" << std::endl;
+                        
+                    }
+                    else
+                    {
+                        std::cout << "No es tu turno" << std::endl;
+                    }
+                }
+                else
+                {
+                    std::cout << "El jugador: " << resto << "no forma parte de esta partida" << std::endl;
+                }
+            }
+            else if (sistemaApoyo.partida->estado == "Terminada")
+            {
+                std::cout << "La partida ya ha terminado y ya tuvo ganador" << std::endl;
+            }
 
             // Aqui estoy probanddo como hacer lo de los turnos
 
