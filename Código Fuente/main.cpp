@@ -133,6 +133,8 @@ void comandos(SistemaApoyo sistemaApoyo)
             }
             */
 
+            //Te debe salir esto 
+            
             // recorrer el arreglo de contientes y por cada continente recorrer el arreglo de territorios y imprimir el nombre de cada territorio y su dueno
             for(Continente* continente : sistemaApoyo.partida->continentes)
             {
