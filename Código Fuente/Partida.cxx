@@ -141,6 +141,17 @@ void Partida::fortificar()
           std::cout << "Ahora el territorio " << terriPongo->nombreTerri << " tiene " << terriPongo->uniEjercito << " tropas" << std::endl;
           std::cout << "Y el territorio " << terriQuito->nombreTerri << " tiene " << terriQuito->uniEjercito << " tropas" << std::endl;
           std::cout << std::endl;
+          
+          // actualizar el jugador actual, entonces el siguiente jugador en la cola de jugadores sera el jugador actual y el jugador actual pasara a ser el siguiente jugador en la cola
+          Jugador* jugadorTemp = jugadorActual;
+          jugadores.pop();
+          jugadores.push(jugadorTemp);
+          jugadorActual = jugadores.front();
+
+          std::cout << "Presione Enter para continuar..." << std::endl;
+          std::cin.ignore();
+          std::cin.get();
+          system("clear");
         }
         else
         {
