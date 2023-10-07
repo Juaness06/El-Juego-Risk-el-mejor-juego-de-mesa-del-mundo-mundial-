@@ -65,3 +65,74 @@ void Partida::asignaTerri(Continente *elConti, std::string nomTerri, Jugador *el
   elTerri->uniEjercito = 1;
   elPlayer->ejercito = elPlayer->ejercito - 1;
 }
+
+void Partida::fortificar()
+{
+  std::string leQuitoA;
+  std::string lePongoA;
+  int cantEjercitos;
+
+  for(Continente* continente : continentes)
+  {
+    std::cout << continente->nombreCont << std::endl;
+    for(Territorio* territorio : continente->territorios)
+    {
+      if (jugadorActual->color == territorio->duenoAct->color)
+      {
+        std::cout << territorio->nombreTerri << " tiene: " << territorio->uniEjercito << " tropas"<< std::endl;
+      }
+    }
+  }
+
+  // preguntar al usuario que territorio quiere fortificar (asignarle mas ejercitos), y acual territorio se los quiere quitar para el traslado
+  std::cout << "De que territorio quiere quitarle ejercitos? ";
+  std::cin >> leQuitoA;
+  std::cout << "A que territorio quiere ponerle ejercitos? ";
+  std::cin >> lePongoA;
+  std::cout << "Cuantos ejercitos quiere ponerle? ";
+  std::cin >> cantEjercitos;
+
+  // Busca el territorio al que se le quitaran ejercitos
+  Territorio* terriQuito = buscaT(leQuitoA);
+  // Busca el territorio al que se le pondran ejercitos
+  Territorio* terriPongo = buscaT(lePongoA);
+
+  // Si se encuentran ambos territorios
+  if (terriQuito && terriPongo)
+  {
+    // Si el territorio al que se le quitan ejercitos es del jugador actual
+    if (terriQuito->duenoAct == jugadorActual)
+    {
+      // Si el territorio al que se le ponen ejercitos es del jugador actual
+      if (terriPongo->duenoAct == jugadorActual)
+      {
+        // Si el territorio al que se le quitan ejercitos tiene mas ejercitos que los que se quieren quitar
+        if (terriQuito->uniEjercito > cantEjercitos)
+        {
+          // Se le quitan los ejercitos al territorio
+          terriQuito->uniEjercito = terriQuito->uniEjercito - cantEjercitos;
+          // Se le agregan los ejercitos al territorio
+          terriPongo->uniEjercito = terriPongo->uniEjercito + cantEjercitos;
+        }
+        else
+        {
+          std::cout << "No se puede realizar la accion" << std::endl;
+        }
+      }
+      else
+      {
+        std::cout << "No se puede realizar la accion" << std::endl;
+      }
+    }
+    else
+    {
+      std::cout << "No se puede realizar la accion" << std::endl;
+    }
+  }
+  else
+  {
+    std::cout << "No se puede realizar la accion" << std::endl;
+  }
+
+
+}

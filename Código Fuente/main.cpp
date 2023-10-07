@@ -269,7 +269,7 @@ void comandos(SistemaApoyo sistemaApoyo)
                     if (sistemaApoyo.partida->jugadorActual->color == resto)
                     {
                         std::cout << "Es tu turno" << std::endl;
-                        
+                        sistemaApoyo.accionesTurno(sistemaApoyo.partida);
                     }
                     else
                     {

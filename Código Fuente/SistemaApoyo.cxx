@@ -498,6 +498,124 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
 }
 
 
+void SistemaApoyo::accionesTurno(Partida *partidaAct)
+{
+  int uniEjerAdicionales = 0;
+  int asignTrops = 0;
+  
+  for(Continente* continente : partidaAct->continentes)
+  {
+    std::cout << continente->nombreCont << std::endl;
+    for(Territorio* territorio : continente->territorios)
+    {
+      if (partidaAct->jugadorActual->color == territorio->duenoAct->color)
+      {
+        uniEjerAdicionales++;
+      }
+    }
+  }
+
+  std::cout << "Como actualmente tienes " << uniEjerAdicionales << " continentes conquistados, vas a recibir :";
+
+  uniEjerAdicionales = uniEjerAdicionales / 3;
+
+  std::cout << uniEjerAdicionales << " tropas adicionales." << std::endl;
+
+  partidaAct->jugadorActual->ejercito = partidaAct->jugadorActual->ejercito + uniEjerAdicionales;
+
+  do
+  {
+    for (int i = 0; i < 6; i++)
+    {
+      std::cout << "Del continente: " << partidaAct->continentes[i]->nombreCont << std::endl;
+      for (int j = 0; j < partidaAct->continentes[i]->territorios.size(); j++) //
+      {
+        if (partidaAct->continentes[i]->territorios[j]->duenoAct->color == partidaAct->jugadorActual->color)
+        {
+
+          if (partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito == 0)
+          {
+            std::cout << "Ya no tienes mas tropas disponibles para repartir." << std::endl;
+            std::cout << std::endl;
+            break; // si el jugador no tiene mas tropas disponibles, se pasa al siguiente jugador
+          }  
+
+          std::cout << "Justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
+          std::cout << "El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << "va a tener 1 + ";
+          std::cin >> asignTrops;
+          std::cout << std::endl;
+
+          while (asignTrops > partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito || asignTrops < 0)
+          {
+            std::cout << std::endl;
+            std::cout << "Recuerda que tienes: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
+            std::cout << "Ingresa una cantidad de tropas valida para este territorio." << std::endl;
+            std::cout << "- El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener 1 + ";
+            std::cin >> asignTrops;
+            std::cout << std::endl;
+          }          
+
+          partidaAct->continentes[i]->territorios[j]->uniEjercito = partidaAct->continentes[i]->territorios[j]->uniEjercito + asignTrops; // asigna las tropas al territorio
+          partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito = partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito - asignTrops; // resta las tropas al jugador
+
+          if (partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito == 0)
+          {
+            std::cout << "Ya no tienes mas tropas disponibles para repartir." << std::endl;
+            std::cout << std::endl;
+            break; // si el jugador no tiene mas tropas disponibles, se pasa al siguiente jugador
+          }        
+          
+        }        
+      }
+      std::cout << std::endl;
+      std::cout << "--------------------------------------------------------" << std::endl;
+      std::cout << std::endl;
+    }
+
+    std::cout << "Aun tienes tropas disponibles para repartir." << std::endl;
+    std::cout << "Presione Enter para continuar..." << std::endl;
+    std::cin.ignore();
+    std::cin.get();
+    system("clear");
+
+  } while (partidaAct->jugadorActual->ejercito > 0);
+
+  std::cout << "Ya que recibiste tus tropas adicionales y las repartiste en tus territorios" << std::endl;
+  std::cout << "Ahora puedes realizar las siguientes acciones:" << std::endl;
+  std::cout << "1. Atacar" << std::endl;
+  std::cout << "2. Fortificar" << std::endl;
+
+  int eleccion;
+  std::cout << "Ingrese el numero de la accion que desea realizar: ";
+  std::cin >> eleccion;
+  std::cout << std::endl;
+
+  switch (eleccion)
+  {
+    case 1:
+    {
+      std::cout << "Atacar" << std::endl;
+      break;
+    }
+
+    case 2:
+    {
+      std::cout << "Fortificar" << std::endl;
+      partidaAct->fortificar();
+      break;
+    }
+
+    default:
+    {
+      std::cout << "Accion no valida." << std::endl;
+      break;
+    }
+  }
+
+
+}
+
+
 bool tieneTerriDisp(const std::vector<std::string> &continente)
 {
   return !continente.empty();

@@ -19,7 +19,7 @@ class Partida
     Jugador* buscaJ (std::string);
     Continente* buscaC (std::string);
     void asignaTerri(Continente*, std::string, Jugador*);
-    void accionesTurno (std::string);
+    void fortificar();
 };
 
 #include "Partida.cxx"
