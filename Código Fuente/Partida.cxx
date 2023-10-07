@@ -92,6 +92,8 @@ void Partida::fortificar()
   std::string lePongoA;
   int cantEjercitos;
 
+  std::cout << std::endl;
+  std::cout << "Recuerda que actualmente los territorios que dominas son: " << std::endl;
   // Muestra los territorios del jugador actual y la cantidad de ejercitos que tiene en cada uno
   for(Continente* continente : continentes)
   {
@@ -106,11 +108,12 @@ void Partida::fortificar()
   }
 
   // preguntar al usuario que territorio quiere fortificar (asignarle mas ejercitos), y a cual territorio se los quiere quitar para el traslado
-  std::cout << "De que territorio quiere quitarle ejercitos? ";
+  std::cout << std::endl;
+  std::cout << "A cual territorio le quieres quitar tropas? ";
   std::cin >> leQuitoA;
-  std::cout << "A que territorio quiere ponerle ejercitos? ";
+  std::cout << "A que territorio quieres ponerle esas tropas? ";
   std::cin >> lePongoA;
-  std::cout << "Cuantos ejercitos quiere ponerle? ";
+  std::cout << "Cuantas tropas quieres ponerle? ";
   std::cin >> cantEjercitos;
 
   // Busca el territorio al que se le quitaran ejercitos
@@ -134,29 +137,44 @@ void Partida::fortificar()
           terriQuito->uniEjercito = terriQuito->uniEjercito - cantEjercitos;
           // Se le agregan los ejercitos al territorio
           terriPongo->uniEjercito = terriPongo->uniEjercito + cantEjercitos;
+          std::cout << std::endl;
+          std::cout << "Ahora el territorio " << terriPongo->nombreTerri << " tiene " << terriPongo->uniEjercito << " tropas" << std::endl;
+          std::cout << "Y el territorio " << terriQuito->nombreTerri << " tiene " << terriQuito->uniEjercito << " tropas" << std::endl;
+          std::cout << std::endl;
         }
         else
         {
           if(cantEjercitos > terriQuito->uniEjercito - 1) 
           {
+            std::cout << std::endl;
             std::cout << "Recuerda que siempre debe quedar al menos 1 ejercito en el territorio" << std::endl;
           }
           std::cout << "No se puede realizar la accion" << std::endl;
+          std::cout << std::endl;
         }
       }
       else
       {
+        std::cout << std::endl;
         std::cout << "No se puede realizar la accion" << std::endl;
+        std::cout << "El territorio al que quieres ponerle tropas no es tuyo" << std::endl;
+        std::cout << std::endl;
       }
     }
     else
     {
+      std::cout << std::endl;
       std::cout << "No se puede realizar la accion" << std::endl; // Si el territorio al que se le quitan ejercitos no es del jugador actual
+      std::cout << "El territorio al que quieres quitarle tropas no es tuyo" << std::endl;
+      std::cout << std::endl;
     }
   }
   else
   {
+    std::cout << std::endl;
     std::cout << "No se puede realizar la accion" << std::endl; // Si no se encuentran ambos territorios
+    std::cout << "Los territorios que ingresaste no existen" << std::endl;
+    std::cout << std::endl;
   }
 
 }
