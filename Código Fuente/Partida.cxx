@@ -53,6 +53,25 @@ Continente *Partida::buscaC(std::string nombreC)
   return NULL; // Si no encuentra el continente
 }
 
+
+//funcion que busca un Terriorio dado el nombre del territorio y devuelve el puntero al territorio
+Territorio *Partida::buscaT(std::string nombreT)
+{
+  for (Continente *contiObj : continentes) // Itera sobre los continentes
+  {
+    for (Territorio *terriObj : contiObj->territorios) // Itera sobre los territorios de cada continente
+    {
+      if (terriObj && terriObj->nombreTerri == nombreT) // Si el territorio existe y tiene el nombre especificado
+      {
+        return terriObj; // Devuelve el puntero al territorio especificado
+      }
+    }
+  }
+  return NULL; // Si no encuentra el territorio
+}
+
+
+/*
 void Partida::asignaTerri(Continente *elConti, std::string nomTerri, Jugador *elPlayer)
 {
 
@@ -65,6 +84,7 @@ void Partida::asignaTerri(Continente *elConti, std::string nomTerri, Jugador *el
   elTerri->uniEjercito = 1;
   elPlayer->ejercito = elPlayer->ejercito - 1;
 }
+*/
 
 void Partida::fortificar()
 {
@@ -72,6 +92,7 @@ void Partida::fortificar()
   std::string lePongoA;
   int cantEjercitos;
 
+  // Muestra los territorios del jugador actual y la cantidad de ejercitos que tiene en cada uno
   for(Continente* continente : continentes)
   {
     std::cout << continente->nombreCont << std::endl;
@@ -84,7 +105,7 @@ void Partida::fortificar()
     }
   }
 
-  // preguntar al usuario que territorio quiere fortificar (asignarle mas ejercitos), y acual territorio se los quiere quitar para el traslado
+  // preguntar al usuario que territorio quiere fortificar (asignarle mas ejercitos), y a cual territorio se los quiere quitar para el traslado
   std::cout << "De que territorio quiere quitarle ejercitos? ";
   std::cin >> leQuitoA;
   std::cout << "A que territorio quiere ponerle ejercitos? ";
@@ -107,7 +128,7 @@ void Partida::fortificar()
       if (terriPongo->duenoAct == jugadorActual)
       {
         // Si el territorio al que se le quitan ejercitos tiene mas ejercitos que los que se quieren quitar
-        if (terriQuito->uniEjercito > cantEjercitos)
+        if (terriQuito->uniEjercito > cantEjercitos && cantEjercitos < terriQuito->uniEjercito - 1) // Se le resta 1 porque siempre debe quedar al menos 1 ejercito en el territorio
         {
           // Se le quitan los ejercitos al territorio
           terriQuito->uniEjercito = terriQuito->uniEjercito - cantEjercitos;
@@ -116,6 +137,10 @@ void Partida::fortificar()
         }
         else
         {
+          if(cantEjercitos > terriQuito->uniEjercito - 1) 
+          {
+            std::cout << "Recuerda que siempre debe quedar al menos 1 ejercito en el territorio" << std::endl;
+          }
           std::cout << "No se puede realizar la accion" << std::endl;
         }
       }
@@ -126,13 +151,78 @@ void Partida::fortificar()
     }
     else
     {
-      std::cout << "No se puede realizar la accion" << std::endl;
+      std::cout << "No se puede realizar la accion" << std::endl; // Si el territorio al que se le quitan ejercitos no es del jugador actual
     }
   }
   else
   {
-    std::cout << "No se puede realizar la accion" << std::endl;
+    std::cout << "No se puede realizar la accion" << std::endl; // Si no se encuentran ambos territorios
   }
 
+}
 
+void Partida::atacar()
+{
+  std::string atacoA;
+  std::string atacoDesde;
+  int cantEjercitos;
+
+  std::queue<Jugador*> jugadoresTemp = jugadores; // Copia la cola original
+
+  std::cout << "Antes de atacar, recuerda que actualmente los territorios se encuentran dominados de la siguiente manera: " << std::endl;
+
+  // Muestra los territorios de los otros jugadores y la cantidad de ejercitos que tiene en cada uno, junto con el nombre del jugador
+  while (!jugadoresTemp.empty())
+  {
+    Jugador* jugadorObj = jugadoresTemp.front();
+    if (jugadorObj->color != jugadorActual->color)
+    {
+      std::cout << "El jugador " << jugadorObj->color << " domina: " << std::endl;
+      for(Continente* continente : continentes)
+      {
+        std::cout << continente->nombreCont << std::endl;
+        for(Territorio* territorio : continente->territorios)
+        {
+          if (jugadorObj->color == territorio->duenoAct->color)
+          {
+            std::cout << territorio->nombreTerri << " tiene: " << territorio->uniEjercito << " tropas"<< std::endl;
+          }
+        }
+      }
+    }
+    jugadoresTemp.pop(); // Desencola el jugador actual de la copia
+  }
+
+  // preguntar al usuario que territorio quiere atacar, y desde que territorio quiere atacar
+  std::cout << "Desde que territorio quiere atacar? ";
+  std::cin >> atacoDesde;
+  std::cout << "A que territorio quiere atacar? ";
+  std::cin >> atacoA;
+
+  Jugador* jugadorAtacado = buscaT(atacoA)->duenoAct;
+
+  // Busca el territorio al que se le quitaran ejercitos
+  Territorio* terriAtaco = buscaT(atacoA);
+  // Busca el territorio al que se le pondran ejercitos
+  Territorio* terriAtacoDesde = buscaT(atacoDesde);
+
+  // Si se encuentran ambos territorios
+  if (terriAtaco && terriAtacoDesde)
+  {
+    // Si el territorio desde el que se ataca es del jugador actual
+    if (terriAtacoDesde->duenoAct == jugadorActual)
+    {
+      
+    }
+    else
+    {
+      std::cout << "No se puede realizar la accion" << std::endl; // Si el territorio desde el que se ataca no es del jugador actual
+      std::cout << "El territorio desde el que quieres atacar no es tuyo" << std::endl;
+    }
+  }
+  else
+  {
+    std::cout << "No se puede realizar la accion" << std::endl; // Si no se encuentran ambos territorios
+    std::cout << "Los territorios que ingresaste no existen" << std::endl;
+  }
 }

@@ -515,7 +515,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
     }
   }
 
-  std::cout << "Como actualmente tienes " << uniEjerAdicionales << " continentes conquistados, vas a recibir :";
+  std::cout << "Como actualmente tienes " << uniEjerAdicionales << " continentes conquistados, vas a recibir: ";
 
   uniEjerAdicionales = uniEjerAdicionales / 3;
 
@@ -541,7 +541,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
           }  
 
           std::cout << "Justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
-          std::cout << "El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << "va a tener 1 + ";
+          std::cout << "El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << "va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
           std::cin >> asignTrops;
           std::cout << std::endl;
 
@@ -550,7 +550,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
             std::cout << std::endl;
             std::cout << "Recuerda que tienes: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
             std::cout << "Ingresa una cantidad de tropas valida para este territorio." << std::endl;
-            std::cout << "- El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener 1 + ";
+            std::cout << "- El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << "va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
             std::cin >> asignTrops;
             std::cout << std::endl;
           }          
@@ -581,36 +581,41 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
   } while (partidaAct->jugadorActual->ejercito > 0);
 
   std::cout << "Ya que recibiste tus tropas adicionales y las repartiste en tus territorios" << std::endl;
-  std::cout << "Ahora puedes realizar las siguientes acciones:" << std::endl;
-  std::cout << "1. Atacar" << std::endl;
-  std::cout << "2. Fortificar" << std::endl;
 
+  //ciclo para asegurarse que el jugador ingrese una opcion valida
   int eleccion;
-  std::cout << "Ingrese el numero de la accion que desea realizar: ";
-  std::cin >> eleccion;
-  std::cout << std::endl;
-
-  switch (eleccion)
+  do
   {
-    case 1:
-    {
-      std::cout << "Atacar" << std::endl;
-      break;
-    }
+    std::cout << "Elije lo que deseas hacer en este turno: " << std::endl;
+    std::cout << "1. Atacar" << std::endl;
+    std::cout << "2. Fortificar" << std::endl;
 
-    case 2:
-    {
-      std::cout << "Fortificar" << std::endl;
-      partidaAct->fortificar();
-      break;
-    }
+    std::cout << "Ingrese el numero de la accion que desea realizar: ";
+    std::cin >> eleccion;
+    std::cout << std::endl;
 
-    default:
+    switch (eleccion)
     {
-      std::cout << "Accion no valida." << std::endl;
-      break;
+      case 1:
+      {
+        std::cout << "Atacar" << std::endl;
+        break;
+      }
+
+      case 2:
+      {
+        std::cout << "Fortificar" << std::endl;
+        partidaAct->fortificar();
+        break;
+      }
+
+      default:
+      {
+        std::cout << "Accion no valida. Vuelva aintentarlo" << std::endl;
+        break;
+      }
     }
-  }
+  } while (eleccion != 1 && eleccion != 2);
 
 
 }
