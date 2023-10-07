@@ -2,7 +2,6 @@
 #define __JUGADOR_H__
 
 #include "Mision.h"
-#include "Tarjeta.h"
 
 #include <list>
 #include <string>
@@ -15,7 +14,6 @@ class Jugador
     char modoPartida;
     int ejercito;
     Mision* mision;
-    std::vector<Tarjeta> tarjetas;
 
   public:
     Jugador(int,char,std::string);

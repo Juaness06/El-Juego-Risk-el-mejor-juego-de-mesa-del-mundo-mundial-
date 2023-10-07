@@ -3,7 +3,6 @@
 #include "Mision.h"
 #include "Partida.h"
 #include "SistemaApoyo.h"
-#include "Tarjeta.h"
 #include "Territorio.h"
 #include <iostream> // Para usar cout
 #include <ctime> // Para usar time()

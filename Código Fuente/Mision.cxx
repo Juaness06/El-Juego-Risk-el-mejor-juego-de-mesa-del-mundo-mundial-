@@ -18,8 +18,7 @@ Mision::Mision(std::string colorJ) : nomTerris()
                             "Australia Oriental", "Indonesia", "Nueva Guinea", "Australia Occidental"};
   
   completada = false;
-  cantTerri = std::rand() % 6 + 10; // de 10 a 15 
-  uniEjer = std::rand() % 7 + 3; // de 3 a 9
+  cantTerri = std::rand() % 6 + 10; // de 10 a 15
 
   for (int i = 0; i < 42; i++)
   {
@@ -45,12 +44,7 @@ Mision::Mision(std::string colorJ) : nomTerris()
     std::cout << "  - ";
     std::cout << *miIterador << " "  << std::endl;
   }
-  std::cout << std::endl;
-  std::cout << "Adicionalmente, hay que establecer cuantas unidades de ejercito, por cada uno de los contientes anteriores," << std::endl;
-  std::cout << "debe tener para ganar el juego. esto tambien se define de forma aleatoria." << std::endl;
-  std::cout << "Unidades de ejercito para ganar: ";
-  std::cout << uniEjer << std::endl;
-  std::cout << std::endl;
+  
   std::cout << "Para continuar escriba cualquier cosa: ";
   std::cin >> confirmacion;
   std::cout << std::endl;

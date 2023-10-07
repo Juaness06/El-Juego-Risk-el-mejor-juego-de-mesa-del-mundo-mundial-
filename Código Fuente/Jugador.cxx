@@ -2,7 +2,7 @@
 #include "Mision.h"
 #include <iostream>
 
-Jugador::Jugador(int _cantJugadores, char _modoPartida, std::string _color) : ejercito(), tarjetas()
+Jugador::Jugador(int _cantJugadores, char _modoPartida, std::string _color) : ejercito()
 {
   color = _color;
   modoPartida = _modoPartida;
@@ -34,7 +34,6 @@ Jugador::Jugador(int _cantJugadores, char _modoPartida, std::string _color) : ej
 void Jugador::miMision(std::string _color)
 {
   int cuantosTerri = mision->cantTerri;
-  int cantasUniEjer = mision->uniEjer;
   std::vector<std::string> cualesTerri = mision->nomTerris;
 
   std::cout << "La mision del jugador (" + _color + ") es:" << std::endl;
@@ -45,6 +44,4 @@ void Jugador::miMision(std::string _color)
     std::cout << "  - ";
     std::cout << *miIterador << " "  << std::endl;
   }
-  std::cout << "- Cada uno de los anteriores territorios debe tener: " + cantasUniEjer;
-  std::cout << " unidades de ejercito." << std::endl;
 }

@@ -62,6 +62,6 @@ void Partida::asignaTerri(Continente *elConti, std::string nomTerri, Jugador *el
   Territorio *elTerri = new Territorio(nomTerri);
   elTerri->duenoAct = elPlayer;  
 
-  elTerri->uniInfanteria = 1;
+  elTerri->uniEjercito = 1;
   elPlayer->ejercito = elPlayer->ejercito - 1;
 }
