@@ -123,12 +123,25 @@ void comandos(SistemaApoyo sistemaApoyo)
         } 
         else if (command == "inicializar " + resto) // el resto representaria el <nombre_archivo>
         {
-
-            // Si no esta en una partida
-            std::cout <<"El juego ya ha sido inicializado" << std::endl;
-
-            // Para el caso (Archivo vacío o incompleto) como aun no se han creado los archivos para guardar
-            // para la entrega cero se dejo esto comentado
+             if (sistemaApoyo.partida->estado == "En Curso")
+            {
+                //hacer copia de jugadores de la cola de jugadores
+                //sistemaApoyo.partida->iniciarPartidaConArchivo(resto);
+                std::cout<<std::endl;
+                std::cout << "La partida ha sido guardada correctamente" << std::endl;
+            }
+            else if (sistemaApoyo.partida->estado == "No empezada")
+            {
+                std::cout<<std::endl;
+                std::cout << "La partida no ha sido inicializada correctamente no se puede guaradar nada" << std::endl;
+                std::cout<<std::endl;
+            }  
+            else if (sistemaApoyo.partida->estado == "Terminada")
+            {
+                std::cout<<std::endl;
+                std::cout << "La partida ya ha terminado y ya tuvo ganador no se puede guardar" << std::endl;
+                std::cout<<std::endl;
+            }
 
         }
         else if (command == "guardar?") 
@@ -146,14 +159,25 @@ void comandos(SistemaApoyo sistemaApoyo)
         else if (command == "guardar " + resto) // el resto representa <nombre_archivo>
         {
             
-            std::cout <<"Esta partida no ha sido inicializada correctamente" << std::endl;
-
-
-            // Si esta en una partida ya iniciada
-            std::cout <<"La partida ha sido guardada correctamente" << std::endl;
-            
-            // Para el caso (Error al guardar) como aun no se han creado los archivos para guardar
-            // para la entrega cero se dejo esto comentado
+            if (sistemaApoyo.partida->estado == "En Curso")
+            {
+                //hacer copia de jugadores de la cola de jugadores
+                sistemaApoyo.partida->guardarPartida(resto);
+                std::cout<<std::endl;
+                std::cout << "La partida ha sido guardada correctamente" << std::endl;
+            }
+            else if (sistemaApoyo.partida->estado == "No empezada")
+            {
+                std::cout<<std::endl;
+                std::cout << "La partida no ha sido inicializada correctamente no se puede guaradar nada" << std::endl;
+                std::cout<<std::endl;
+            }  
+            else if (sistemaApoyo.partida->estado == "Terminada")
+            {
+                std::cout<<std::endl;
+                std::cout << "La partida ya ha terminado y ya tuvo ganador no se puede guardar" << std::endl;
+                std::cout<<std::endl;
+            }
 
         }
         else if (command == "guardar_comprimido?") 
@@ -171,15 +195,26 @@ void comandos(SistemaApoyo sistemaApoyo)
         }
         else if (command == "guardar_comprimido " + resto) // el resto representa <nombre_archivo>
         {
-            // Si no esta en una partida
-            std::cout <<"Esta partida no ha sido inicializada correctamente" << std::endl;
-            
-            // Si esta en una partida ya iniciada saldra esto
-            std::cout <<"La partida ha sido codificada y guardada correctamente" << std::endl;
-
-            // Para el caso (Error al codificar y/o guardar) como aun no se han creado los archivos para guardar
-            // para la entrega cero se dejo esto comentado
-
+            if (sistemaApoyo.partida->estado == "En Curso")
+            {
+                //hacer copia de jugadores de la cola de jugadores
+                sistemaApoyo.partida->guardarCompimido(resto);
+                std::cout<<std::endl;
+                std::cout << "La partida ha sido guardada correctamente" << std::endl;
+                std::cout<<std::endl;
+            }
+            else if (sistemaApoyo.partida->estado == "No empezada")
+            {
+                std::cout<<std::endl;
+                std::cout << "La partida no ha sido inicializada correctamente no se puede guaradar nada" << std::endl;
+                std::cout<<std::endl;
+            }  
+            else if (sistemaApoyo.partida->estado == "Terminada")
+            {
+                std::cout<<std::endl;
+                std::cout << "La partida ya ha terminado y ya tuvo ganador no se puede guardar" << std::endl;
+                std::cout<<std::endl;
+            }
         }
         else if (command == "costo_conquista?") 
         {

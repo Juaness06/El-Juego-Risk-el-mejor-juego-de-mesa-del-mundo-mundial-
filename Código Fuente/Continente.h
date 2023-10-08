@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <queue>
 
 #include "Territorio.h"
 
@@ -13,6 +14,7 @@ class Continente
     std::vector<Territorio*>territorios;
   public:
         Continente(std::string);
+        Continente(std::string, int tropasDeArchivo[]);
         Territorio* buscaT (std::string);
 };
 
