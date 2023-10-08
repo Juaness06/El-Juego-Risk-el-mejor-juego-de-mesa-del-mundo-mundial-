@@ -21,6 +21,7 @@ class Partida
     Territorio *buscaT(std::string nombreT);
     void fortificar();
     void atacar();
+    void gestorDados(Jugador* jugadorAtacante, Jugador* jugadorDefensor, Territorio* terriAtacoDesde, Territorio* terriAtaco);
 };
 
 #include "Partida.cxx"

@@ -198,9 +198,29 @@ void Partida::atacar()
 
   std::queue<Jugador*> jugadoresTemp = jugadores; // Copia la cola original
 
+  std::cout << std::endl;
+  std::cout << "Recuerda que actualmente los territorios que dominas son: " << std::endl;
+  for(Continente* continente : continentes)
+  {
+    std::cout << continente->nombreCont << std::endl;
+    for(Territorio* territorio : continente->territorios)
+    {
+      if (jugadorActual->color == territorio->duenoAct->color)
+      {
+        std::cout << " - " << territorio->nombreTerri << " tiene: " << territorio->uniEjercito << " tropas"<< std::endl;
+      }
+    }
+  }
+
+  std::cout << std::endl;
+  std::cout << "Presione Enter para continuar..." << std::endl;
+  std::cin.ignore();
+  std::cin.get();
+
   std::cout << "Antes de atacar, recuerda que actualmente los territorios se encuentran dominados de la siguiente manera: " << std::endl;
 
   // Muestra los territorios de los otros jugadores y la cantidad de ejercitos que tiene en cada uno, junto con el nombre del jugador
+  // porque el siguiente ciclo no imprime los territorios del jugador actual? 
   while (!jugadoresTemp.empty())
   {
     Jugador* jugadorObj = jugadoresTemp.front();
@@ -214,21 +234,22 @@ void Partida::atacar()
         {
           if (jugadorObj->color == territorio->duenoAct->color)
           {
-            std::cout << territorio->nombreTerri << " tiene: " << territorio->uniEjercito << " tropas"<< std::endl;
+            std::cout << " - " << territorio->nombreTerri << " tiene: " << territorio->uniEjercito << " tropas"<< std::endl;
           }
         }
       }
     }
+    std::cout << std::endl;
     jugadoresTemp.pop(); // Desencola el jugador actual de la copia
   }
 
   // preguntar al usuario que territorio quiere atacar, y desde que territorio quiere atacar
-  std::cout << "Desde que territorio quiere atacar? ";
+  std::cout << "Desde que territorio quieres atacar? ";
   std::cin >> atacoDesde;
-  std::cout << "A que territorio quiere atacar? ";
+  std::cout << "A que territorio quieres atacar? ";
   std::cin >> atacoA;
 
-  Jugador* jugadorAtacado = buscaT(atacoA)->duenoAct;
+  Jugador* jugadorDefensor = buscaT(atacoA)->duenoAct;
 
   // Busca el territorio al que se le quitaran ejercitos
   Territorio* terriAtaco = buscaT(atacoA);
@@ -241,7 +262,11 @@ void Partida::atacar()
     // Si el territorio desde el que se ataca es del jugador actual
     if (terriAtacoDesde->duenoAct == jugadorActual)
     {
-      
+      gestorDados(jugadorActual, jugadorDefensor, terriAtacoDesde, terriAtaco);
+      Jugador* jugadorTemp = jugadorActual;
+      jugadores.pop();
+      jugadores.push(jugadorTemp);
+      jugadorActual = jugadores.front();
     }
     else
     {
@@ -252,6 +277,133 @@ void Partida::atacar()
   else
   {
     std::cout << "No se puede realizar la accion" << std::endl; // Si no se encuentran ambos territorios
-    std::cout << "Los territorios que ingresaste no existen" << std::endl;
+    std::cout << "Uno o los dos territorios que ingresaste no existen" << std::endl;
+  }
+
+}
+
+// funcion para los dados
+void Partida::gestorDados(Jugador* jugadorAtacante, Jugador* jugadorDefensor, Territorio* terriAtacoDesde, Territorio* terriAtaco)
+{
+  int dadosAtac;
+  int dadosDefen;
+  int cantDados;
+
+  do
+  {
+    std::cout << "Cuantos dados quieres tirar? ";
+    std::cin >> cantDados;
+  } while (cantDados < 1 || cantDados > 3);
+
+  // ciclo para determinar cuando termina el ataque
+  bool terminaAtaque = false;
+  while (terminaAtaque != true)
+  {
+    int confirmOAtaque;
+
+    if (cantDados == 1)
+    {
+      dadosAtac = rand() % 6 + 1;
+      dadosDefen = rand() % 6 + 1;
+
+      std::cout << "El atacante saco: " << dadosAtac << std::endl;
+      std::cout << "El defensor saco: " << dadosDefen << std::endl;
+
+    }
+    else if (cantDados == 2)
+    {
+      dadosAtac = rand() % 6 + 1;
+      dadosAtac = dadosAtac + rand() % 6 + 1;
+      dadosDefen = rand() % 6 + 1;
+      dadosDefen = dadosDefen + rand() % 6 + 1;
+
+      std::cout << "El atacante saco en total: " << dadosAtac << std::endl;
+      std::cout << "El defensor saco en total: " << dadosDefen << std::endl;
+    }
+    else if (cantDados == 3)
+    {
+      dadosAtac = rand() % 6 + 1;
+      dadosAtac = dadosAtac + rand() % 6 + 1;
+      dadosAtac = dadosAtac + rand() % 6 + 1;
+
+      dadosDefen = rand() % 6 + 1;
+      dadosDefen = dadosDefen + rand() % 6 + 1;
+      dadosDefen = dadosDefen + rand() % 6 + 1;
+
+      std::cout << "El atacante saco en total: " << dadosAtac << std::endl;
+      std::cout << "El defensor saco en total: " << dadosDefen << std::endl;
+    }
+
+    // si el atacante saca mas que el defensor
+    if (dadosAtac > dadosDefen)
+    {
+      terriAtaco->uniEjercito = terriAtaco->uniEjercito - 1;
+      // si el defensor tiene mas de 0 ejercitos
+      if(terriAtaco->uniEjercito <= 0)
+      {
+        std::cout << "El atacante gano el combate" << std::endl;
+        std::cout << "El territorio " << terriAtaco->nombreTerri << " ahora tiene " << terriAtaco->uniEjercito << " tropas" << std::endl;
+        std::cout << "El atacante conquisto el territorio " << terriAtaco->nombreTerri << std::endl;
+        terriAtaco->duenoAct = jugadorAtacante;
+        terriAtaco->uniEjercito = 1;
+        std::cout << "El territorio " << terriAtaco->nombreTerri << " ahora pertenece al jugador " << jugadorAtacante->color << std::endl;
+        terminaAtaque = true;
+        break;
+
+      }
+      else if (terriAtaco->uniEjercito >= 1)
+      {
+
+        // terriAtaco->uniEjercito = terriAtaco->uniEjercito - 1;
+        std::cout << "El atacante gano el combate" << std::endl;
+        std::cout << "El territorio " << terriAtaco->nombreTerri << " ahora tiene " << terriAtaco->uniEjercito << " tropas" << std::endl;
+        do
+        {
+          std::cout << "Quieres seguir atacando? (1 = si, 2 = no) ";
+          std::cin >> confirmOAtaque;
+        } while (confirmOAtaque < 1 || confirmOAtaque > 2);
+        if (confirmOAtaque == 2)
+        {
+          terminaAtaque = true;
+          break;
+        }
+
+      }
+    }
+    // si el defensor saca mas o igual que el atacante
+    else if (dadosAtac <= dadosDefen)
+    {
+      terriAtacoDesde->uniEjercito = terriAtacoDesde->uniEjercito - 1;
+      if(terriAtacoDesde->uniEjercito <= 1) // Si el territorio desde el que se ataca tiene mas de 1 ejercito
+      {
+
+        std::cout << "El defensor (" << jugadorDefensor->color << ") logro resistir el ataque" << std::endl;
+        std::cout << "El territorio " << terriAtacoDesde->nombreTerri << " ahora tiene " << terriAtacoDesde->uniEjercito << " tropas" << std::endl;
+        std::cout << "El territorio " << terriAtaco->nombreTerri << " ahora tiene " << terriAtaco->uniEjercito << " tropas" << std::endl;
+        terriAtacoDesde->uniEjercito = 1;
+        terminaAtaque = true;
+        break;
+
+      }
+      else if (terriAtacoDesde->uniEjercito > 1)
+      {
+
+        //terriAtacoDesde->uniEjercito = terriAtacoDesde->uniEjercito - 1;
+        std::cout << "El defensor gano el combate" << std::endl;
+        std::cout << "El territorio " << terriAtacoDesde->nombreTerri << " ahora tiene " << terriAtacoDesde->uniEjercito << " tropas" << std::endl;
+        do
+        {
+          std::cout << "Quieres seguir atacando? (1 = si, 2 = no) ";
+          std::cin >> confirmOAtaque;
+        } while (confirmOAtaque < 1 || confirmOAtaque > 2);
+        if (confirmOAtaque == 2)
+        {
+          terminaAtaque = true;
+          break;
+        }
+
+      }
+    }
+    
   }
 }

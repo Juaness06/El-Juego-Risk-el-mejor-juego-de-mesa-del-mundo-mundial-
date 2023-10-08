@@ -595,7 +595,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
           }  
 
           std::cout << "Justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
-          std::cout << "El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << "va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
+          std::cout << " - El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
           std::cin >> asignTrops;
           std::cout << std::endl;
 
@@ -604,7 +604,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
             std::cout << std::endl;
             std::cout << "Recuerda que tienes: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
             std::cout << "Ingresa una cantidad de tropas valida para este territorio." << std::endl;
-            std::cout << "- El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << "va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
+            std::cout << "- El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
             std::cin >> asignTrops;
             std::cout << std::endl;
           }          
@@ -653,6 +653,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
       case 1:
       {
         std::cout << "Atacar" << std::endl;
+        partidaAct->atacar();
         break;
       }
 
