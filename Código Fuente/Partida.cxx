@@ -3,6 +3,7 @@
 #include "HuffmanArbol.h"
 #include <sstream>
 #include <map>
+#include <limits>
 
 Partida::Partida(char _modoJuego, int cantJugadores) : jugadores(), continentes(), modoJuego(_modoJuego) // Constructor de partida
 {
@@ -262,7 +263,7 @@ void Partida::fortificar()
     {
       if (jugadorActual->color == territorio->duenoAct->color)
       {
-        std::cout << territorio->nombreTerri << " tiene: " << territorio->uniEjercito << " tropas" << std::endl;
+        std::cout << " - " << territorio->nombreTerri << " tiene: " << territorio->uniEjercito << " tropas" << std::endl;
       }
     }
   }
@@ -270,9 +271,11 @@ void Partida::fortificar()
   // preguntar al usuario que territorio quiere fortificar (asignarle mas ejercitos), y a cual territorio se los quiere quitar para el traslado
   std::cout << std::endl;
   std::cout << "A cual territorio le quieres quitar tropas? ";
-  std::cin >> leQuitoA;
+  std::getline(std::cin, leQuitoA);
+  //std::cin >> leQuitoA;
   std::cout << "A que territorio quieres ponerle esas tropas? ";
-  std::cin >> lePongoA;
+  std::getline(std::cin, lePongoA);
+  //std::cin >> lePongoA;
   std::cout << "Cuantas tropas quieres ponerle? ";
   std::cin >> cantEjercitos;
 
@@ -321,7 +324,12 @@ void Partida::fortificar()
             std::cout << "Recuerda que siempre debe quedar al menos 1 ejercito en el territorio" << std::endl;
           }
           std::cout << "No se puede realizar la accion" << std::endl;
-          std::cout << std::endl;
+          std::cout<<std::endl;
+          std::cout << "No perdiste tu turno" << std::endl;
+          std::cout << "Presiona Enter para volverlo a intentar..." << std::endl;
+          std::cin.ignore();
+          std::cin.get();
+          system("clear");
         }
       }
       else
@@ -329,7 +337,12 @@ void Partida::fortificar()
         std::cout << std::endl;
         std::cout << "No se puede realizar la accion" << std::endl;
         std::cout << "El territorio al que quieres ponerle tropas no es tuyo" << std::endl;
-        std::cout << std::endl;
+        std::cout<<std::endl;
+        std::cout << "No perdiste tu turno" << std::endl;
+        std::cout << "Presiona Enter para volverlo a intentar..." << std::endl;
+        std::cin.ignore();
+        std::cin.get();
+        system("clear");
       }
     }
     else
@@ -337,15 +350,26 @@ void Partida::fortificar()
       std::cout << std::endl;
       std::cout << "No se puede realizar la accion" << std::endl; // Si el territorio al que se le quitan ejercitos no es del jugador actual
       std::cout << "El territorio al que quieres quitarle tropas no es tuyo" << std::endl;
-      std::cout << std::endl;
+      std::cout<<std::endl;
+      std::cout << "No perdiste tu turno" << std::endl;
+      std::cout << "Presione Enter para volverlo a intentar..." << std::endl;
+      std::cin.ignore();
+      std::cin.get();
+      system("clear");
+      
     }
   }
   else
   {
     std::cout << std::endl;
     std::cout << "No se puede realizar la accion" << std::endl; // Si no se encuentran ambos territorios
-    std::cout << "Los territorios que ingresaste no existen" << std::endl;
-    std::cout << std::endl;
+    std::cout << "Uno o los dos Territorios que ingresaste no existen" << std::endl;
+    std::cout<<std::endl;
+    std::cout << "No perdiste tu turno" << std::endl;
+    std::cout << "Presione Enter para volverlo a intentar..." << std::endl;
+    std::cin.ignore();
+    std::cin.get();
+    system("clear");
   }
 }
 
@@ -373,7 +397,7 @@ void Partida::atacar()
 
   std::cout << std::endl;
   std::cout << "Presione Enter para continuar..." << std::endl;
-  std::cin.ignore();
+  //std::cin.ignore();
   std::cin.get();
 
   std::cout << "Antes de atacar, recuerda que actualmente los territorios se encuentran dominados de la siguiente manera: " << std::endl;
@@ -404,9 +428,11 @@ void Partida::atacar()
 
   // preguntar al usuario que territorio quiere atacar, y desde que territorio quiere atacar
   std::cout << "Desde que territorio quieres atacar? ";
-  std::cin >> atacoDesde;
+  std::getline(std::cin, atacoDesde);
+  //std::cin >> atacoDesde;
   std::cout << "A que territorio quieres atacar? ";
-  std::cin >> atacoA;
+  std::getline(std::cin, atacoA);
+  //std::cin >> atacoA;
 
   Jugador *jugadorDefensor = buscaT(atacoA)->duenoAct;
 
@@ -431,12 +457,24 @@ void Partida::atacar()
     {
       std::cout << "No se puede realizar la accion" << std::endl; // Si el territorio desde el que se ataca no es del jugador actual
       std::cout << "El territorio desde el que quieres atacar no es tuyo" << std::endl;
+      std::cout<<std::endl;
+      std::cout << "No perdiste tu turno" << std::endl;
+      std::cout << "Presione Enter para volverlo a intentar..." << std::endl;
+      std::cin.ignore();
+      std::cin.get();
+      system("clear");
     }
   }
   else
   {
     std::cout << "No se puede realizar la accion" << std::endl; // Si no se encuentran ambos territorios
     std::cout << "Uno o los dos territorios que ingresaste no existen" << std::endl;
+    std::cout<<std::endl;
+    std::cout << "No perdiste tu turno" << std::endl;
+    std::cout << "Presione Enter para volverlo a intentar..." << std::endl;
+    std::cin.ignore();
+    std::cin.get();
+    system("clear");
   }
 }
 
@@ -451,6 +489,7 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
   {
     std::cout << "Cuantos dados quieres tirar? ";
     std::cin >> cantDados;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   } while (cantDados < 1 || cantDados > 3);
 
   // ciclo para determinar cuando termina el ataque
@@ -464,6 +503,7 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
       dadosAtac = rand() % 6 + 1;
       dadosDefen = rand() % 6 + 1;
 
+      std::cout << "------------------------------------------" << std::endl;
       std::cout << "El atacante saco: " << dadosAtac << std::endl;
       std::cout << "El defensor saco: " << dadosDefen << std::endl;
     }
@@ -504,6 +544,12 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
         terriAtaco->duenoAct = jugadorAtacante;
         terriAtaco->uniEjercito = 1;
         std::cout << "El territorio " << terriAtaco->nombreTerri << " ahora pertenece al jugador " << jugadorAtacante->color << std::endl;
+        std::cout << " - Como " << terriAtaco->nombreTerri <<" fue conquistado ahora tiene : "<< terriAtaco->uniEjercito << " tropas del jugador " << jugadorAtacante->color << std::endl;
+        std::cout<<std::endl;
+        std::cout << "Presione Enter para continuar..." << std::endl;
+        //std::cin.ignore();
+        std::cin.get();
+        system("clear");
         terminaAtaque = true;
         break;
       }
@@ -517,6 +563,7 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
         {
           std::cout << "Quieres seguir atacando? (1 = si, 2 = no) ";
           std::cin >> confirmOAtaque;
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         } while (confirmOAtaque < 1 || confirmOAtaque > 2);
         if (confirmOAtaque == 2)
         {
@@ -536,6 +583,11 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
         std::cout << "El territorio " << terriAtacoDesde->nombreTerri << " ahora tiene " << terriAtacoDesde->uniEjercito << " tropas" << std::endl;
         std::cout << "El territorio " << terriAtaco->nombreTerri << " ahora tiene " << terriAtaco->uniEjercito << " tropas" << std::endl;
         terriAtacoDesde->uniEjercito = 1;
+        std::cout<<std::endl;
+        std::cout << "Presione Enter para continuar..." << std::endl;
+        //std::cin.ignore();
+        std::cin.get();
+        system("clear");
         terminaAtaque = true;
         break;
       }
@@ -549,6 +601,7 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
         {
           std::cout << "Quieres seguir atacando? (1 = si, 2 = no) ";
           std::cin >> confirmOAtaque;
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         } while (confirmOAtaque < 1 || confirmOAtaque > 2);
         if (confirmOAtaque == 2)
         {

@@ -28,6 +28,7 @@ void SistemaApoyo::crearPartida()
     std::cout<<std::endl;
     std::cout << "Cuantas personas van a jugar? (min 3 - max 6): ";
     std::cin >> cantJugadores;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   } while (cantJugadores < 3 || cantJugadores > 6);
 
   std::cout<<std::endl;
@@ -39,6 +40,7 @@ void SistemaApoyo::crearPartida()
   {
     std::cout << "Ingrese un modo de juego valido: ";
     std::cin >> modoJuego;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   } while (modoJuego != 'm' && modoJuego != 'n');
 
   this->partida = new Partida(modoJuego, cantJugadores);
@@ -46,7 +48,7 @@ void SistemaApoyo::crearPartida()
   std::cout << std::endl;
 
   std::cout << "Presione Enter para continuar..." << std::endl;
-  std::cin.ignore();
+  //std::cin.ignore();
   std::cin.get();
   system("clear");
 }
@@ -92,6 +94,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
       std::cout << "6. Australia" << std::endl;
       std::cout << "Ingrese el numero del continente seleccionado: ";
       std::cin >> eleccion1;
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       std::cout << std::endl;
 
       switch (eleccion1)
@@ -116,6 +119,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
 
           std::cout << "Ingrese el numero del territorio seleccionado: ";
           std::cin >> eleccion2;
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
           if (eleccion2 >= 1 && eleccion2 <= AmericaNorte.size())
           {
@@ -139,7 +143,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
             conta_terr++;
             
             std::cout << "Presione Enter para continuar..." << std::endl;
-            std::cin.ignore();
+            //std::cin.ignore();
             std::cin.get();
             system("clear");
 
@@ -174,6 +178,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
 
           std::cout << "Ingrese el numero del territorio seleccionado: ";
           std::cin >> eleccion2;
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
           if (eleccion2 >= 1 && eleccion2 <= AmericaSur.size())
           {
@@ -198,7 +203,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
             conta_terr++;
 
             std::cout << "Presione Enter para continuar..." << std::endl;
-            std::cin.ignore();
+            //std::cin.ignore();
             std::cin.get();
             system("clear");
           }
@@ -232,6 +237,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
 
           std::cout << "Ingrese el numero del territorio seleccionado: ";
           std::cin >> eleccion2;
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           if (eleccion2 >= 1 && eleccion2 <= Europa.size())
           {
             salvaNomTerri = Europa[eleccion2 - 1];
@@ -255,7 +261,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
             conta_terr++;
 
             std::cout << "Presione Enter para continuar..." << std::endl;
-            std::cin.ignore();
+            //std::cin.ignore();
             std::cin.get();
             system("clear");
           }
@@ -288,6 +294,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
           }
           std::cout << "Ingrese el numero del territorio seleccionado: ";
           std::cin >> eleccion2;
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
           if (eleccion2 >= 1 && eleccion2 <= Africa.size())
           {
@@ -312,7 +319,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
             conta_terr++;
 
             std::cout << "Presione Enter para continuar..." << std::endl;
-            std::cin.ignore();
+            //std::cin.ignore();
             std::cin.get();
             system("clear");
           }
@@ -346,6 +353,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
 
           std::cout << "Ingrese el numero del territorio seleccionado: ";
           std::cin >> eleccion2;
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           if (eleccion2 >= 1 && eleccion2 <= Asia.size())
           {
             salvaNomTerri = Asia[eleccion2 - 1];
@@ -369,7 +377,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
             conta_terr++;
 
             std::cout << "Presione Enter para continuar..." << std::endl;
-            std::cin.ignore();
+            //std::cin.ignore();
             std::cin.get();
             system("clear");
           }
@@ -403,6 +411,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
 
           std::cout << "Ingrese el numero del territorio seleccionado: ";
           std::cin >> eleccion2;
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           if (eleccion2 >= 1 && eleccion2 <= Australia.size())
           {
             salvaNomTerri = Australia[eleccion2 - 1];
@@ -426,7 +435,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
             conta_terr++;
 
             std::cout << "Presione Enter para continuar..." << std::endl;
-            std::cin.ignore();
+            //std::cin.ignore();
             std::cin.get();
             system("clear");
           }
@@ -502,6 +511,7 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
           std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas"<< std::endl;
           std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
           std::cin >> asignTrops;
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           std::cout << std::endl;
 
           while (asignTrops > partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito || asignTrops < 0)
@@ -514,6 +524,7 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
             std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas"<< std::endl;
           std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
             std::cin >> asignTrops;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << std::endl;
           }          
 
@@ -538,13 +549,13 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
       std::cout << "Aun tienes tropas disponibles para repartir." << std::endl;
       std::cout << std::endl;
       std::cout << "Presione Enter para continuar..." << std::endl;
-      std::cin.ignore();
+      //std::cin.ignore();
       std::cin.get();
       system("clear");
       h = h-1;
     }    
     std::cout << "Presione Enter para continuar..." << std::endl;
-    std::cin.ignore();
+    //std::cin.ignore();
     std::cin.get();
     system("clear");
   }
@@ -569,7 +580,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
   }
 
   std::cout << std::endl;
-  std::cout << "Como actualmente tienes " << uniEjerAdicionales << " continentes conquistados, vas a recibir: ";
+  std::cout << "Como actualmente tienes " << uniEjerAdicionales << " territorios conquistados, vas a recibir: ";
 
   uniEjerAdicionales = uniEjerAdicionales / 3;
 
@@ -597,6 +608,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
           std::cout << "Justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
           std::cout << " - El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
           std::cin >> asignTrops;
+          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           std::cout << std::endl;
 
           while (asignTrops > partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito || asignTrops < 0)
@@ -606,6 +618,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
             std::cout << "Ingresa una cantidad de tropas valida para este territorio." << std::endl;
             std::cout << "- El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
             std::cin >> asignTrops;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << std::endl;
           }          
 
@@ -628,7 +641,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
 
     std::cout << "Aun tienes tropas disponibles para repartir." << std::endl;
     std::cout << "Presione Enter para continuar..." << std::endl;
-    std::cin.ignore();
+    //std::cin.ignore();
     std::cin.get();
     system("clear");
 
@@ -646,6 +659,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
 
     std::cout << "Ingrese el numero de la accion que desea realizar: ";
     std::cin >> eleccion;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << std::endl;
 
     switch (eleccion)
