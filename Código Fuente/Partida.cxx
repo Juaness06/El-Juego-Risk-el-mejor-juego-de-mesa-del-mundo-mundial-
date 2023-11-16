@@ -638,13 +638,15 @@ void Partida::guardarPartida(std::string nombreArchivo)
     archivoDePartida << "Jugador: " << jugadoresTemp.front()->color << std::endl;
 
     // Guardar los territorios del jugador y cuantas tropas tiene en cada uno
-    for (Continente *contiObj : continentes) // Itera sobre los continentes
+    for (Continente *contiObj : continentes)
     {
-      for (Territorio *terriObj : contiObj->territorios) // Itera sobre los territorios de cada continente
+      for (Territorio *terriObj : contiObj->territorios)
       {
         if (jugadoresTemp.front()->color == terriObj->duenoAct->color)
         {
-          archivoDePartida << terriObj->nombreTerri << " tiene: " << terriObj->uniEjercito << " tropas" << std::endl;
+          archivoDePartida << "Contienente: " << contiObj->nombreCont << std::endl;
+          archivoDePartida << "Territorio:" << terriObj->nombreTerri << std::endl;
+          archivoDePartida << "Tropas:" << terriObj->uniEjercito << std::endl;
         }
       }
     }
@@ -656,28 +658,20 @@ void Partida::guardarPartida(std::string nombreArchivo)
   archivoDePartida.close();
 }
 
+// TODO CAMBIOS ACA
 void Partida::guardarCompimido(std::string nombreArchivo)
 {
   std::ofstream archivoDePartida(nombreArchivo + ".bin", std::ios::binary);
-
-  // hacer copia de la cola de jugadores
-  std::queue<Jugador *> jugadoresTemp = jugadores; // Copia la cola original
-
   if (!archivoDePartida.is_open())
   {
     std::cout << "No se pudo abrir el archivo" << std::endl;
+    return;
   }
-  else
-  {
-    std::cout << "El archivo se creo correctamente" << std::endl;
-  }
+
+  std::cout << "El archivo se creo correctamente" << std::endl;
 
   std::stringstream output;
-
-  output << "Partida de Risk" << std::endl;
-  output << std::endl;
-
-  // Guardar la información de los jugadores
+  std::queue<Jugador *> jugadoresTemp = jugadores; // Copia la cola original
   while (!jugadoresTemp.empty())
   {
 
@@ -690,7 +684,9 @@ void Partida::guardarCompimido(std::string nombreArchivo)
       {
         if (jugadoresTemp.front()->color == terriObj->duenoAct->color)
         {
-          output << terriObj->nombreTerri << " tiene: " << terriObj->uniEjercito << " tropas" << std::endl;
+          output << "Contienente: " << contiObj->nombreCont << std::endl;
+          output << "Territorio:" << terriObj->nombreTerri << std::endl;
+          output << "Tropas:" << terriObj->uniEjercito << std::endl;
         }
       }
     }
@@ -701,25 +697,31 @@ void Partida::guardarCompimido(std::string nombreArchivo)
 
   std::string resultado = output.str();
 
-  // Crear una cadena de caracteres a partir del resultado formateado
-  char *cadena = new char[resultado.length() + 1];
-  strcpy(cadena, resultado.c_str());
-
-  // Realizar el cálculo de frecuencia en la cadena formateada
-  const int maxCaracteres = 256; // Suponemos un máximo de 256 caracteres (ASCII)
-  long frecuencia[maxCaracteres] = {0};
-  for (int i = 0; cadena[i] != '\0'; i++)
+  // Calcular las frecuencias de los caracteres en 'resultado'
+  const int maxCaracteres = 256;
+  long frecuencias[maxCaracteres] = {0};
+  for (char c : resultado)
   {
-    frecuencia[static_cast<unsigned char>(cadena[i])]++;
+    frecuencias[static_cast<unsigned char>(c)]++;
   }
-  int tamano = sizeof(frecuencia) / sizeof(frecuencia[0]);
 
   HuffmanArbol arbolhuffman;
-  arbolhuffman.generarArbol(cadena, frecuencia, tamano);
+  arbolhuffman.generarArbol(const_cast<char *>(resultado.c_str()), frecuencias, maxCaracteres);
 
-  // Cifrar el resultado formateado
-  std::string textoComprimido = arbolhuffman.cifrar(resultado);
-  archivoDePartida << textoComprimido;
+  // Cifrar el texto y obtener un vector de bytes
+  std::vector<char> textoComprimido = arbolhuffman.cifrar(resultado);
+
+  // Escribir los bytes directamente en el archivo
+  archivoDePartida.write(textoComprimido.data(), textoComprimido.size());
+
+  if (!archivoDePartida.good())
+  {
+    std::cout << "Error al escribir en el archivo" << std::endl;
+  }
+  else
+  {
+    std::cout << "El archivo fue guardado correctamente" << std::endl;
+  }
 
   archivoDePartida.close();
 }

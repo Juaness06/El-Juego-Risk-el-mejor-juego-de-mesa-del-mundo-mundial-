@@ -72,20 +72,33 @@ string HuffmanArbol::obtenerCodigo(char caracter)
     }
     return codigo;
 }
-string HuffmanArbol::cifrar(string sec)
+std::vector<char> HuffmanArbol::cifrar(std::string sec)
 {
-    string cifrado;
-    for (int i = 0; i < sec.size(); ++i)
+    std::string cifradoBinario;
+    for (char c : sec)
     {
-        cifrado += this->obtenerCodigo(sec[i]);
+        cifradoBinario += obtenerCodigo(c);
     }
-    int tama = cifrado.size() % 8;
-    if(tama != 0){
-        for (int i = 0; i < 8 - tama; i++){
-            cifrado += "0";
+    // Asegurarse de que el tamaño de cifradoBinario sea múltiplo de 8
+    while (cifradoBinario.size() % 8 != 0)
+    {
+        cifradoBinario += "0";
+    }
+
+    std::vector<char> resultado;
+    for (size_t i = 0; i < cifradoBinario.size(); i += 8)
+    {
+        char byte = 0;
+        for (size_t j = 0; j < 8; ++j)
+        {
+            if (cifradoBinario[i + j] == '1')
+            {
+                byte |= 1 << (7 - j);
+            }
         }
+        resultado.push_back(byte);
     }
-    return cifrado;
+    return resultado;
 }
 string HuffmanArbol::desCifrar(string sec, long longiSec)
 {
