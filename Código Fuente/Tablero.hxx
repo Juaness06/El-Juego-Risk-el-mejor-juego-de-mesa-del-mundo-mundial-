@@ -186,6 +186,7 @@ void Tablero<T, U>::dijkstra(T territorio)
     // Mientras no se hayan visitado todos los nodos
     while (!noVisitados.empty())
     {
+        
 
         // Se inicializa la menor distancia con el maximo valor de U
         U menor = numeric_limits<U>::max();

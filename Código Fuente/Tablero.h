@@ -21,6 +21,7 @@ class Tablero
     U valorConexion(T territorio1, T territorio2);
     void prim(T territorio);
     void dijkstra(T territorio);
+    
 };
 
 #include "Tablero.hxx"
