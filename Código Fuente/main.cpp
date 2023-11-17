@@ -113,9 +113,8 @@ void comandos(SistemaApoyo sistemaApoyo)
         else if (command == "inicializar") {
 
             sistemaApoyo.crearPartida();
-            
+            sistemaApoyo.partida->crearTablero();
             sistemaApoyo.escojerTerris(sistemaApoyo.partida);           
-
             sistemaApoyo.repartirTropas(sistemaApoyo.partida);
 
             std::cout << "La partida ha sido inicializada correctamente" << std::endl;
@@ -125,28 +124,7 @@ void comandos(SistemaApoyo sistemaApoyo)
         {
 
             sistemaApoyo.reanudarPartida(resto);
-
-            /*
-             if (sistemaApoyo.partida->estado == "En Curso")
-            {
-                //hacer copia de jugadores de la cola de jugadores
-                //sistemaApoyo.partida->iniciarPartidaConArchivo(resto);
-                std::cout<<std::endl;
-                std::cout << "La partida ha sido guardada correctamente" << std::endl;
-            }
-            else if (sistemaApoyo.partida->estado == "No empezada")
-            {
-                std::cout<<std::endl;
-                std::cout << "La partida no ha sido inicializada correctamente no se puede guaradar nada" << std::endl;
-                std::cout<<std::endl;
-            }  
-            else if (sistemaApoyo.partida->estado == "Terminada")
-            {
-                std::cout<<std::endl;
-                std::cout << "La partida ya ha terminado y ya tuvo ganador no se puede guardar" << std::endl;
-                std::cout<<std::endl;
-            } */
-
+            
         }
         else if (command == "guardar?") 
         {

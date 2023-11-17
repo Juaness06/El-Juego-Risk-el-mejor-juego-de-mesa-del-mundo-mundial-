@@ -24,6 +24,7 @@ class Partida
     void gestorDados(Jugador* jugadorAtacante, Jugador* jugadorDefensor, Territorio* terriAtacoDesde, Territorio* terriAtaco);
     void guardarPartida(std::string);
     void guardarCompimido(std::string);
+    void crearTablero();
 };
 
 #include "Partida.cxx"
