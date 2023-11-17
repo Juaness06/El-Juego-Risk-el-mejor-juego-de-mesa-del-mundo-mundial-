@@ -113,7 +113,6 @@ void comandos(SistemaApoyo sistemaApoyo)
         else if (command == "inicializar") {
 
             sistemaApoyo.crearPartida();
-            sistemaApoyo.partida->crearTablero();
             sistemaApoyo.escojerTerris(sistemaApoyo.partida);           
             sistemaApoyo.repartirTropas(sistemaApoyo.partida);
 

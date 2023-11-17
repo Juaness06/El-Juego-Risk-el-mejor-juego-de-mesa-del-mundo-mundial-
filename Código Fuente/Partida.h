@@ -4,6 +4,8 @@
 #include <queue>
 #include "Jugador.h"
 #include "Continente.h"
+#include "Territorio.h"
+#include "Tablero.h"
 
 class Partida
 {
@@ -13,9 +15,10 @@ class Partida
     Continente* continentes[6];
     char modoJuego;
     Jugador* jugadorActual;
+    Tablero<std::string, int> tablero;
 
   public:
-    Partida(char, int);
+    Partida(char, int, Tablero<std::string, int>);
     Jugador* buscaJ (std::string);
     Continente* buscaC (std::string);
     Territorio *buscaT(std::string nombreT);
@@ -24,7 +27,6 @@ class Partida
     void gestorDados(Jugador* jugadorAtacante, Jugador* jugadorDefensor, Territorio* terriAtacoDesde, Territorio* terriAtaco);
     void guardarPartida(std::string);
     void guardarCompimido(std::string);
-    void crearTablero();
 };
 
 #include "Partida.cxx"

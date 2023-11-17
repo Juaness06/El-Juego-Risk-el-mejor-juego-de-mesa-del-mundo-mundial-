@@ -111,6 +111,38 @@ U Tablero<T, U>::valorConexion(T territorio1, T territorio2)
 }
 
 template <class T, class U>
+void Tablero<T, U>::imprimirMatriz()
+{
+    std::cout << "\t\t";
+    cout << "\n\nMatriz de adyacencia:\n\n";
+    for (int i = 0; i < this->matriz_adyacencia.size(); i++){
+        std::cout << " " << i;
+    }
+    std::cout << "\n";
+    for (int i = 0; i < this->matriz_adyacencia.size(); i++)
+    {
+        std::cout << "  ";
+    }
+    std::cout << "\n";
+    for (int i = 0; i < this->matriz_adyacencia.size(); i++)
+    {
+        if (i < 10)
+        {
+            std::cout << i << "  ";
+        }
+        else
+        {
+            std::cout << i << " ";
+        }
+        for (int j = 0; j < this->matriz_adyacencia.size(); j++)
+        {
+            std::cout << this->matriz_adyacencia[i][j] << "  ";
+        }
+        std::cout << "\n";
+    }        
+}
+
+template <class T, class U>
 void Tablero<T, U>::prim(T territorio)
 {
     vector<T> visitados;

@@ -19,6 +19,7 @@ class Tablero
     bool InsertarCamino(T territorio1, T territorio2, U peso);
     bool buscarCamino(T territorio1, T territorio2);
     U valorConexion(T territorio1, T territorio2);
+    void imprimirMatriz();
     void prim(T territorio);
     void dijkstra(T territorio);
     
