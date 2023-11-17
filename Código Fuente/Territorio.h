@@ -15,7 +15,6 @@ class Territorio
 
   public:
     Territorio(std::string);
-    Territorio(std::string _nombreTerri, int tropasDeArchivo);
 };
 
 #include "Territorio.cxx"
