@@ -123,6 +123,10 @@ void comandos(SistemaApoyo sistemaApoyo)
         } 
         else if (command == "inicializar " + resto) // el resto representaria el <nombre_archivo>
         {
+
+            sistemaApoyo.reanudarPartida(resto);
+
+            /*
              if (sistemaApoyo.partida->estado == "En Curso")
             {
                 //hacer copia de jugadores de la cola de jugadores
@@ -141,7 +145,7 @@ void comandos(SistemaApoyo sistemaApoyo)
                 std::cout<<std::endl;
                 std::cout << "La partida ya ha terminado y ya tuvo ganador no se puede guardar" << std::endl;
                 std::cout<<std::endl;
-            }
+            } */
 
         }
         else if (command == "guardar?") 

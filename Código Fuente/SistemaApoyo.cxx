@@ -10,6 +10,17 @@
 #define magenta "\033[35m"
 #define reset "\033[0m"
 
+struct infoTerri {
+    std::string continente;
+    std::string nombre;
+    int tropas;
+};
+
+struct infoPlayer {
+    std::string nombre;
+    std::vector<infoTerri> territorios;
+};
+
 bool tieneTerriDisp(const std::vector<std::string> &continente);
 
 SistemaApoyo::SistemaApoyo()
@@ -51,6 +62,87 @@ void SistemaApoyo::crearPartida()
   //std::cin.ignore();
   std::cin.get();
   system("clear");
+}
+
+void SistemaApoyo::reanudarPartida(std::string nombreArchivo){
+
+  std::vector<infoPlayer> datos_jugadores;
+  std::ifstream archivo(nombreArchivo);
+
+  if(!archivo.is_open()){
+    std::cout<<"No se pudo abrir el archivo"<<std::endl;
+    return;
+  }
+
+  std::string linea;
+  infoPlayer player;
+
+  while (std::getline(archivo, linea)) {
+        std::istringstream iss(linea);
+
+        if (linea.find("Jugador:") != std::string::npos) {
+            // Si encuentras un nuevo jugador, agrega el jugador actual a datos_jugadores
+            if (!player.nombre.empty()) {
+                datos_jugadores.push_back(player);
+                player.territorios.clear();
+            }
+            player.nombre = linea.substr(linea.find(":") + 2);
+        } 
+        else if (linea.find("Contienente:") != std::string::npos) {
+            infoTerri territorio;
+            territorio.continente = linea.substr(linea.find(":") + 2);
+            std::getline(archivo, linea);
+            territorio.nombre = linea.substr(linea.find(":") + 1);
+            std::getline(archivo, linea);
+            territorio.tropas = std::stoi(linea.substr(linea.find(":") + 1));
+
+            player.territorios.push_back(territorio);
+        }
+    }
+
+  // Se Agregar el último jugador a datos_jugadores
+  if (!player.nombre.empty()) {
+      datos_jugadores.push_back(player);
+  }
+
+  archivo.close();
+
+  // recorrer el vector datos_jugadores y imprimir los datos
+  std::cout<<"------------- Datos de la partida leidos del archivo -------------"<<std::endl;
+  std::cout<<"cantidad de jugadores: "<<datos_jugadores.size()<<std::endl;
+  for(infoPlayer player : datos_jugadores){
+    std::cout<<"Jugador: "<<player.nombre<<std::endl;
+    for(infoTerri terri : player.territorios){
+      std::cout<<"Continente: "<<terri.continente<<std::endl;
+      std::cout<<"Territorio: "<<terri.nombre<<std::endl;
+      std::cout<<"Tropas: "<<terri.tropas<<std::endl;
+    }
+  }
+  std::cout<<"------------------------------------------------------------------"<<std::endl;
+
+  int cantJugadores = datos_jugadores.size();
+  char modoJuego = 'n';
+
+  this->partida = new Partida(modoJuego, cantJugadores);
+
+  // recorrer el vector datos_jugadores y asignar los territorios a los jugadores en la partida
+  for(infoPlayer player : datos_jugadores){ // recorre los jugadores
+    for(infoTerri terri : player.territorios){ // recorre los territorios de cada jugador
+      Jugador *jugador = partida->buscaJ(player.nombre); // busca el jugador en la partida
+      for(Continente* continente : partida->continentes){ // recorre los continentes de la partida
+        if(continente->nombreCont == terri.continente){ // si el continente del archivo es igual al continente de la partida
+          for(Territorio* territorio : continente->territorios){ // recorre los territorios del continente
+            if(territorio->nombreTerri == terri.nombre){ // si el territorio del archivo es igual al territorio de la partida
+              territorio->duenoAct = jugador; // asigna el jugador al territorio
+              territorio->uniEjercito = terri.tropas; // asigna las tropas al territorio
+              jugador->ejercito = jugador->ejercito - terri.tropas; // resta las tropas al jugador
+            }
+          }
+        }
+      }
+    }
+  }  
+
 }
 
 void SistemaApoyo::escojerTerris(Partida *partidaAct)

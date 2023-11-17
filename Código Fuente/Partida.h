@@ -16,7 +16,6 @@ class Partida
 
   public:
     Partida(char, int);
-    Partida(int cantJugadores, std::queue<std::string> terrisArchivo, std::queue<int> tropasDeArchivo);
     Jugador* buscaJ (std::string);
     Continente* buscaC (std::string);
     Territorio *buscaT(std::string nombreT);
@@ -25,7 +24,6 @@ class Partida
     void gestorDados(Jugador* jugadorAtacante, Jugador* jugadorDefensor, Territorio* terriAtacoDesde, Territorio* terriAtaco);
     void guardarPartida(std::string);
     void guardarCompimido(std::string);
-    //void iniciarPartidaConArchivo(std::string);
 };
 
 #include "Partida.cxx"

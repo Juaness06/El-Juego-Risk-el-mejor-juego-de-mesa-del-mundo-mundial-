@@ -11,6 +11,7 @@ class SistemaApoyo
   public:
     SistemaApoyo();
     void crearPartida();
+    void reanudarPartida(std::string nombreArchivo);
     void escojerTerris(Partida *partidaAct);
     void repartirTropas(Partida *partidaAct);
     void accionesTurno(Partida *partidaAct);
