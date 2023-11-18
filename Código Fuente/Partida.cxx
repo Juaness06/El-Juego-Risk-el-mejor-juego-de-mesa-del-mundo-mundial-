@@ -283,19 +283,26 @@ void Partida::atacar()
     // Si el territorio desde el que se ataca es del jugador actual
     if (terriAtacoDesde->duenoAct == jugadorActual)
     {
-      gestorDados(jugadorActual, jugadorDefensor, terriAtacoDesde, terriAtaco);
-      Jugador *jugadorTemp = jugadorActual;
-      jugadores.pop();
-      jugadores.push(jugadorTemp);
-      jugadorActual = jugadores.front();
-
       if (tablero.buscarCamino(atacoDesde, atacoA))
       {
-        std::cout << "Los territorios son adyacentes" << std::endl;
+        
+        gestorDados(jugadorActual, jugadorDefensor, terriAtacoDesde, terriAtaco);
+        Jugador *jugadorTemp = jugadorActual;
+        jugadores.pop();
+        jugadores.push(jugadorTemp);
+        jugadorActual = jugadores.front();
+        
       }
       else
       {
+        std::cout << "No se puede realizar la accion" << std::endl; // Si los territorios no son adyacentes
         std::cout << "Los territorios no son adyacentes" << std::endl;
+        std::cout << std::endl;
+        std::cout << "No perdiste tu turno" << std::endl;
+        std::cout << "Presione Enter para volverlo a intentar..." << std::endl;
+        std::cin.ignore();
+        std::cin.get();
+        system("clear");
       }
     }
     else
