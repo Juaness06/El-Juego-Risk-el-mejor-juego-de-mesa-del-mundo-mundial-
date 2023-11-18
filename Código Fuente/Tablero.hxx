@@ -114,7 +114,7 @@ template <class T, class U>
 void Tablero<T, U>::imprimirMatriz()
 {
     std::cout << "\t\t";
-    cout << "\n\nMatriz de adyacencia:\n\n";
+    cout << "\n\nMatriz de adyacencia (inicilizacion):\n\n";
     for (int i = 0; i < this->matriz_adyacencia.size(); i++){
         std::cout << " " << i;
     }

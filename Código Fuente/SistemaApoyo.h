@@ -16,6 +16,7 @@ class SistemaApoyo
     void repartirTropas(Partida *partidaAct);
     void accionesTurno(Partida *partidaAct);
     void inicializarTablero();
+    void actTableroInfoActual();
     void conquistaMasBarata(Partida* partidaAct);
 
 };

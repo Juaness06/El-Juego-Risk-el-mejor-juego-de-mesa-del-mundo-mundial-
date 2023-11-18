@@ -76,7 +76,6 @@ void SistemaApoyo::reanudarPartida(std::string nombreArchivo)
 
   std::vector<infoPlayer> datos_jugadores;
   std::ifstream archivo(nombreArchivo);
-  inicializarTablero();
 
   if (!archivo.is_open())
   {
@@ -122,20 +121,7 @@ void SistemaApoyo::reanudarPartida(std::string nombreArchivo)
 
   archivo.close();
 
-  // recorrer el vector datos_jugadores y imprimir los datos
-  std::cout << "------------- Datos de la partida leidos del archivo -------------" << std::endl;
-  std::cout << "cantidad de jugadores: " << datos_jugadores.size() << std::endl;
-  for (infoPlayer player : datos_jugadores)
-  {
-    std::cout << "Jugador: " << player.nombre << std::endl;
-    for (infoTerri terri : player.territorios)
-    {
-      std::cout << "Continente: " << terri.continente << std::endl;
-      std::cout << "Territorio: " << terri.nombre << std::endl;
-      std::cout << "Tropas: " << terri.tropas << std::endl;
-    }
-  }
-  std::cout << "------------------------------------------------------------------" << std::endl;
+
 
   int cantJugadores = datos_jugadores.size();
   char modoJuego = 'n';
@@ -167,37 +153,9 @@ void SistemaApoyo::reanudarPartida(std::string nombreArchivo)
     }
   }
 
-  // actualizar el peso de las conexiones a partir de la infromacion del archivo (el peso de la arista son las unidades de ejercito del territorio de destino)
-
-  std::string nombreTerriOrigen;
-  std::string nombreTerriDestino;
-
-  // recorrer la matriz de adyacencia, rescatar el nombre del territorio de origen y el nombre del territorio de destino, buscar los territorios en la partida y actualizar el peso de la conexion
-  for (int i = 0; i < 42; i++)
-  {
-    for (int j = 0; j < 42; j++)
-    {
-      if (tablero.matriz_adyacencia[i][j] != 0)
-      {                                              // si el peso de la conexion es distinto de 0 es decir si hay una conexion
-        nombreTerriDestino = tablero.territorios[j]; // rescatar el nombre del territorio de destino
-
-        for (Continente *continente : partida->continentes)
-        { // buscar el territorio de destino en la partida
-          for (Territorio *territorio : continente->territorios)
-          {
-            if (territorio->nombreTerri == nombreTerriDestino)
-            {
-              tablero.matriz_adyacencia[i][j] = territorio->uniEjercito; // actualizar el peso de la conexion
-            }
-          }
-        }
-      }
-    }
-  }
-
-  std::cout << "------------- Matriz de adyacencia actualizada -------------" << std::endl;
-  tablero.imprimirMatriz();
-  std::cout << "------------------------------------------------------------" << std::endl;
+  // llamado a la funcion que actualiza el grafo a partir de los datos actuales de la partida
+  actTableroInfoActual();
+  
 }
 
 void SistemaApoyo::escojerTerris(Partida *partidaAct)
@@ -662,7 +620,7 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
           std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas" << std::endl;
           std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
           std::cin >> asignTrops;
-          partidaAct->actualizarMatrizSumandoTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
+          
           std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           std::cout << std::endl;
 
@@ -676,7 +634,7 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
             std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas" << std::endl;
             std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
             std::cin >> asignTrops;
-            partidaAct->actualizarMatrizSumandoTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
+            
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << std::endl;
           }
@@ -758,7 +716,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
           std::cout << "Justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
           std::cout << " - El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
           std::cin >> asignTrops;
-          partidaAct->actualizarMatrizSumandoTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
+          
           std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           std::cout << std::endl;
 
@@ -769,7 +727,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
             std::cout << "Ingresa una cantidad de tropas valida para este territorio." << std::endl;
             std::cout << "- El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
             std::cin >> asignTrops;
-            partidaAct->actualizarMatrizSumandoTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
+
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << std::endl;
           }
@@ -792,7 +750,9 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
 
     std::cout << "Aun tienes tropas disponibles para repartir." << std::endl;
     std::cout << "Presione Enter para continuar..." << std::endl;
-    // std::cin.ignore();
+    
+    actTableroInfoActual();
+
     std::cin.get();
     system("clear");
 
@@ -1115,6 +1075,41 @@ void SistemaApoyo::inicializarTablero()
   std::cout << "-------------------------------------------------------------------------------" << std::endl;
   tablero.imprimirMatriz();
   std::cout << "-------------------------------------------------------------------------------" << std::endl;
+}
+
+void SistemaApoyo::actTableroInfoActual()
+{
+  std::string nombreTerriDestino;
+
+  // recorrer la matriz de adyacencia, rescatar el nombre del territorio de origen y el nombre del territorio de destino, buscar los territorios en la partida y actualizar el peso de la conexion
+  for (int i = 0; i < 42; i++)
+  {
+    for (int j = 0; j < 42; j++)
+    {
+      if (tablero.matriz_adyacencia[i][j] != 0)
+      { // si el peso de la conexion es distinto de 0 es decir si hay una conexion
+        nombreTerriDestino = tablero.territorios[j]; // rescatar el nombre del territorio de destino
+
+        for (Continente *continente : partida->continentes)
+        { // buscar el territorio de destino en la partida
+          for (Territorio *territorio : continente->territorios)
+          {
+            if (territorio->nombreTerri == nombreTerriDestino)
+            {
+              tablero.matriz_adyacencia[i][j] = territorio->uniEjercito; // actualizar el peso de la conexion
+            }
+          }
+        }
+      }
+    }
+  }
+
+  std::cout << "------------- Matriz de adyacencia actualizada -------------" << std::endl;
+  tablero.imprimirMatriz();
+  std::cout << "------------------------------------------------------------" << std::endl;
+
+
+  this->partida->tablero = tablero;
 }
 
 void SistemaApoyo::conquistaMasBarata(Partida *partidaAct)

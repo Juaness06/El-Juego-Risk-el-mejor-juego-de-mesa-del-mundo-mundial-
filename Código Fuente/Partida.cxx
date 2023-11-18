@@ -129,10 +129,13 @@ void Partida::fortificar()
         {
           // Se le quitan los ejercitos al territorio
           terriQuito->uniEjercito = terriQuito->uniEjercito - cantEjercitos;
-          actualizarMatrizRestandoTropas(leQuitoA, cantEjercitos);
+          //actualizarMatrizRestandoTropas(leQuitoA, cantEjercitos);
           // Se le agregan los ejercitos al territorio
           terriPongo->uniEjercito = terriPongo->uniEjercito + cantEjercitos;
-          actualizarMatrizSumandoTropas(lePongoA, cantEjercitos);
+          //actualizarMatrizSumandoTropas(lePongoA, cantEjercitos);
+
+          actualizarMatrizTropas(leQuitoA, terriQuito->uniEjercito);
+          actualizarMatrizTropas(lePongoA, terriPongo->uniEjercito);
 
           std::cout << std::endl;
           std::cout << "Ahora el territorio " << terriPongo->nombreTerri << " tiene " << terriPongo->uniEjercito << " tropas" << std::endl;
@@ -572,44 +575,8 @@ void Partida::guardarCompimido(std::string nombreArchivo)
   archivoDePartida.close();
 }
 
-void Partida::actualizarMatrizSumandoTropas(std::string territorio, int cantidadTropas)
-{
-  int indiceTerritorio = tablero.indiceTerritorio(territorio);
-  // recorrer la matriz de adyacencia
-  for (int i = 0; i < 42; i++)
-  {
-    for (int j = 0; j < 42; j++)
-    {
-      if (tablero.matriz_adyacencia[i][indiceTerritorio] != 0)
-      {
-        tablero.matriz_adyacencia[i][indiceTerritorio] = tablero.matriz_adyacencia[i][indiceTerritorio] + cantidadTropas;
-      }
-    }
-  }
 
-  std::cout << std::endl;
-  tablero.imprimirMatriz();
-  std::cout << std::endl;
-}
 
-void Partida::actualizarMatrizRestandoTropas(std::string territorio, int cantidadTropas)
-{
-  int indiceTerritorio = tablero.indiceTerritorio(territorio);
-  // recorrer la matriz de adyacencia
-  for (int i = 0; i < 42; i++)
-  {
-    for (int j = 0; j < 42; j++)
-    {
-      if (tablero.matriz_adyacencia[i][indiceTerritorio] != 0)
-      {
-        tablero.matriz_adyacencia[i][indiceTerritorio] = tablero.matriz_adyacencia[i][indiceTerritorio] - cantidadTropas;
-      }
-    }
-  }
-  std::cout << std::endl;
-  tablero.imprimirMatriz();
-  std::cout << std::endl;
-}
 
 void Partida::actualizarMatrizTropas(std::string territorio, int cantidadTropas)
 {

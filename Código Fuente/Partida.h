@@ -27,8 +27,6 @@ class Partida
     void gestorDados(Jugador* jugadorAtacante, Jugador* jugadorDefensor, Territorio* terriAtacoDesde, Territorio* terriAtaco);
     void guardarPartida(std::string);
     void guardarCompimido(std::string);
-    void actualizarMatrizSumandoTropas(std::string territorio, int cantidadTropas);
-    void actualizarMatrizRestandoTropas(std::string territorio, int cantidadTropas);
     void actualizarMatrizTropas(std::string territorio, int cantidadTropas);
 };
 
