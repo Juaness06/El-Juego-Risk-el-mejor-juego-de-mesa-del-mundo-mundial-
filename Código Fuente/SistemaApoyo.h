@@ -15,8 +15,8 @@ class SistemaApoyo
     void escojerTerris(Partida *partidaAct);
     void repartirTropas(Partida *partidaAct);
     void accionesTurno(Partida *partidaAct);
-
     void inicializarTablero();
+    
 };
 
 #include "SistemaApoyo.cxx"

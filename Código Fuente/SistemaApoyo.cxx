@@ -609,6 +609,7 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
           std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas"<< std::endl;
           std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
           std::cin >> asignTrops;
+          partidaAct->actualizarMatrizSumandoTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
           std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           std::cout << std::endl;
 
@@ -620,8 +621,9 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
             std::cout << "Ingresa una cantidad de tropas no mayor ni menor a las que tienes disponibles" << std::endl;
             std::cout << std::endl;
             std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas"<< std::endl;
-          std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
+            std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
             std::cin >> asignTrops;
+            partidaAct->actualizarMatrizSumandoTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << std::endl;
           }          
@@ -706,6 +708,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
           std::cout << "Justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
           std::cout << " - El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
           std::cin >> asignTrops;
+          partidaAct->actualizarMatrizSumandoTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
           std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           std::cout << std::endl;
 
@@ -716,6 +719,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
             std::cout << "Ingresa una cantidad de tropas valida para este territorio." << std::endl;
             std::cout << "- El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
             std::cin >> asignTrops;
+            partidaAct->actualizarMatrizSumandoTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << std::endl;
           }          
@@ -841,6 +845,7 @@ void SistemaApoyo::inicializarTablero()
 
   //! Conexiones America Del Norte
 
+  Territorio *terriObj;
   //?Conexiones de Alaska
   tablero.InsertarCamino(("Alaska"), ("Territorio Noroccidental"), 1);
   tablero.InsertarCamino(("Alaska"), ("Alberta"), 1);
@@ -1066,3 +1071,6 @@ void SistemaApoyo::inicializarTablero()
   std::cout<< "-------------------------------------------------------------------------------" <<std::endl;
   
 }
+
+
+

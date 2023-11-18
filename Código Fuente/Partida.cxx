@@ -109,6 +109,7 @@ void Partida::fortificar()
   //std::cin >> lePongoA;
   std::cout << "Cuantas tropas quieres ponerle? ";
   std::cin >> cantEjercitos;
+  actualizarMatrizSumandoTropas(lePongoA, cantEjercitos);
 
   // Busca el territorio al que se le quitaran ejercitos
   Territorio *terriQuito = buscaT(leQuitoA);
@@ -283,6 +284,15 @@ void Partida::atacar()
       jugadores.pop();
       jugadores.push(jugadorTemp);
       jugadorActual = jugadores.front();
+
+      if(tablero.buscarCamino(atacoDesde, atacoA))
+      {
+        std::cout << "Los territorios son adyacentes" << std::endl;
+      }
+      else
+      {
+        std::cout << "Los territorios no son adyacentes" << std::endl;
+      }
     }
     else
     {
@@ -366,6 +376,9 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
     if (dadosAtac > dadosDefen)
     {
       terriAtaco->uniEjercito = terriAtaco->uniEjercito - 1;
+      //Actualizar matriz de adyacencia
+      actualizarMatrizTropas(terriAtaco->nombreTerri, terriAtaco->uniEjercito);
+      
       // si el defensor tiene mas de 0 ejercitos
       if (terriAtaco->uniEjercito <= 0)
       {
@@ -374,6 +387,7 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
         std::cout << "El atacante conquisto el territorio " << terriAtaco->nombreTerri << std::endl;
         terriAtaco->duenoAct = jugadorAtacante;
         terriAtaco->uniEjercito = 1;
+        actualizarMatrizTropas(terriAtaco->nombreTerri, terriAtaco->uniEjercito);
         std::cout << "El territorio " << terriAtaco->nombreTerri << " ahora pertenece al jugador " << jugadorAtacante->color << std::endl;
         std::cout << " - Como " << terriAtaco->nombreTerri <<" fue conquistado ahora tiene : "<< terriAtaco->uniEjercito << " tropas del jugador " << jugadorAtacante->color << std::endl;
         std::cout<<std::endl;
@@ -407,6 +421,8 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
     else if (dadosAtac <= dadosDefen)
     {
       terriAtacoDesde->uniEjercito = terriAtacoDesde->uniEjercito - 1;
+      actualizarMatrizTropas(terriAtacoDesde->nombreTerri, terriAtacoDesde->uniEjercito);
+
       if (terriAtacoDesde->uniEjercito <= 1) // Si el territorio desde el que se ataca tiene mas de 1 ejercito
       {
 
@@ -555,4 +571,52 @@ void Partida::guardarCompimido(std::string nombreArchivo)
   }
 
   archivoDePartida.close();
+}
+
+void Partida::actualizarMatrizSumandoTropas(std::string territorio, int cantidadTropas)
+{
+  int indiceTerritorio = tablero.indiceTerritorio(territorio);
+  //recorrer la matriz de adyacencia
+  for (int i = 0; i < 42; i++)
+  {
+    for (int j = 0; j < 42; j++)
+    {
+      if (tablero.matriz_adyacencia[i][indiceTerritorio] != 0)
+      {
+        tablero.matriz_adyacencia[i][indiceTerritorio] = tablero.matriz_adyacencia[i][indiceTerritorio] + cantidadTropas;
+      }
+    }
+  }
+}
+
+void Partida::actualizarMatrizRestandoTropas(std::string territorio, int cantidadTropas)
+{
+  int indiceTerritorio = tablero.indiceTerritorio(territorio);
+  //recorrer la matriz de adyacencia
+  for (int i = 0; i < 42; i++)
+  {
+    for (int j = 0; j < 42; j++)
+    {
+      if (tablero.matriz_adyacencia[i][indiceTerritorio] != 0)
+      {
+        tablero.matriz_adyacencia[i][indiceTerritorio] = tablero.matriz_adyacencia[i][indiceTerritorio] - cantidadTropas;
+      }
+    }
+  }
+}
+
+void Partida::actualizarMatrizTropas(std::string territorio, int cantidadTropas)
+{
+  int indiceTerritorio = tablero.indiceTerritorio(territorio);
+  //recorrer la matriz de adyacencia
+  for (int i = 0; i < 42; i++)
+  {
+    for (int j = 0; j < 42; j++)
+    {
+      if (tablero.matriz_adyacencia[i][indiceTerritorio] != 0)
+      {
+        tablero.matriz_adyacencia[i][indiceTerritorio] = cantidadTropas;
+      }
+    }
+  }
 }
