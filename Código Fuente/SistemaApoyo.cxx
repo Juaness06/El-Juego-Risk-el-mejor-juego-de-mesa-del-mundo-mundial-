@@ -177,9 +177,8 @@ void SistemaApoyo::reanudarPartida(std::string nombreArchivo)
   {
     for (int j = 0; j < 42; j++)
     {
-      if (tablero.matriz_adyacencia[i][j] == 1)
+      if (tablero.matriz_adyacencia[i][j] != 0)
       { // si el peso de la conexion es distinto de 0 es decir si hay una conexion
-
         nombreTerriDestino = tablero.territorios[j]; // rescatar el nombre del territorio de destino
 
         for (Continente *continente : partida->continentes)
