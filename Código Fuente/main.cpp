@@ -238,18 +238,8 @@ void comandos(SistemaApoyo sistemaApoyo)
         }
         else if (command == "conquista_mas_barata")
         {
-            // Si esta en una partida no iniciada por pantalla sadria esto
-            std::cout <<"Esta partida no ha sido inicializada correctamente" << std::endl;
-            
-            
-            // Si esta en una partida ya finalizada la salida por pantalla es la siguiente
-            std::cout <<"Esta partida ya tuvo un ganador" << std::endl;
-        
-            // Si esta en una partida ya inicida se realizan los calculos para saber cual es la conquista mas barata
-            std::cout <<"La conquista más barata es avanzar sobre el territorio <territorio_1> desde el territorio <territorio_2>. Para conquistar el territorio <territorio_1>, debe atacar desde <territorio_2>, pasando por los territorios <territorio_3>, <territorio_4>, ..., <territorio_m>. Debe conquistar <n> unidades de ejército" << std::endl;
+            sistemaApoyo.conquistaMasBarata(sistemaApoyo.partida);
         }
-
-
         else if (command == "turno?") 
         {
             std::cout << "--------------------------------------------------------" << std::endl;

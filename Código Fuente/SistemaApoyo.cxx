@@ -2,6 +2,7 @@
 #include "Tablero.h"
 
 #include <iostream>
+#include <climits>
 
 #define red "\033[31m"
 #define blue "\033[34m"
@@ -13,15 +14,17 @@
 
 Tablero<std::string, int> tablero;
 
-struct infoTerri {
-    std::string continente;
-    std::string nombre;
-    int tropas;
+struct infoTerri
+{
+  std::string continente;
+  std::string nombre;
+  int tropas;
 };
 
-struct infoPlayer {
-    std::string nombre;
-    std::vector<infoTerri> territorios;
+struct infoPlayer
+{
+  std::string nombre;
+  std::vector<infoTerri> territorios;
 };
 
 bool tieneTerriDisp(const std::vector<std::string> &continente);
@@ -40,13 +43,13 @@ void SistemaApoyo::crearPartida()
 
   do
   {
-    std::cout<<std::endl;
+    std::cout << std::endl;
     std::cout << "Cuantas personas van a jugar? (min 3 - max 6): ";
     std::cin >> cantJugadores;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   } while (cantJugadores < 3 || cantJugadores > 6);
 
-  std::cout<<std::endl;
+  std::cout << std::endl;
   std::cout << "Risk, tiene dos formas de jugar: " << std::endl;
   std::cout << "Para el modo por Misiones, ingrese la tecla 'm' " << std::endl;
   std::cout << "Para el modo Normal, ingrese la tecla 'n' " << std::endl;
@@ -63,67 +66,76 @@ void SistemaApoyo::crearPartida()
   std::cout << std::endl;
 
   std::cout << "Presione Enter para continuar..." << std::endl;
-  //std::cin.ignore();
+  // std::cin.ignore();
   std::cin.get();
   system("clear");
 }
 
-void SistemaApoyo::reanudarPartida(std::string nombreArchivo){
+void SistemaApoyo::reanudarPartida(std::string nombreArchivo)
+{
 
   std::vector<infoPlayer> datos_jugadores;
   std::ifstream archivo(nombreArchivo);
   inicializarTablero();
 
-  if(!archivo.is_open()){
-    std::cout<<"No se pudo abrir el archivo"<<std::endl;
+  if (!archivo.is_open())
+  {
+    std::cout << "No se pudo abrir el archivo" << std::endl;
     return;
   }
 
   std::string linea;
   infoPlayer player;
 
-  while (std::getline(archivo, linea)) {
-        std::istringstream iss(linea);
+  while (std::getline(archivo, linea))
+  {
+    std::istringstream iss(linea);
 
-        if (linea.find("Jugador:") != std::string::npos) {
-            // Si encuentras un nuevo jugador, agrega el jugador actual a datos_jugadores
-            if (!player.nombre.empty()) {
-                datos_jugadores.push_back(player);
-                player.territorios.clear();
-            }
-            player.nombre = linea.substr(linea.find(":") + 2);
-        } 
-        else if (linea.find("Contienente:") != std::string::npos) {
-            infoTerri territorio;
-            territorio.continente = linea.substr(linea.find(":") + 2);
-            std::getline(archivo, linea);
-            territorio.nombre = linea.substr(linea.find(":") + 1);
-            std::getline(archivo, linea);
-            territorio.tropas = std::stoi(linea.substr(linea.find(":") + 1));
-
-            player.territorios.push_back(territorio);
-        }
+    if (linea.find("Jugador:") != std::string::npos)
+    {
+      // Si encuentras un nuevo jugador, agrega el jugador actual a datos_jugadores
+      if (!player.nombre.empty())
+      {
+        datos_jugadores.push_back(player);
+        player.territorios.clear();
+      }
+      player.nombre = linea.substr(linea.find(":") + 2);
     }
+    else if (linea.find("Contienente:") != std::string::npos)
+    {
+      infoTerri territorio;
+      territorio.continente = linea.substr(linea.find(":") + 2);
+      std::getline(archivo, linea);
+      territorio.nombre = linea.substr(linea.find(":") + 1);
+      std::getline(archivo, linea);
+      territorio.tropas = std::stoi(linea.substr(linea.find(":") + 1));
+
+      player.territorios.push_back(territorio);
+    }
+  }
 
   // Se Agregar el último jugador a datos_jugadores
-  if (!player.nombre.empty()) {
-      datos_jugadores.push_back(player);
+  if (!player.nombre.empty())
+  {
+    datos_jugadores.push_back(player);
   }
 
   archivo.close();
 
   // recorrer el vector datos_jugadores y imprimir los datos
-  std::cout<<"------------- Datos de la partida leidos del archivo -------------"<<std::endl;
-  std::cout<<"cantidad de jugadores: "<<datos_jugadores.size()<<std::endl;
-  for(infoPlayer player : datos_jugadores){
-    std::cout<<"Jugador: "<<player.nombre<<std::endl;
-    for(infoTerri terri : player.territorios){
-      std::cout<<"Continente: "<<terri.continente<<std::endl;
-      std::cout<<"Territorio: "<<terri.nombre<<std::endl;
-      std::cout<<"Tropas: "<<terri.tropas<<std::endl;
+  std::cout << "------------- Datos de la partida leidos del archivo -------------" << std::endl;
+  std::cout << "cantidad de jugadores: " << datos_jugadores.size() << std::endl;
+  for (infoPlayer player : datos_jugadores)
+  {
+    std::cout << "Jugador: " << player.nombre << std::endl;
+    for (infoTerri terri : player.territorios)
+    {
+      std::cout << "Continente: " << terri.continente << std::endl;
+      std::cout << "Territorio: " << terri.nombre << std::endl;
+      std::cout << "Tropas: " << terri.tropas << std::endl;
     }
   }
-  std::cout<<"------------------------------------------------------------------"<<std::endl;
+  std::cout << "------------------------------------------------------------------" << std::endl;
 
   int cantJugadores = datos_jugadores.size();
   char modoJuego = 'n';
@@ -132,58 +144,61 @@ void SistemaApoyo::reanudarPartida(std::string nombreArchivo){
   this->partida = new Partida(modoJuego, cantJugadores, tablero);
 
   // recorrer el vector datos_jugadores y asignar los territorios a los jugadores en la partida segun el archivo
-  for(infoPlayer player : datos_jugadores){ 
-    for(infoTerri terri : player.territorios){ 
-      Jugador *jugador = partida->buscaJ(player.nombre); 
-      for(Continente* continente : partida->continentes){ 
-        if(continente->nombreCont == terri.continente){ 
-          for(Territorio* territorio : continente->territorios){ 
-            if(territorio->nombreTerri == terri.nombre){ 
-              territorio->duenoAct = jugador; 
-              territorio->uniEjercito = terri.tropas; 
+  for (infoPlayer player : datos_jugadores)
+  {
+    for (infoTerri terri : player.territorios)
+    {
+      Jugador *jugador = partida->buscaJ(player.nombre);
+      for (Continente *continente : partida->continentes)
+      {
+        if (continente->nombreCont == terri.continente)
+        {
+          for (Territorio *territorio : continente->territorios)
+          {
+            if (territorio->nombreTerri == terri.nombre)
+            {
+              territorio->duenoAct = jugador;
+              territorio->uniEjercito = terri.tropas;
               jugador->ejercito = jugador->ejercito - terri.tropas;
             }
           }
         }
       }
     }
-  }  
+  }
 
   // actualizar el peso de las conexiones a partir de la infromacion del archivo (el peso de la arista son las unidades de ejercito del territorio de destino)
-  
+
   std::string nombreTerriOrigen;
   std::string nombreTerriDestino;
-  
+
   // recorrer la matriz de adyacencia, rescatar el nombre del territorio de origen y el nombre del territorio de destino, buscar los territorios en la partida y actualizar el peso de la conexion
-  for(int i = 0; i < 42; i++)
+  for (int i = 0; i < 42; i++)
   {
-    for(int j = 0; j < 42; j++)
+    for (int j = 0; j < 42; j++)
     {
-      if(tablero.matriz_adyacencia[i][j] == 1){ // si el peso de la conexion es distinto de 0 es decir si hay una conexion
+      if (tablero.matriz_adyacencia[i][j] == 1)
+      { // si el peso de la conexion es distinto de 0 es decir si hay una conexion
 
         nombreTerriDestino = tablero.territorios[j]; // rescatar el nombre del territorio de destino
 
-        for(Continente* continente : partida->continentes){ // buscar el territorio de destino en la partida
-          for(Territorio* territorio : continente->territorios){
-            if(territorio->nombreTerri == nombreTerriDestino){
+        for (Continente *continente : partida->continentes)
+        { // buscar el territorio de destino en la partida
+          for (Territorio *territorio : continente->territorios)
+          {
+            if (territorio->nombreTerri == nombreTerriDestino)
+            {
               tablero.matriz_adyacencia[i][j] = territorio->uniEjercito; // actualizar el peso de la conexion
             }
           }
         }
-
       }
     }
   }
 
-  std::cout<<"------------- Matriz de adyacencia actualizada -------------"<<std::endl;
+  std::cout << "------------- Matriz de adyacencia actualizada -------------" << std::endl;
   tablero.imprimirMatriz();
-  std::cout<<"------------------------------------------------------------"<<std::endl;
-
-
-
-
-  
-
+  std::cout << "------------------------------------------------------------" << std::endl;
 }
 
 void SistemaApoyo::escojerTerris(Partida *partidaAct)
@@ -203,7 +218,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
   int eleccion1;
   int eleccion2;
   std::string colJugadores[6] = {"rojo", "azul", "amarillo", "naranja", "verde", "rosado"};
-  std::string coltext [6] = {red, blue, yellow, orange, green, magenta};
+  std::string coltext[6] = {red, blue, yellow, orange, green, magenta};
   std::string auxContis[6] = {"America Del Norte", "America Del Sur", "Asia", "Africa", "Europa", "Australia"};
 
   std::string aux[cantJ];
@@ -217,7 +232,7 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
   {
     for (int i = 0; i < cantJ; i++)
     {
-      std::cout << "Jugador "<<coltext[i]<<"(" + aux[i]+ ")"<<reset<<" es su turno para:" << std::endl;
+      std::cout << "Jugador " << coltext[i] << "(" + aux[i] + ")" << reset << " es su turno para:" << std::endl;
       std::cout << "Elijir uno de los siguientes continetes:" << std::endl;
       std::cout << "1. America del Norte" << std::endl;
       std::cout << "2. America del Sur" << std::endl;
@@ -232,383 +247,387 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
 
       switch (eleccion1)
       {
-        
-        case 1:
+
+      case 1:
+      {
+        if (!tieneTerriDisp(AmericaNorte))
         {
-          if (!tieneTerriDisp(AmericaNorte))
+          std::cout << "No hay territorios disponibles en America del Norte." << std::endl;
+          std::cout << std::endl;
+
+          i = i - 1;
+          break;
+        }
+
+        std::cout << "Territorios disponibles en America del Norte:" << std::endl;
+        for (size_t j = 0; j < AmericaNorte.size(); j++)
+        {
+          std::cout << j + 1 << ". " << AmericaNorte[j] << std::endl;
+        }
+
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
+        std::cin >> eleccion2;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        if (eleccion2 >= 1 && eleccion2 <= AmericaNorte.size())
+        {
+          salvaNomTerri = AmericaNorte[eleccion2 - 1];
+          Jugador *player = partidaAct->buscaJ(aux[i]);
+
+          for (int i = 0; i < 12; i++)
           {
-            std::cout << "No hay territorios disponibles en America del Norte." << std::endl;
-            std::cout<<std::endl;
-
-            i = i-1;
-            break;
-          }
-
-          std::cout << "Territorios disponibles en America del Norte:" << std::endl;
-          for (size_t j = 0; j < AmericaNorte.size(); j++)
-          {
-            std::cout << j + 1 << ". " << AmericaNorte[j] << std::endl;
-          }
-
-          std::cout << "Ingrese el numero del territorio seleccionado: ";
-          std::cin >> eleccion2;
-          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-          if (eleccion2 >= 1 && eleccion2 <= AmericaNorte.size())
-          {
-            salvaNomTerri = AmericaNorte[eleccion2 - 1];
-            Jugador *player = partidaAct->buscaJ(aux[i]);
-
-            for(int i = 0; i < 12; i++){
-              if (partidaAct->continentes[0]->territorios[i]->nombreTerri == salvaNomTerri)
-              {
-                partidaAct->continentes[0]->territorios[i]->duenoAct = player;
-                player->ejercito = player->ejercito - 1;
-                partidaAct->continentes[0]->territorios[i]->uniEjercito = 1;
-                break;
-              }              
+            if (partidaAct->continentes[0]->territorios[i]->nombreTerri == salvaNomTerri)
+            {
+              partidaAct->continentes[0]->territorios[i]->duenoAct = player;
+              player->ejercito = player->ejercito - 1;
+              partidaAct->continentes[0]->territorios[i]->uniEjercito = 1;
+              break;
             }
-
-            std::cout<<std::endl;
-            std::cout << "Territorio elegido: " << AmericaNorte[eleccion2 - 1] << std::endl;
-            std::cout << std::endl;
-            AmericaNorte.erase(AmericaNorte.begin() + eleccion2 - 1);
-            conta_terr++;
-            
-            std::cout << "Presione Enter para continuar..." << std::endl;
-            //std::cin.ignore();
-            std::cin.get();
-            system("clear");
-
-          }
-          else
-          {
-            std::cout<<std::endl;
-            std::cout << "Numero de territorio invalido." << std::endl;
-            std::cout<<std::endl;
-            i = i-1;
           }
 
-          break;
+          std::cout << std::endl;
+          std::cout << "Territorio elegido: " << AmericaNorte[eleccion2 - 1] << std::endl;
+          std::cout << std::endl;
+          AmericaNorte.erase(AmericaNorte.begin() + eleccion2 - 1);
+          conta_terr++;
+
+          std::cout << "Presione Enter para continuar..." << std::endl;
+          // std::cin.ignore();
+          std::cin.get();
+          system("clear");
         }
-
-        case 2:
+        else
         {
-          if (!tieneTerriDisp(AmericaSur))
-          {
-            std::cout << "No hay territorios disponibles en America del Sur." << std::endl;
-            std::cout<<std::endl;
-
-            i = i-1;
-            break;
-          }
-
-          std::cout << "Territorios disponibles en America del Sur:" << std::endl;
-          for (size_t j = 0; j < AmericaSur.size(); j++)
-          {
-            std::cout << j + 1 << ". " << AmericaSur[j] << std::endl;
-          }
-
-          std::cout << "Ingrese el numero del territorio seleccionado: ";
-          std::cin >> eleccion2;
-          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-          if (eleccion2 >= 1 && eleccion2 <= AmericaSur.size())
-          {
-            salvaNomTerri = AmericaSur[eleccion2 - 1];
-            Jugador *player = partidaAct->buscaJ(aux[i]);
-
-            for(int i = 0; i < 4; i++){
-              if (partidaAct->continentes[1]->territorios[i]->nombreTerri == salvaNomTerri)
-              {
-                partidaAct->continentes[1]->territorios[i]->duenoAct = player;
-                player->ejercito = player->ejercito - 1;
-                partidaAct->continentes[1]->territorios[i]->uniEjercito = 1;
-                break;
-              }              
-            }
-
-            std::cout<<std::endl;
-            std::cout << "Territorio elegido: " << AmericaSur[eleccion2 - 1] << std::endl;
-            std::cout<<std::endl;
-
-            AmericaSur.erase(AmericaSur.begin() + eleccion2 - 1);
-            conta_terr++;
-
-            std::cout << "Presione Enter para continuar..." << std::endl;
-            //std::cin.ignore();
-            std::cin.get();
-            system("clear");
-          }
-          else
-          {
-            std::cout<<std::endl;
-            std::cout << "Numero de territorio invalido." << std::endl;
-            std::cout<<std::endl;
-            i = i-1;
-          }
-
-          break;
+          std::cout << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
+          std::cout << std::endl;
+          i = i - 1;
         }
 
-        case 3:
-        {
-          if (!tieneTerriDisp(Europa))
-          {
-            std::cout << "No hay territorios disponibles en Europa." << std::endl;
-            std::cout<<std::endl;
-
-            i = i-1;
-            break;
-          }
-
-          std::cout << "Territorios disponibles en Europa:" << std::endl;
-          for (size_t j = 0; j < Europa.size(); j++)
-          {
-            std::cout << j + 1 << ". " << Europa[j] << std::endl;
-          }
-
-          std::cout << "Ingrese el numero del territorio seleccionado: ";
-          std::cin >> eleccion2;
-          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-          if (eleccion2 >= 1 && eleccion2 <= Europa.size())
-          {
-            salvaNomTerri = Europa[eleccion2 - 1];
-            Jugador *player = partidaAct->buscaJ(aux[i]);
-
-            for(int i = 0; i < 7; i++){
-              if (partidaAct->continentes[4]->territorios[i]->nombreTerri == salvaNomTerri)
-              {
-                partidaAct->continentes[4]->territorios[i]->duenoAct = player;
-                player->ejercito = player->ejercito - 1;
-                partidaAct->continentes[4]->territorios[i]->uniEjercito = 1;
-                break;
-              }              
-            }
-
-            std::cout<<std::endl;
-            std::cout << "Territorio elegido: " << Europa[eleccion2 - 1] << std::endl;
-            std::cout<<std::endl;
-
-            Europa.erase(Europa.begin() + eleccion2 - 1);
-            conta_terr++;
-
-            std::cout << "Presione Enter para continuar..." << std::endl;
-            //std::cin.ignore();
-            std::cin.get();
-            system("clear");
-          }
-          else
-          {
-            std::cout<<std::endl;
-            std::cout << "Numero de territorio invalido." << std::endl;
-            std::cout<<std::endl;
-            i = i-1;
-          }
-
-          break;
-        }
-
-        case 4:
-        {
-          if (!tieneTerriDisp(Africa))
-          {
-            std::cout << "No hay territorios disponibles en Africa." << std::endl;
-            std::cout<<std::endl;
-
-            i = i-1;
-            break;
-          }
-
-          std::cout << "Territorios disponibles en Africa:" << std::endl;
-          for (size_t j = 0; j < Africa.size(); j++)
-          {
-            std::cout << j + 1 << ". " << Africa[j] << std::endl;
-          }
-          std::cout << "Ingrese el numero del territorio seleccionado: ";
-          std::cin >> eleccion2;
-          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-          if (eleccion2 >= 1 && eleccion2 <= Africa.size())
-          {
-            salvaNomTerri = Africa[eleccion2 - 1];
-            Jugador *player = partidaAct->buscaJ(aux[i]);
-
-            for(int i = 0; i < 6; i++){
-              if (partidaAct->continentes[3]->territorios[i]->nombreTerri == salvaNomTerri)
-              {
-                partidaAct->continentes[3]->territorios[i]->duenoAct = player;
-                player->ejercito = player->ejercito - 1;
-                partidaAct->continentes[3]->territorios[i]->uniEjercito = 1;
-                break;
-              }              
-            }
-
-            std::cout<<std::endl;
-            std::cout << "Territorio elegido: " << Africa[eleccion2 - 1] << std::endl;
-            std::cout<<std::endl;
-
-            Africa.erase(Africa.begin() + eleccion2 - 1);
-            conta_terr++;
-
-            std::cout << "Presione Enter para continuar..." << std::endl;
-            //std::cin.ignore();
-            std::cin.get();
-            system("clear");
-          }
-          else
-          {
-            std::cout<<std::endl;
-            std::cout << "Numero de territorio invalido." << std::endl;
-            std::cout<<std::endl;
-            i = i-1;
-          }
-
-          break;
-        }
-
-        case 5:
-        {
-          if (!tieneTerriDisp(Asia))
-          {
-            std::cout << "No hay territorios disponibles en Asia." << std::endl;
-            std::cout<<std::endl;
-
-            i = i-1;
-            break;
-          }
-
-          std::cout << "Territorios disponibles en Asia:" << std::endl;
-          for (size_t j = 0; j < Asia.size(); j++)
-          {
-            std::cout << j + 1 << ". " << Asia[j] << std::endl;
-          }
-
-          std::cout << "Ingrese el numero del territorio seleccionado: ";
-          std::cin >> eleccion2;
-          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-          if (eleccion2 >= 1 && eleccion2 <= Asia.size())
-          {
-            salvaNomTerri = Asia[eleccion2 - 1];
-            Jugador *player = partidaAct->buscaJ(aux[i]);
-
-            for(int i = 0; i < 12; i++){
-              if (partidaAct->continentes[2]->territorios[i]->nombreTerri == salvaNomTerri)
-              {
-                partidaAct->continentes[2]->territorios[i]->duenoAct = player;
-                player->ejercito = player->ejercito - 1;
-                partidaAct->continentes[2]->territorios[i]->uniEjercito = 1;
-                break;
-              }              
-            }
-
-            std::cout<<std::endl;
-            std::cout << "Territorio elegido: " << Asia[eleccion2 - 1] << std::endl;
-            std::cout<<std::endl;
-
-            Asia.erase(Asia.begin() + eleccion2 - 1);
-            conta_terr++;
-
-            std::cout << "Presione Enter para continuar..." << std::endl;
-            //std::cin.ignore();
-            std::cin.get();
-            system("clear");
-          }
-          else
-          {
-            std::cout<<std::endl;
-            std::cout << "Numero de territorio invalido." << std::endl;
-            std::cout<<std::endl;
-            i = i-1;
-          }
-
-          break;
-        }
-
-        case 6:
-        {
-          if (!tieneTerriDisp(Australia))
-          {
-            std::cout << "No hay territorios disponibles en Australia." << std::endl;
-            std::cout<<std::endl;
-
-            i = i-1;
-            break;
-          }
-
-          std::cout << "Territorios disponibles en Australia:" << std::endl;
-          for (size_t j = 0; j < Australia.size(); j++)
-          {
-            std::cout << j + 1 << ". " << Australia[j] << std::endl;
-          }
-
-          std::cout << "Ingrese el numero del territorio seleccionado: ";
-          std::cin >> eleccion2;
-          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-          if (eleccion2 >= 1 && eleccion2 <= Australia.size())
-          {
-            salvaNomTerri = Australia[eleccion2 - 1];
-            Jugador *player = partidaAct->buscaJ(aux[i]);
-
-            for(int i = 0; i < 4; i++){
-              if (partidaAct->continentes[5]->territorios[i]->nombreTerri == salvaNomTerri)
-              {
-                partidaAct->continentes[5]->territorios[i]->duenoAct = player;
-                player->ejercito = player->ejercito - 1;
-                partidaAct->continentes[5]->territorios[i]->uniEjercito = 1;
-                break;
-              }              
-            }
-
-            std::cout<<std::endl;
-            std::cout << "Territorio elegido: " << Australia[eleccion2 - 1] << std::endl;
-            std::cout<<std::endl;
-
-            Australia.erase(Australia.begin() + eleccion2 - 1);
-            conta_terr++;
-
-            std::cout << "Presione Enter para continuar..." << std::endl;
-            //std::cin.ignore();
-            std::cin.get();
-            system("clear");
-          }
-          else
-          {
-            std::cout<<std::endl;
-            std::cout << "Numero de territorio invalido." << std::endl;
-            std::cout<<std::endl;
-            i = i-1;
-          }
-
-          break;
-        }
-
-        default:
-        {
-          std::cout << "Continente no valido. Intente nuevamente." << std::endl;
-          std::cout<<std::endl;
-          i = i-1;
-
-          break;
-        }
+        break;
       }
-      //limpiamos el buffer
+
+      case 2:
+      {
+        if (!tieneTerriDisp(AmericaSur))
+        {
+          std::cout << "No hay territorios disponibles en America del Sur." << std::endl;
+          std::cout << std::endl;
+
+          i = i - 1;
+          break;
+        }
+
+        std::cout << "Territorios disponibles en America del Sur:" << std::endl;
+        for (size_t j = 0; j < AmericaSur.size(); j++)
+        {
+          std::cout << j + 1 << ". " << AmericaSur[j] << std::endl;
+        }
+
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
+        std::cin >> eleccion2;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        if (eleccion2 >= 1 && eleccion2 <= AmericaSur.size())
+        {
+          salvaNomTerri = AmericaSur[eleccion2 - 1];
+          Jugador *player = partidaAct->buscaJ(aux[i]);
+
+          for (int i = 0; i < 4; i++)
+          {
+            if (partidaAct->continentes[1]->territorios[i]->nombreTerri == salvaNomTerri)
+            {
+              partidaAct->continentes[1]->territorios[i]->duenoAct = player;
+              player->ejercito = player->ejercito - 1;
+              partidaAct->continentes[1]->territorios[i]->uniEjercito = 1;
+              break;
+            }
+          }
+
+          std::cout << std::endl;
+          std::cout << "Territorio elegido: " << AmericaSur[eleccion2 - 1] << std::endl;
+          std::cout << std::endl;
+
+          AmericaSur.erase(AmericaSur.begin() + eleccion2 - 1);
+          conta_terr++;
+
+          std::cout << "Presione Enter para continuar..." << std::endl;
+          // std::cin.ignore();
+          std::cin.get();
+          system("clear");
+        }
+        else
+        {
+          std::cout << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
+          std::cout << std::endl;
+          i = i - 1;
+        }
+
+        break;
+      }
+
+      case 3:
+      {
+        if (!tieneTerriDisp(Europa))
+        {
+          std::cout << "No hay territorios disponibles en Europa." << std::endl;
+          std::cout << std::endl;
+
+          i = i - 1;
+          break;
+        }
+
+        std::cout << "Territorios disponibles en Europa:" << std::endl;
+        for (size_t j = 0; j < Europa.size(); j++)
+        {
+          std::cout << j + 1 << ". " << Europa[j] << std::endl;
+        }
+
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
+        std::cin >> eleccion2;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        if (eleccion2 >= 1 && eleccion2 <= Europa.size())
+        {
+          salvaNomTerri = Europa[eleccion2 - 1];
+          Jugador *player = partidaAct->buscaJ(aux[i]);
+
+          for (int i = 0; i < 7; i++)
+          {
+            if (partidaAct->continentes[4]->territorios[i]->nombreTerri == salvaNomTerri)
+            {
+              partidaAct->continentes[4]->territorios[i]->duenoAct = player;
+              player->ejercito = player->ejercito - 1;
+              partidaAct->continentes[4]->territorios[i]->uniEjercito = 1;
+              break;
+            }
+          }
+
+          std::cout << std::endl;
+          std::cout << "Territorio elegido: " << Europa[eleccion2 - 1] << std::endl;
+          std::cout << std::endl;
+
+          Europa.erase(Europa.begin() + eleccion2 - 1);
+          conta_terr++;
+
+          std::cout << "Presione Enter para continuar..." << std::endl;
+          // std::cin.ignore();
+          std::cin.get();
+          system("clear");
+        }
+        else
+        {
+          std::cout << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
+          std::cout << std::endl;
+          i = i - 1;
+        }
+
+        break;
+      }
+
+      case 4:
+      {
+        if (!tieneTerriDisp(Africa))
+        {
+          std::cout << "No hay territorios disponibles en Africa." << std::endl;
+          std::cout << std::endl;
+
+          i = i - 1;
+          break;
+        }
+
+        std::cout << "Territorios disponibles en Africa:" << std::endl;
+        for (size_t j = 0; j < Africa.size(); j++)
+        {
+          std::cout << j + 1 << ". " << Africa[j] << std::endl;
+        }
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
+        std::cin >> eleccion2;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        if (eleccion2 >= 1 && eleccion2 <= Africa.size())
+        {
+          salvaNomTerri = Africa[eleccion2 - 1];
+          Jugador *player = partidaAct->buscaJ(aux[i]);
+
+          for (int i = 0; i < 6; i++)
+          {
+            if (partidaAct->continentes[3]->territorios[i]->nombreTerri == salvaNomTerri)
+            {
+              partidaAct->continentes[3]->territorios[i]->duenoAct = player;
+              player->ejercito = player->ejercito - 1;
+              partidaAct->continentes[3]->territorios[i]->uniEjercito = 1;
+              break;
+            }
+          }
+
+          std::cout << std::endl;
+          std::cout << "Territorio elegido: " << Africa[eleccion2 - 1] << std::endl;
+          std::cout << std::endl;
+
+          Africa.erase(Africa.begin() + eleccion2 - 1);
+          conta_terr++;
+
+          std::cout << "Presione Enter para continuar..." << std::endl;
+          // std::cin.ignore();
+          std::cin.get();
+          system("clear");
+        }
+        else
+        {
+          std::cout << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
+          std::cout << std::endl;
+          i = i - 1;
+        }
+
+        break;
+      }
+
+      case 5:
+      {
+        if (!tieneTerriDisp(Asia))
+        {
+          std::cout << "No hay territorios disponibles en Asia." << std::endl;
+          std::cout << std::endl;
+
+          i = i - 1;
+          break;
+        }
+
+        std::cout << "Territorios disponibles en Asia:" << std::endl;
+        for (size_t j = 0; j < Asia.size(); j++)
+        {
+          std::cout << j + 1 << ". " << Asia[j] << std::endl;
+        }
+
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
+        std::cin >> eleccion2;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        if (eleccion2 >= 1 && eleccion2 <= Asia.size())
+        {
+          salvaNomTerri = Asia[eleccion2 - 1];
+          Jugador *player = partidaAct->buscaJ(aux[i]);
+
+          for (int i = 0; i < 12; i++)
+          {
+            if (partidaAct->continentes[2]->territorios[i]->nombreTerri == salvaNomTerri)
+            {
+              partidaAct->continentes[2]->territorios[i]->duenoAct = player;
+              player->ejercito = player->ejercito - 1;
+              partidaAct->continentes[2]->territorios[i]->uniEjercito = 1;
+              break;
+            }
+          }
+
+          std::cout << std::endl;
+          std::cout << "Territorio elegido: " << Asia[eleccion2 - 1] << std::endl;
+          std::cout << std::endl;
+
+          Asia.erase(Asia.begin() + eleccion2 - 1);
+          conta_terr++;
+
+          std::cout << "Presione Enter para continuar..." << std::endl;
+          // std::cin.ignore();
+          std::cin.get();
+          system("clear");
+        }
+        else
+        {
+          std::cout << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
+          std::cout << std::endl;
+          i = i - 1;
+        }
+
+        break;
+      }
+
+      case 6:
+      {
+        if (!tieneTerriDisp(Australia))
+        {
+          std::cout << "No hay territorios disponibles en Australia." << std::endl;
+          std::cout << std::endl;
+
+          i = i - 1;
+          break;
+        }
+
+        std::cout << "Territorios disponibles en Australia:" << std::endl;
+        for (size_t j = 0; j < Australia.size(); j++)
+        {
+          std::cout << j + 1 << ". " << Australia[j] << std::endl;
+        }
+
+        std::cout << "Ingrese el numero del territorio seleccionado: ";
+        std::cin >> eleccion2;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        if (eleccion2 >= 1 && eleccion2 <= Australia.size())
+        {
+          salvaNomTerri = Australia[eleccion2 - 1];
+          Jugador *player = partidaAct->buscaJ(aux[i]);
+
+          for (int i = 0; i < 4; i++)
+          {
+            if (partidaAct->continentes[5]->territorios[i]->nombreTerri == salvaNomTerri)
+            {
+              partidaAct->continentes[5]->territorios[i]->duenoAct = player;
+              player->ejercito = player->ejercito - 1;
+              partidaAct->continentes[5]->territorios[i]->uniEjercito = 1;
+              break;
+            }
+          }
+
+          std::cout << std::endl;
+          std::cout << "Territorio elegido: " << Australia[eleccion2 - 1] << std::endl;
+          std::cout << std::endl;
+
+          Australia.erase(Australia.begin() + eleccion2 - 1);
+          conta_terr++;
+
+          std::cout << "Presione Enter para continuar..." << std::endl;
+          // std::cin.ignore();
+          std::cin.get();
+          system("clear");
+        }
+        else
+        {
+          std::cout << std::endl;
+          std::cout << "Numero de territorio invalido." << std::endl;
+          std::cout << std::endl;
+          i = i - 1;
+        }
+
+        break;
+      }
+
+      default:
+      {
+        std::cout << "Continente no valido. Intente nuevamente." << std::endl;
+        std::cout << std::endl;
+        i = i - 1;
+
+        break;
+      }
+      }
+      // limpiamos el buffer
       std::cin.clear();
     }
   }
-  std::cout<<"Se ha inizializado la partida correctamente"<<std::endl;
+  std::cout << "Se ha inizializado la partida correctamente" << std::endl;
   std::cout << std::endl;
   std::cout << std::endl;
-
 }
 
 void SistemaApoyo::repartirTropas(Partida *partidaAct)
 {
   int cantJ = partidaAct->jugadores.size();
   int asignTrops = 0;
-  
+
   std::string colJugadores[6] = {"rojo", "azul", "amarillo", "naranja", "verde", "rosado"};
-  std::string coltext [6] = {red, blue, yellow, orange, green, magenta};
+  std::string coltext[6] = {red, blue, yellow, orange, green, magenta};
   std::string aux[cantJ];
 
   for (int i = 0; i < cantJ; i++)
@@ -621,10 +640,10 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
 
   for (int h = 0; h < cantJ; h++)
   {
-    std::cout << "Turno del Jugador "<<coltext[h]<<"(" + aux[h]+ ")"<<reset<<" para distribuir tropas en los territorios que eligio:" << std::endl;
+    std::cout << "Turno del Jugador " << coltext[h] << "(" + aux[h] + ")" << reset << " para distribuir tropas en los territorios que eligio:" << std::endl;
     for (int i = 0; i < 6; i++)
     {
-      std::cout<<std::endl;
+      std::cout << std::endl;
       std::cout << "En el continente " << partidaAct->continentes[i]->nombreCont << " dominas los siguientes territorios: " << std::endl;
       for (int j = 0; j < partidaAct->continentes[i]->territorios.size(); j++) //
       {
@@ -636,12 +655,12 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
             std::cout << "Ya no tienes mas tropas disponibles para repartir." << std::endl;
             std::cout << std::endl;
             break; // si el jugador no tiene mas tropas disponibles, se pasa al siguiente jugador
-          }  
+          }
 
           std::cout << std::endl;
           std::cout << "Recuerda que justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
 
-          std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas"<< std::endl;
+          std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas" << std::endl;
           std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
           std::cin >> asignTrops;
           partidaAct->actualizarMatrizSumandoTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
@@ -655,15 +674,15 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
             std::cout << "Recuerda que tienes: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
             std::cout << "Ingresa una cantidad de tropas no mayor ni menor a las que tienes disponibles" << std::endl;
             std::cout << std::endl;
-            std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas"<< std::endl;
+            std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas" << std::endl;
             std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
             std::cin >> asignTrops;
             partidaAct->actualizarMatrizSumandoTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << std::endl;
-          }          
+          }
 
-          partidaAct->continentes[i]->territorios[j]->uniEjercito = partidaAct->continentes[i]->territorios[j]->uniEjercito + asignTrops; // asigna las tropas al territorio
+          partidaAct->continentes[i]->territorios[j]->uniEjercito = partidaAct->continentes[i]->territorios[j]->uniEjercito + asignTrops;               // asigna las tropas al territorio
           partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito = partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito - asignTrops; // resta las tropas al jugador
 
           if (partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito == 0)
@@ -671,41 +690,38 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
             std::cout << "Ya no tienes mas tropas disponibles para repartir." << std::endl;
             std::cout << std::endl;
             break; // si el jugador no tiene mas tropas disponibles, se pasa al siguiente jugador
-          }        
-          
-        }        
+          }
+        }
       }
       std::cout << std::endl;
       std::cout << "--------------------------------------------------------" << std::endl;
       std::cout << std::endl;
     }
-    if (partidaAct->buscaJ(aux[h])->ejercito > 0) // 
+    if (partidaAct->buscaJ(aux[h])->ejercito > 0) //
     {
       std::cout << "Aun tienes tropas disponibles para repartir." << std::endl;
       std::cout << std::endl;
       std::cout << "Presione Enter para continuar..." << std::endl;
-      //std::cin.ignore();
+      // std::cin.ignore();
       std::cin.get();
       system("clear");
-      h = h-1;
-    }    
+      h = h - 1;
+    }
     std::cout << "Presione Enter para continuar..." << std::endl;
-    //std::cin.ignore();
+    // std::cin.ignore();
     std::cin.get();
     system("clear");
   }
-
 }
-
 
 void SistemaApoyo::accionesTurno(Partida *partidaAct)
 {
   int uniEjerAdicionales = 0;
   int asignTrops = 0;
-  
-  for(Continente* continente : partidaAct->continentes)
+
+  for (Continente *continente : partidaAct->continentes)
   {
-    for(Territorio* territorio : continente->territorios)
+    for (Territorio *territorio : continente->territorios)
     {
       if (partidaAct->jugadorActual->color == territorio->duenoAct->color)
       {
@@ -738,7 +754,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
             std::cout << "Ya no tienes mas tropas disponibles para repartir." << std::endl;
             std::cout << std::endl;
             break; // si el jugador no tiene mas tropas disponibles, se pasa al siguiente jugador
-          }  
+          }
 
           std::cout << "Justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
           std::cout << " - El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
@@ -757,9 +773,9 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
             partidaAct->actualizarMatrizSumandoTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << std::endl;
-          }          
+          }
 
-          partidaAct->continentes[i]->territorios[j]->uniEjercito = partidaAct->continentes[i]->territorios[j]->uniEjercito + asignTrops; // asigna las tropas al territorio
+          partidaAct->continentes[i]->territorios[j]->uniEjercito = partidaAct->continentes[i]->territorios[j]->uniEjercito + asignTrops;               // asigna las tropas al territorio
           partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito = partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito - asignTrops; // resta las tropas al jugador
 
           if (partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito == 0)
@@ -767,9 +783,8 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
             std::cout << "Ya no tienes mas tropas disponibles para repartir." << std::endl;
             std::cout << std::endl;
             break; // si el jugador no tiene mas tropas disponibles, se pasa al siguiente jugador
-          }        
-          
-        }        
+          }
+        }
       }
       std::cout << std::endl;
       std::cout << "--------------------------------------------------------" << std::endl;
@@ -778,7 +793,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
 
     std::cout << "Aun tienes tropas disponibles para repartir." << std::endl;
     std::cout << "Presione Enter para continuar..." << std::endl;
-    //std::cin.ignore();
+    // std::cin.ignore();
     std::cin.get();
     system("clear");
 
@@ -786,7 +801,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
 
   std::cout << "Ya que recibiste tus tropas adicionales y las repartiste en tus territorios" << std::endl;
 
-  //ciclo para asegurarse que el jugador ingrese una opcion valida
+  // ciclo para asegurarse que el jugador ingrese una opcion valida
   int eleccion;
   do
   {
@@ -801,31 +816,28 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
 
     switch (eleccion)
     {
-      case 1:
-      {
-        std::cout << "Atacar" << std::endl;
-        partidaAct->atacar();
-        break;
-      }
+    case 1:
+    {
+      std::cout << "Atacar" << std::endl;
+      partidaAct->atacar();
+      break;
+    }
 
-      case 2:
-      {
-        std::cout << "Fortificar" << std::endl;
-        partidaAct->fortificar();
-        break;
-      }
+    case 2:
+    {
+      std::cout << "Fortificar" << std::endl;
+      partidaAct->fortificar();
+      break;
+    }
 
-      default:
-      {
-        std::cout << "Accion no valida. Vuelva aintentarlo" << std::endl;
-        break;
-      }
+    default:
+    {
+      std::cout << "Accion no valida. Vuelva aintentarlo" << std::endl;
+      break;
+    }
     }
   } while (eleccion != 1 && eleccion != 2);
-
-
 }
-
 
 bool tieneTerriDisp(const std::vector<std::string> &continente)
 {
@@ -1101,11 +1113,35 @@ void SistemaApoyo::inicializarTablero()
   tablero.InsertarCamino(("Australia Occidental"), ("Nueva Guinea"), 1);
   tablero.InsertarCamino(("Australia Occidental"), ("Australia Oriental"), 1);
 
-  std::cout<< "-------------------------------------------------------------------------------" <<std::endl;
+  std::cout << "-------------------------------------------------------------------------------" << std::endl;
   tablero.imprimirMatriz();
-  std::cout<< "-------------------------------------------------------------------------------" <<std::endl;
-  
+  std::cout << "-------------------------------------------------------------------------------" << std::endl;
 }
 
+void SistemaApoyo::conquistaMasBarata(Partida *partidaAct)
+{
+  for (Continente *continente : partidaAct->continentes)
+  {
+    for (Territorio *territorio : continente->territorios)
+    {
+      if (territorio->duenoAct->color == partidaAct->jugadorActual->color)
+      {
+        int territorioIndex = tablero.indiceTerritorio(territorio->nombreTerri);
+        std::cout << "En el territorio: " << territorio->nombreTerri << ", la conquista mas barata es:" << std::endl;
 
-
+        int menorCosto = INT_MAX; // Inicializamos el menorCosto con un valor alto
+        for (int i = 0; i < 42; i++)
+        {
+          if (tablero.matriz_adyacencia[territorioIndex][i] != 0)
+          {
+            if (tablero.matriz_adyacencia[territorioIndex][i] < menorCosto)
+            {
+              menorCosto = tablero.matriz_adyacencia[territorioIndex][i];
+              std::cout << "El territorio \"" << tablero.territorios[i] << "\" con costo de: " << menorCosto << std::endl;
+            }
+          }
+        }
+      }
+    }
+  }
+}

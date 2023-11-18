@@ -8,9 +8,9 @@
 
 Partida::Partida(char _modoJuego, int cantJugadores, Tablero<std::string, int> mapa) : jugadores(), continentes(), modoJuego(_modoJuego) // Constructor de partida
 {
-  
+
   tablero = mapa;
-  
+
   std::string coloresJ[6] = {"rojo", "azul", "amarillo", "naranja", "verde", "rosado"};
 
   estado = "En Curso"; // Posibles estados: "En Curso", "Terminada"
@@ -103,13 +103,12 @@ void Partida::fortificar()
   std::cout << std::endl;
   std::cout << "A cual territorio le quieres quitar tropas? ";
   std::getline(std::cin, leQuitoA);
-  //std::cin >> leQuitoA;
+  // std::cin >> leQuitoA;
   std::cout << "A que territorio quieres ponerle esas tropas? ";
   std::getline(std::cin, lePongoA);
-  //std::cin >> lePongoA;
+  // std::cin >> lePongoA;
   std::cout << "Cuantas tropas quieres ponerle? ";
   std::cin >> cantEjercitos;
-  actualizarMatrizSumandoTropas(lePongoA, cantEjercitos);
 
   // Busca el territorio al que se le quitaran ejercitos
   Territorio *terriQuito = buscaT(leQuitoA);
@@ -130,8 +129,11 @@ void Partida::fortificar()
         {
           // Se le quitan los ejercitos al territorio
           terriQuito->uniEjercito = terriQuito->uniEjercito - cantEjercitos;
+          actualizarMatrizRestandoTropas(leQuitoA, cantEjercitos);
           // Se le agregan los ejercitos al territorio
           terriPongo->uniEjercito = terriPongo->uniEjercito + cantEjercitos;
+          actualizarMatrizSumandoTropas(lePongoA, cantEjercitos);
+
           std::cout << std::endl;
           std::cout << "Ahora el territorio " << terriPongo->nombreTerri << " tiene " << terriPongo->uniEjercito << " tropas" << std::endl;
           std::cout << "Y el territorio " << terriQuito->nombreTerri << " tiene " << terriQuito->uniEjercito << " tropas" << std::endl;
@@ -146,7 +148,7 @@ void Partida::fortificar()
           std::cout << "Presione Enter para continuar..." << std::endl;
           std::cin.ignore();
           std::cin.get();
-          //system("clear");	
+          // system("clear");
         }
         else
         {
@@ -156,7 +158,7 @@ void Partida::fortificar()
             std::cout << "Recuerda que siempre debe quedar al menos 1 ejercito en el territorio" << std::endl;
           }
           std::cout << "No se puede realizar la accion" << std::endl;
-          std::cout<<std::endl;
+          std::cout << std::endl;
           std::cout << "No perdiste tu turno" << std::endl;
           std::cout << "Presiona Enter para volverlo a intentar..." << std::endl;
           std::cin.ignore();
@@ -169,7 +171,7 @@ void Partida::fortificar()
         std::cout << std::endl;
         std::cout << "No se puede realizar la accion" << std::endl;
         std::cout << "El territorio al que quieres ponerle tropas no es tuyo" << std::endl;
-        std::cout<<std::endl;
+        std::cout << std::endl;
         std::cout << "No perdiste tu turno" << std::endl;
         std::cout << "Presiona Enter para volverlo a intentar..." << std::endl;
         std::cin.ignore();
@@ -182,13 +184,12 @@ void Partida::fortificar()
       std::cout << std::endl;
       std::cout << "No se puede realizar la accion" << std::endl; // Si el territorio al que se le quitan ejercitos no es del jugador actual
       std::cout << "El territorio al que quieres quitarle tropas no es tuyo" << std::endl;
-      std::cout<<std::endl;
+      std::cout << std::endl;
       std::cout << "No perdiste tu turno" << std::endl;
       std::cout << "Presione Enter para volverlo a intentar..." << std::endl;
       std::cin.ignore();
       std::cin.get();
       system("clear");
-      
     }
   }
   else
@@ -196,7 +197,7 @@ void Partida::fortificar()
     std::cout << std::endl;
     std::cout << "No se puede realizar la accion" << std::endl; // Si no se encuentran ambos territorios
     std::cout << "Uno o los dos Territorios que ingresaste no existen" << std::endl;
-    std::cout<<std::endl;
+    std::cout << std::endl;
     std::cout << "No perdiste tu turno" << std::endl;
     std::cout << "Presione Enter para volverlo a intentar..." << std::endl;
     std::cin.ignore();
@@ -229,7 +230,7 @@ void Partida::atacar()
 
   std::cout << std::endl;
   std::cout << "Presione Enter para continuar..." << std::endl;
-  //std::cin.ignore();
+  // std::cin.ignore();
   std::cin.get();
 
   std::cout << "Antes de atacar, recuerda que actualmente los territorios se encuentran dominados de la siguiente manera: " << std::endl;
@@ -261,10 +262,10 @@ void Partida::atacar()
   // preguntar al usuario que territorio quiere atacar, y desde que territorio quiere atacar
   std::cout << "Desde que territorio quieres atacar? ";
   std::getline(std::cin, atacoDesde);
-  //std::cin >> atacoDesde;
+  // std::cin >> atacoDesde;
   std::cout << "A que territorio quieres atacar? ";
   std::getline(std::cin, atacoA);
-  //std::cin >> atacoA;
+  // std::cin >> atacoA;
 
   Jugador *jugadorDefensor = buscaT(atacoA)->duenoAct;
 
@@ -285,7 +286,7 @@ void Partida::atacar()
       jugadores.push(jugadorTemp);
       jugadorActual = jugadores.front();
 
-      if(tablero.buscarCamino(atacoDesde, atacoA))
+      if (tablero.buscarCamino(atacoDesde, atacoA))
       {
         std::cout << "Los territorios son adyacentes" << std::endl;
       }
@@ -298,7 +299,7 @@ void Partida::atacar()
     {
       std::cout << "No se puede realizar la accion" << std::endl; // Si el territorio desde el que se ataca no es del jugador actual
       std::cout << "El territorio desde el que quieres atacar no es tuyo" << std::endl;
-      std::cout<<std::endl;
+      std::cout << std::endl;
       std::cout << "No perdiste tu turno" << std::endl;
       std::cout << "Presione Enter para volverlo a intentar..." << std::endl;
       std::cin.ignore();
@@ -310,7 +311,7 @@ void Partida::atacar()
   {
     std::cout << "No se puede realizar la accion" << std::endl; // Si no se encuentran ambos territorios
     std::cout << "Uno o los dos territorios que ingresaste no existen" << std::endl;
-    std::cout<<std::endl;
+    std::cout << std::endl;
     std::cout << "No perdiste tu turno" << std::endl;
     std::cout << "Presione Enter para volverlo a intentar..." << std::endl;
     std::cin.ignore();
@@ -376,9 +377,8 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
     if (dadosAtac > dadosDefen)
     {
       terriAtaco->uniEjercito = terriAtaco->uniEjercito - 1;
-      //Actualizar matriz de adyacencia
       actualizarMatrizTropas(terriAtaco->nombreTerri, terriAtaco->uniEjercito);
-      
+
       // si el defensor tiene mas de 0 ejercitos
       if (terriAtaco->uniEjercito <= 0)
       {
@@ -389,10 +389,10 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
         terriAtaco->uniEjercito = 1;
         actualizarMatrizTropas(terriAtaco->nombreTerri, terriAtaco->uniEjercito);
         std::cout << "El territorio " << terriAtaco->nombreTerri << " ahora pertenece al jugador " << jugadorAtacante->color << std::endl;
-        std::cout << " - Como " << terriAtaco->nombreTerri <<" fue conquistado ahora tiene : "<< terriAtaco->uniEjercito << " tropas del jugador " << jugadorAtacante->color << std::endl;
-        std::cout<<std::endl;
+        std::cout << " - Como " << terriAtaco->nombreTerri << " fue conquistado ahora tiene : " << terriAtaco->uniEjercito << " tropas del jugador " << jugadorAtacante->color << std::endl;
+        std::cout << std::endl;
         std::cout << "Presione Enter para continuar..." << std::endl;
-        //std::cin.ignore();
+        // std::cin.ignore();
         std::cin.get();
         system("clear");
         terminaAtaque = true;
@@ -430,9 +430,9 @@ void Partida::gestorDados(Jugador *jugadorAtacante, Jugador *jugadorDefensor, Te
         std::cout << "El territorio " << terriAtacoDesde->nombreTerri << " ahora tiene " << terriAtacoDesde->uniEjercito << " tropas" << std::endl;
         std::cout << "El territorio " << terriAtaco->nombreTerri << " ahora tiene " << terriAtaco->uniEjercito << " tropas" << std::endl;
         terriAtacoDesde->uniEjercito = 1;
-        std::cout<<std::endl;
+        std::cout << std::endl;
         std::cout << "Presione Enter para continuar..." << std::endl;
-        //std::cin.ignore();
+        // std::cin.ignore();
         std::cin.get();
         system("clear");
         terminaAtaque = true;
@@ -505,7 +505,6 @@ void Partida::guardarPartida(std::string nombreArchivo)
   archivoDePartida.close();
 }
 
-
 void Partida::guardarCompimido(std::string nombreArchivo)
 {
   std::ofstream archivoDePartida(nombreArchivo + ".bin", std::ios::binary);
@@ -576,7 +575,7 @@ void Partida::guardarCompimido(std::string nombreArchivo)
 void Partida::actualizarMatrizSumandoTropas(std::string territorio, int cantidadTropas)
 {
   int indiceTerritorio = tablero.indiceTerritorio(territorio);
-  //recorrer la matriz de adyacencia
+  // recorrer la matriz de adyacencia
   for (int i = 0; i < 42; i++)
   {
     for (int j = 0; j < 42; j++)
@@ -587,12 +586,16 @@ void Partida::actualizarMatrizSumandoTropas(std::string territorio, int cantidad
       }
     }
   }
+
+  std::cout << std::endl;
+  tablero.imprimirMatriz();
+  std::cout << std::endl;
 }
 
 void Partida::actualizarMatrizRestandoTropas(std::string territorio, int cantidadTropas)
 {
   int indiceTerritorio = tablero.indiceTerritorio(territorio);
-  //recorrer la matriz de adyacencia
+  // recorrer la matriz de adyacencia
   for (int i = 0; i < 42; i++)
   {
     for (int j = 0; j < 42; j++)
@@ -603,12 +606,15 @@ void Partida::actualizarMatrizRestandoTropas(std::string territorio, int cantida
       }
     }
   }
+  std::cout << std::endl;
+  tablero.imprimirMatriz();
+  std::cout << std::endl;
 }
 
 void Partida::actualizarMatrizTropas(std::string territorio, int cantidadTropas)
 {
   int indiceTerritorio = tablero.indiceTerritorio(territorio);
-  //recorrer la matriz de adyacencia
+  // recorrer la matriz de adyacencia
   for (int i = 0; i < 42; i++)
   {
     for (int j = 0; j < 42; j++)
@@ -619,4 +625,7 @@ void Partida::actualizarMatrizTropas(std::string territorio, int cantidadTropas)
       }
     }
   }
+  std::cout << std::endl;
+  tablero.imprimirMatriz();
+  std::cout << std::endl;
 }
