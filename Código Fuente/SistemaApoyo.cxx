@@ -178,7 +178,7 @@ void SistemaApoyo::reanudarPartida(std::string nombreArchivo)
     for (int j = 0; j < 42; j++)
     {
       if (tablero.matriz_adyacencia[i][j] != 0)
-      { // si el peso de la conexion es distinto de 0 es decir si hay una conexion
+      {                                              // si el peso de la conexion es distinto de 0 es decir si hay una conexion
         nombreTerriDestino = tablero.territorios[j]; // rescatar el nombre del territorio de destino
 
         for (Continente *continente : partida->continentes)
@@ -205,8 +205,8 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
   // partidas
   std::vector<std::string> AmericaNorte = {"Alaska", "Alberta", "America Central", "Estados Unidos Orientales", "Groenlandia", "Territorio Noroccidental", "Ontario", "Quebec", "Estados Unidos Occidentales"};
   std::vector<std::string> AmericaSur = {"Argentina", "Brasil", "Peru", "Venezuela"};
-  std::vector<std::string> Europa = {"Gran Bretana", "Islandia", "Europa del Norte", "Escandinavia", "Europa del Sur", "Ucrania", "Europa Occidental"};
-  std::vector<std::string> Africa = {"Congo", "Africa Oriental", "Egipto", "Madagascar", "Africa del Norte", "Africa del Sur"};
+  std::vector<std::string> Europa = {"Gran Bretana", "Islandia", "Europa Del Norte", "Escandinavia", "Europa Del Sur", "Ucrania", "Europa Occidental"};
+  std::vector<std::string> Africa = {"Congo", "Africa Oriental", "Egipto", "Madagascar", "Africa Del Norte", "Africa Del Sur"};
   std::vector<std::string> Asia = {"Afghanistan", "China", "India", "Irkutsk", "Japon", "Kamchatka", "Medio Oriente", "Mongolia", "Siam", "Siberia", "Ural", "Yakutsk"};
   std::vector<std::string> Australia = {"Australia Oriental", "Indonesia", "Nueva Guinea", "Australia Occidental"};
 
@@ -233,8 +233,8 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
     {
       std::cout << "Jugador " << coltext[i] << "(" + aux[i] + ")" << reset << " es su turno para:" << std::endl;
       std::cout << "Elijir uno de los siguientes continetes:" << std::endl;
-      std::cout << "1. America del Norte" << std::endl;
-      std::cout << "2. America del Sur" << std::endl;
+      std::cout << "1. America Del Norte" << std::endl;
+      std::cout << "2. America Del Sur" << std::endl;
       std::cout << "3. Europa" << std::endl;
       std::cout << "4. Africa" << std::endl;
       std::cout << "5. Asia" << std::endl;
@@ -310,14 +310,14 @@ void SistemaApoyo::escojerTerris(Partida *partidaAct)
       {
         if (!tieneTerriDisp(AmericaSur))
         {
-          std::cout << "No hay territorios disponibles en America del Sur." << std::endl;
+          std::cout << "No hay territorios disponibles en America Del Sur." << std::endl;
           std::cout << std::endl;
 
           i = i - 1;
           break;
         }
 
-        std::cout << "Territorios disponibles en America del Sur:" << std::endl;
+        std::cout << "Territorios disponibles en America Del Sur:" << std::endl;
         for (size_t j = 0; j < AmericaSur.size(); j++)
         {
           std::cout << j + 1 << ". " << AmericaSur[j] << std::endl;
@@ -872,7 +872,7 @@ void SistemaApoyo::inicializarTablero()
   tablero.insertarTerritorio(("Madagascar"));
   tablero.insertarTerritorio(("Africa Del Norte"));
   tablero.insertarTerritorio(("Africa Del Sur"));
-  tablero.insertarTerritorio(("Afganistan"));
+  tablero.insertarTerritorio(("Afghanistan"));
   tablero.insertarTerritorio(("China"));
   tablero.insertarTerritorio(("India"));
   tablero.insertarTerritorio(("Irkutsk"));
@@ -985,11 +985,11 @@ void SistemaApoyo::inicializarTablero()
   tablero.InsertarCamino(("Europa Del Sur"), ("Egipto"), 1);
   tablero.InsertarCamino(("Europa Del Sur"), ("Africa Del Norte"), 1);
   tablero.InsertarCamino(("Europa Del Sur"), ("Medio Oriente"), 1);
-  //?Conexiones de Ucrania con Europa Del Norte, Escandinavia, Europa Del Sur, Afganistan, Medio Oriente, Ural.
+  //?Conexiones de Ucrania con Europa Del Norte, Escandinavia, Europa Del Sur, Afghanistan, Medio Oriente, Ural.
   tablero.InsertarCamino(("Ucrania"), ("Europa Del Norte"), 1);
   tablero.InsertarCamino(("Ucrania"), ("Escandinavia"), 1);
   tablero.InsertarCamino(("Ucrania"), ("Europa Del Sur"), 1);
-  tablero.InsertarCamino(("Ucrania"), ("Afganistan"), 1);
+  tablero.InsertarCamino(("Ucrania"), ("Afghanistan"), 1);
   tablero.InsertarCamino(("Ucrania"), ("Medio Oriente"), 1);
   tablero.InsertarCamino(("Ucrania"), ("Ural"), 1);
   //?Conexiones de Europa Occidental con Gran Bretana, Europa Del Norte, Europa Del Sur, Africa Del Norte.
@@ -1032,21 +1032,21 @@ void SistemaApoyo::inicializarTablero()
 
   //! Conexiones Asia
 
-  //?Conexiones de Afganistan con Ucrania, Medio Oriente, China, India, Ural.
-  tablero.InsertarCamino(("Afganistan"), ("Ucrania"), 1);
-  tablero.InsertarCamino(("Afganistan"), ("Medio Oriente"), 1);
-  tablero.InsertarCamino(("Afganistan"), ("China"), 1);
-  tablero.InsertarCamino(("Afganistan"), ("India"), 1);
-  tablero.InsertarCamino(("Afganistan"), ("Ural"), 1);
-  //?Conexiones de China con Afganistan, India, Mongolia, Siam, Siberia, Ural.
-  tablero.InsertarCamino(("China"), ("Afganistan"), 1);
+  //?Conexiones de Afghanistan con Ucrania, Medio Oriente, China, India, Ural.
+  tablero.InsertarCamino(("Afghanistan"), ("Ucrania"), 1);
+  tablero.InsertarCamino(("Afghanistan"), ("Medio Oriente"), 1);
+  tablero.InsertarCamino(("Afghanistan"), ("China"), 1);
+  tablero.InsertarCamino(("Afghanistan"), ("India"), 1);
+  tablero.InsertarCamino(("Afghanistan"), ("Ural"), 1);
+  //?Conexiones de China con Afghanistan, India, Mongolia, Siam, Siberia, Ural.
+  tablero.InsertarCamino(("China"), ("Afghanistan"), 1);
   tablero.InsertarCamino(("China"), ("India"), 1);
   tablero.InsertarCamino(("China"), ("Mongolia"), 1);
   tablero.InsertarCamino(("China"), ("Siam"), 1);
   tablero.InsertarCamino(("China"), ("Siberia"), 1);
   tablero.InsertarCamino(("China"), ("Ural"), 1);
-  //?Conexiones de India con Afganistan, China, Siam, Medio Oriente.
-  tablero.InsertarCamino(("India"), ("Afganistan"), 1);
+  //?Conexiones de India con Afghanistan, China, Siam, Medio Oriente.
+  tablero.InsertarCamino(("India"), ("Afghanistan"), 1);
   tablero.InsertarCamino(("India"), ("China"), 1);
   tablero.InsertarCamino(("India"), ("Siam"), 1);
   tablero.InsertarCamino(("India"), ("Medio Oriente"), 1);
@@ -1063,9 +1063,9 @@ void SistemaApoyo::inicializarTablero()
   tablero.InsertarCamino(("Kamchatka"), ("Irkutsk"), 1);
   tablero.InsertarCamino(("Kamchatka"), ("Japon"), 1);
   tablero.InsertarCamino(("Kamchatka"), ("Mongolia"), 1);
-  //?Conexiones de Medio Oriente con Ucrania, Afganistan, India, Egipto, Europa Del Sur.
+  //?Conexiones de Medio Oriente con Ucrania, Afghanistan, India, Egipto, Europa Del Sur.
   tablero.InsertarCamino(("Medio Oriente"), ("Ucrania"), 1);
-  tablero.InsertarCamino(("Medio Oriente"), ("Afganistan"), 1);
+  tablero.InsertarCamino(("Medio Oriente"), ("Afghanistan"), 1);
   tablero.InsertarCamino(("Medio Oriente"), ("India"), 1);
   tablero.InsertarCamino(("Medio Oriente"), ("Egipto"), 1);
   tablero.InsertarCamino(("Medio Oriente"), ("Europa Del Sur"), 1);
@@ -1084,9 +1084,9 @@ void SistemaApoyo::inicializarTablero()
   tablero.InsertarCamino(("Siberia"), ("China"), 1);
   tablero.InsertarCamino(("Siberia"), ("Irkutsk"), 1);
   tablero.InsertarCamino(("Siberia"), ("Mongolia"), 1);
-  //?Conexiones de Ural con Ucrania, Afganistan, Siberia, China.
+  //?Conexiones de Ural con Ucrania, Afghanistan, Siberia, China.
   tablero.InsertarCamino(("Ural"), ("Ucrania"), 1);
-  tablero.InsertarCamino(("Ural"), ("Afganistan"), 1);
+  tablero.InsertarCamino(("Ural"), ("Afghanistan"), 1);
   tablero.InsertarCamino(("Ural"), ("Siberia"), 1);
   tablero.InsertarCamino(("Ural"), ("China"), 1);
   //?Conexiones de Yakutsk con Siberia, Irkutsk, Kamchatka.
@@ -1126,18 +1126,26 @@ void SistemaApoyo::conquistaMasBarata(Partida *partidaAct)
       if (territorio->duenoAct->color == partidaAct->jugadorActual->color)
       {
         int territorioIndex = tablero.indiceTerritorio(territorio->nombreTerri);
-        std::cout << "En el territorio: " << territorio->nombreTerri << ", la conquista mas barata es:" << std::endl;
+        std::cout << "\nEn el territorio: " << territorio->nombreTerri << ", la conquista mas barata es:" << std::endl;
 
         int menorCosto = INT_MAX; // Inicializamos el menorCosto con un valor alto
         for (int i = 0; i < 42; i++)
         {
-          if (tablero.matriz_adyacencia[territorioIndex][i] != 0)
+          if (i != territorioIndex && tablero.matriz_adyacencia[territorioIndex][i] == 1)
           {
             if (tablero.matriz_adyacencia[territorioIndex][i] < menorCosto)
             {
               menorCosto = tablero.matriz_adyacencia[territorioIndex][i];
-              std::cout << "El territorio \"" << tablero.territorios[i] << "\" con costo de: " << menorCosto << std::endl;
             }
+          }
+        }
+
+        // Después de recorrer la fila, mostramos los territorios con el menor costo encontrado
+        for (int i = 0; i < 42; i++)
+        {
+          if (i != territorioIndex && tablero.matriz_adyacencia[territorioIndex][i] == 1 && tablero.matriz_adyacencia[territorioIndex][i] == menorCosto)
+          {
+            std::cout << "Para el territorio \"" << tablero.territorios[i] << "\" con costo de: " << menorCosto << " tropas" << std::endl;
           }
         }
       }

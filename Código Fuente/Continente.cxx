@@ -7,8 +7,8 @@ Continente::Continente(std::string _nombreCont) : nombreCont(_nombreCont), terri
   std::string terrisANOR[9] = {"Alaska", "Alberta", "America Central", "Estados Unidos Orientales", "Groenlandia", "Territorio Noroccidental", "Ontario", "Quebec", "Estados Unidos Occidentales"};
   std::string terrisASUR[4] = {"Argentina", "Brasil", "Peru", "Venezuela"};
   std::string terrisASIA[12] = {"Afghanistan", "China", "India", "Irkutsk", "Japon", "Kamchatka", "Medio Oriente", "Mongolia", "Siam", "Siberia", "Ural", "Yakutsk"};
-  std::string terrisAFRC[6] = {"Congo", "Africa Oriental", "Egipto", "Madagascar", "Africa del Norte", "Africa del Sur"};
-  std::string terrisEROP[7] = {"Gran Bretana", "Islandia", "Europa del Norte", "Escandinavia", "Europa del Sur", "Ucrania", "Europa Occidental"};
+  std::string terrisAFRC[6] = {"Congo", "Africa Oriental", "Egipto", "Madagascar", "Africa Del Norte", "Africa Del Sur"};
+  std::string terrisEROP[7] = {"Gran Bretana", "Islandia", "Europa Del Norte", "Escandinavia", "Europa Del Sur", "Ucrania", "Europa Occidental"};
   std::string terrisASTR[4] = {"Australia Oriental", "Indonesia", "Nueva Guinea", "Australia Occidental"};
 
   if (nombreCont == "America Del Norte")
