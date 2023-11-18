@@ -620,6 +620,7 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
           std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas" << std::endl;
           std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
           std::cin >> asignTrops;
+          partidaAct->actualizarMatrizTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
           
           std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           std::cout << std::endl;
@@ -634,6 +635,7 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
             std::cout << " - " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " tiene: " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " tropas" << std::endl;
             std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
             std::cin >> asignTrops;
+            partidaAct->actualizarMatrizTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
             
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << std::endl;
