@@ -15,6 +15,11 @@ class SistemaApoyo
     void escojerTerris(Partida *partidaAct);
     void repartirTropas(Partida *partidaAct);
     void accionesTurno(Partida *partidaAct);
+<<<<<<< HEAD
+=======
+
+    
+>>>>>>> 24fb1ca (Salvar reanudarpartida grafo)
     void inicializarTablero();
     
 };

@@ -149,6 +149,41 @@ void SistemaApoyo::reanudarPartida(std::string nombreArchivo){
     }
   }  
 
+  // actualizar el peso de las conexiones a partir de la infromacion del archivo (el peso de la arista son las unidades de ejercito del territorio de destino)
+  
+  std::string nombreTerriOrigen;
+  std::string nombreTerriDestino;
+  
+  // recorrer la matriz de adyacencia, rescatar el nombre del territorio de origen y el nombre del territorio de destino, buscar los territorios en la partida y actualizar el peso de la conexion
+  for(int i = 0; i < 42; i++)
+  {
+    for(int j = 0; j < 42; j++)
+    {
+      if(tablero.matriz_adyacencia[i][j] == 1){ // si el peso de la conexion es distinto de 0 es decir si hay una conexion
+
+        nombreTerriDestino = tablero.territorios[j]; // rescatar el nombre del territorio de destino
+
+        for(Continente* continente : partida->continentes){ // buscar el territorio de destino en la partida
+          for(Territorio* territorio : continente->territorios){
+            if(territorio->nombreTerri == nombreTerriDestino){
+              tablero.matriz_adyacencia[i][j] = territorio->uniEjercito; // actualizar el peso de la conexion
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+  std::cout<<"------------- Matriz de adyacencia actualizada -------------"<<std::endl;
+  tablero.imprimirMatriz();
+  std::cout<<"------------------------------------------------------------"<<std::endl;
+
+
+
+
+  
+
 }
 
 void SistemaApoyo::escojerTerris(Partida *partidaAct)
@@ -803,7 +838,7 @@ void SistemaApoyo::inicializarTablero()
   tablero.insertarTerritorio(("Alaska"));
   tablero.insertarTerritorio(("Alberta"));
   tablero.insertarTerritorio(("America Central"));
-  tablero.insertarTerritorio(("Estados Unidos Del Este"));
+  tablero.insertarTerritorio(("Estados Unidos Orientales"));
   tablero.insertarTerritorio(("Groenlandia"));
   tablero.insertarTerritorio(("Territorio Noroccidental"));
   tablero.insertarTerritorio(("Ontario"));

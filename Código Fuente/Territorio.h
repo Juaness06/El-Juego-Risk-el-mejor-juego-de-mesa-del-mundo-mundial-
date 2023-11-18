@@ -9,7 +9,6 @@ class Territorio
 {
   public:
     std::string nombreTerri;
-    std::vector<std::string> terriAdy;
     Jugador* duenoAct;
     int uniEjercito;
 
