@@ -232,86 +232,73 @@ template <class T, class U>
 std::vector< std::pair<T, T> > Tablero<T, U>::dijkstra(T territorio)
 {
     T territorioActual = territorio;
-    vector<U> distancias;
-    vector<T> visitados;
-    vector<T> grafo = this->territorios;
-    vector<T> noVisitados = this->territorios;
-    vector<T> prev(grafo.size());
+    std::vector<U> distancias;
+    std::vector<T> visitados;
+    std::vector<T> tablero = this->territorios;
+    std::vector<T> noVisitados = this->territorios;
+    std::vector<T> prev(tablero.size());
 
-    // Se inicializan las distancias en infinito
-    for (int i = 0; i < grafo.size(); i++)
+    for (int i = 0; i < tablero.size(); i++) 
     {
-        distancias.push_back(333333);
+        distancias.push_back(456361);
     }
-    // Se inicializa la distancia del territorio inicial en 0
     distancias[indiceTerritorio(territorioActual)] = 0;
 
-    // Mientras no se hayan visitado todos los nodos
-    while (!noVisitados.empty())
+    while (!noVisitados.empty()) 
     {
-        // Se inicializa la menor distancia con el maximo valor de U
-        U menor = 333333;
-        // Se recorren los nodos no visitados
-        for (int i = 0; i < noVisitados.size(); i++)
+        U menor = 456361;
+        for (int i = 0; i < noVisitados.size(); i++) 
         {
-            // Si la distancia del nodo no visitado es menor a la menor distancia
-            if (distancias[indiceTerritorio(noVisitados[i])] < menor)
+            if (distancias[indiceTerritorio(noVisitados[i])] < menor) 
             {
-                // Se actualiza la menor distancia
                 menor = distancias[indiceTerritorio(noVisitados[i])];
-                // Se actualiza el nodo visitado
                 territorioActual = noVisitados[i];
             }
         }
-        // Se agrega el nodo visitado a visitados
         visitados.push_back(territorioActual);
 
-        typename std::vector<T>::iterator it = noVisitados.begin(); 
+        typename std::vector<T>::iterator it = noVisitados.begin();
 
-        for (int i = 0; i < noVisitados.size(); i++)
+        for(int i=0; i<noVisitados.size(); i++)
         {
-            // Si existe una conexion entre el nodo visitado y el vecino
-            if (noVisitados[i] == territorioActual)
+            if(noVisitados[i] == territorioActual)
             {
-                it = noVisitados.erase(it);
+                it = noVisitados.begin() + i;
             }
         }
-
+        
         noVisitados.erase(it);
 
-        // Se recorren los vecinos del nodo visitado
-        for (int i = 0; i < grafo.size(); i++)
+        for (int i = 0; i < tablero.size(); i++)
         {
-            // Si existe una conexion entre el nodo visitado y el vecino
-            if (buscarCamino(territorioActual, grafo[i]))
+            if (buscarCamino(territorioActual, tablero[i])) 
             {
-
-                // Si la distancia del nodo visitado es mayor
-                //  a la del vecino mas la distancia entre el nodo visitado y el vecino
                 U distanciaTerritorio = distancias[indiceTerritorio(territorioActual)];
-                U distanciaVecino = distancias[indiceTerritorio(grafo[i])];
-                U nuevaDistancia = distanciaTerritorio + valorConexion(territorioActual, grafo[i]);
+                U distanciaVecino = distancias[indiceTerritorio(tablero[i])];
+                U nuevaDistancia = distanciaTerritorio + valorConexion(territorioActual, tablero[i]);
 
-                if (distanciaVecino > nuevaDistancia)
+                if (distanciaVecino > nuevaDistancia) 
                 {
-                    // Se actualiza la distancia del nodo visitado
-                    distancias[indiceTerritorio(grafo[i])] = nuevaDistancia;
-                    prev[indiceTerritorio(grafo[i])] = territorioActual;
+                    distancias[indiceTerritorio(tablero[i])] = nuevaDistancia;
+                    prev[indiceTerritorio(tablero[i])] = territorioActual;
                 }
             }
         }
     }
 
-    std::vector< std::pair<T, T> > caminos;
+    std::vector< std::pair<T, T> > conexiones;
 
-    for (int i = 0; i < prev.size(); i++)
+    for(int i=0; i<prev.size(); i++)
     {
-        if(i == indiceTerritorio(territorio)){
+        if (i == indiceTerritorio(territorio))
+        {
             continue;
-        } else {
-            caminos.push_back(std::make_pair(prev[i], grafo[i]));
+        }
+        else
+        {
+            conexiones.push_back(std::make_pair(prev[i], tablero[i]));
         }
     }
 
-    return caminos;
+    return conexiones;
 }

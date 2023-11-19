@@ -121,8 +121,6 @@ void SistemaApoyo::reanudarPartida(std::string nombreArchivo)
 
   archivo.close();
 
-
-
   int cantJugadores = datos_jugadores.size();
   char modoJuego = 'n';
   inicializarTablero();
@@ -155,7 +153,6 @@ void SistemaApoyo::reanudarPartida(std::string nombreArchivo)
 
   // llamado a la funcion que actualiza el grafo a partir de los datos actuales de la partida
   actTableroInfoActual();
-  
 }
 
 void SistemaApoyo::escojerTerris(Partida *partidaAct)
@@ -621,7 +618,7 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
           std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
           std::cin >> asignTrops;
           partidaAct->actualizarMatrizTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
-          
+
           std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           std::cout << std::endl;
 
@@ -636,7 +633,7 @@ void SistemaApoyo::repartirTropas(Partida *partidaAct)
             std::cout << "Ingresa cuantas tropas quieres agregarle a este territorio: ";
             std::cin >> asignTrops;
             partidaAct->actualizarMatrizTropas(partidaAct->continentes[i]->territorios[j]->nombreTerri, asignTrops);
-            
+
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << std::endl;
           }
@@ -718,7 +715,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
           std::cout << "Justo ahora tienes en total: " << partidaAct->continentes[i]->territorios[j]->duenoAct->ejercito << " tropas disponibles." << std::endl;
           std::cout << " - El territorio: " << partidaAct->continentes[i]->territorios[j]->nombreTerri << " va a tener " << partidaAct->continentes[i]->territorios[j]->uniEjercito << " + ";
           std::cin >> asignTrops;
-          
+
           std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           std::cout << std::endl;
 
@@ -752,7 +749,7 @@ void SistemaApoyo::accionesTurno(Partida *partidaAct)
 
     std::cout << "Aun tienes tropas disponibles para repartir." << std::endl;
     std::cout << "Presione Enter para continuar..." << std::endl;
-    
+
     actTableroInfoActual();
 
     std::cin.get();
@@ -1089,7 +1086,7 @@ void SistemaApoyo::actTableroInfoActual()
     for (int j = 0; j < 42; j++)
     {
       if (tablero.matriz_adyacencia[i][j] != 0)
-      { // si el peso de la conexion es distinto de 0 es decir si hay una conexion
+      {                                              // si el peso de la conexion es distinto de 0 es decir si hay una conexion
         nombreTerriDestino = tablero.territorios[j]; // rescatar el nombre del territorio de destino
 
         for (Continente *continente : partida->continentes)
@@ -1110,140 +1107,134 @@ void SistemaApoyo::actTableroInfoActual()
   tablero.imprimirMatriz();
   std::cout << "------------------------------------------------------------" << std::endl;
 
-
   this->partida->tablero = tablero;
 }
 
-void SistemaApoyo::costoConquista(std::string objetivoAtaque)
+void SistemaApoyo::costoConquista(std::string paisAtacado)
 {
+  // Actualizar la información del tablero
   actTableroInfoActual();
 
-  std::string jugadorAct = partida->jugadorActual->color;
+  // Obtener el color del jugador actual
+  std::string jugador = partida->jugadorActual->color;
+  // Almacenar los nombres de los territorios atacantes del jugador actual
+  std::vector<std::string> paisesAtacantes;
+  // Variable para controlar si es posible realizar la conquista
+  bool puede = true;
 
-  // almacenar los nombres de todos los territorios del jugador actual
-  std::vector<std::string> conquistados;
-
-  for (Continente *continente : partida->continentes)
+  // Buscar el territorio atacado en la lista de territorios
+  bool encontrado = false;
+  for (size_t i = 0; i < tablero.territorios.size(); ++i)
   {
-    for (Territorio *territorio : continente->territorios)
+    if (paisAtacado == tablero.territorios[i])
     {
-      if (territorio->duenoAct->color == jugadorAct)
-      {
-        conquistados.push_back(territorio->nombreTerri);
-      }
+      encontrado = true;
+      break;
     }
   }
 
-  //verificar si el objetivo de ataque es un territorio del jugador actual
-  bool propio = false;
-  for (int i = 0; i < conquistados.size(); i++)
+  // Verificar si el territorio atacado existe
+  if (!encontrado)
   {
-    if (conquistados[i] == objetivoAtaque)
-    {
-      propio = true;
-    }
+    std::cout << "\nEl territorio " << paisAtacado << " no existe\n\n";
+    puede = false;
   }
 
-  // si el objetivo de ataque es un territorio del jugador actual mensaje de que no se puede atacar y salir de la funcion
-  if (propio)
+  // Si es posible realizar la conquista
+  if (puede)
   {
-    std::cout << "No puedes atacar a un territorio que ya es tuyo." << std::endl;
-    return;
-  }
-  else // si el objetivo de ataque no es un territorio del jugador actual
-  {
-    // verificar si el objetivo de ataque es un territorio del tablero
-    bool existe = false;
-    for (int i = 0; i < 42; i++)
+    // Obtener los nombres de los territorios atacantes del jugador actual
+    for (const Continente *continente : partida->continentes)
     {
-      if (tablero.territorios[i] == objetivoAtaque)
+      for (const Territorio *territorio : continente->territorios)
       {
-        existe = true;
-        std::cout << "El territorio que ingresaste si existe." << std::endl;
-      }
-    }
-
-    // si el objetivo de ataque no es un territorio del tablero, mensaje de que no existe y salir de la funcion
-    if (existe == false)
-    {
-      std::cout << "El territorio que ingresaste no existe." << std::endl;
-      return;
-    }
-    else // si el objetivo de ataque es un territorio del tablero
-    {
-      // almacenar los caminos mas cortos entre los territorios conquistados y el objetivo de ataque
-      std::vector< std::vector< std::pair<std::string, std::string> > > caminosCortos;
-      for (int i = 0; i < conquistados.size(); i++)
-      {
-        std::cout << "Cantidad de territorios conquistados: " << conquistados.size() << std::endl;
-        std::vector<std::pair<std::string, std::string>> camCortosPais = tablero.dijkstra(conquistados[i]);
-
-        std::stack<std::pair<std::string, std::string>> caminosCortosInvertidos;
-        std::vector<std::pair<std::string, std::string>> final;
-
-        bool listo = false;
-        std::string destino = objetivoAtaque;
-
-        while(listo == false)
+        if (territorio->duenoAct->color == jugador)
         {
-          for (int i = 0; i < camCortosPais.size(); i++) //
-          {
-            if (camCortosPais[i].second.compare(destino) == 0) 
-            {
-              destino = camCortosPais[i].first;
-              caminosCortosInvertidos.push(camCortosPais[i]);
-            }
-          }
+          paisesAtacantes.push_back(territorio->nombreTerri);
+        }
+      }
+    }
 
-          if (destino.compare(conquistados[i]) == 0) 
+    // Almacenar los caminos mínimos desde los territorios atacantes hasta el territorio objetivo
+    std::vector<std::vector<std::pair<std::string, std::string>>> dijkPaises;
+
+    // Calcular caminos mínimos desde cada territorio atacante
+    for (size_t i = 0; i < paisesAtacantes.size(); ++i)
+    {
+      // Obtener el camino mínimo desde un territorio atacante hasta el territorio objetivo
+      std::vector<std::pair<std::string, std::string>> dijkPais = tablero.dijkstra(paisesAtacantes[i]);
+
+      // Almacenar el camino mínimo en una pila
+      std::stack<std::pair<std::string, std::string>> pilaDijk;
+      // Almacenar el camino mínimo de manera inversa
+      std::vector<std::pair<std::string, std::string>> dijkFinal;
+
+      // Variables para controlar el proceso de reconstrucción del camino mínimo
+      bool terminado = false;
+      std::string nombreDes = paisAtacado;
+
+      // Reconstruir el camino mínimo
+      while (!terminado)
+      {
+        for (size_t i = 0; i < dijkPais.size(); ++i)
+        {
+          if (dijkPais[i].second == nombreDes)
           {
-            listo = true;
+            nombreDes = dijkPais[i].first;
+            pilaDijk.push(dijkPais[i]);
           }
         }
 
-        std::cout << "Salio del while de listo" << std::endl;
-
-        while (!caminosCortosInvertidos.empty())
+        if (nombreDes == paisesAtacantes[i])
         {
-          final.push_back(caminosCortosInvertidos.top());
-          caminosCortosInvertidos.pop();
-        }
-
-        caminosCortos.push_back(final);
-          
-      }
-
-      std::cout << "Salio del 1er for" << std::endl;
-
-      int minPos = 0;
-      for(int i = 1; i < caminosCortos.size(); i++)
-      {
-        if (caminosCortos[i].size() < caminosCortos[minPos].size())
-        {
-          minPos = i;
+          terminado = true;
         }
       }
 
-      std::cout << "El camino mas corto para conquistar el territorio \"" << objetivoAtaque << "\" es: " << std::endl;
-      for (int i = 0; i < caminosCortos[minPos].size(); i++)
+      // Almacenar el camino mínimo en orden correcto
+      while (!pilaDijk.empty())
       {
-        std::cout << caminosCortos[minPos][i].first << " -> ";
+        dijkFinal.push_back(pilaDijk.top());
+        pilaDijk.pop();
       }
 
-      int costo = 0;
-      for (int i = 0; i < caminosCortos[minPos].size(); i++)
-      {
-        std::string origen = caminosCortos[minPos][i].first;
-        std::string destino = caminosCortos[minPos][i].second;
-        int calConexion = tablero.valorConexion(origen, destino);
-        costo = costo + calConexion;
-      }
-
-      std::cout << "El costo de conquista es: " << costo << std::endl;
-
+      // Almacenar el camino mínimo en la lista de caminos mínimos
+      dijkPaises.push_back(dijkFinal);
     }
-  }
 
+    // Encontrar el camino mínimo entre todos los caminos mínimos
+    size_t minPos = 0;
+
+    for (size_t i = 1; i < dijkPaises.size(); ++i)
+    {
+      if (dijkPaises[i].size() < dijkPaises[minPos].size())
+      {
+        minPos = i;
+      }
+    }
+
+    // Imprimir el camino mínimo
+    std::cout << jugador << reset;
+    std::cout << "\nEl camino para conquistar " << paisAtacado << " es: ";
+    for (size_t i = 0; i < dijkPaises[minPos].size(); ++i)
+    {
+      std::cout << dijkPaises[minPos][i].first << " -> ";
+    }
+    std::cout << paisAtacado << "\n";
+
+    // Calcular y mostrar el costo total del camino mínimo
+    int costo = 0;
+
+    for (size_t i = 0; i < dijkPaises[minPos].size(); ++i)
+    {
+      std::string primero = dijkPaises[minPos][i].first;
+      std::string segundo = dijkPaises[minPos][i].second;
+      int aux = tablero.valorConexion(primero, segundo);
+
+      costo = costo + aux;
+    }
+    std::cout << "El costo para conquistar " << paisAtacado << " es: " << costo << "\n\n";
+  }
 }
 
 void SistemaApoyo::conquistaMasBarata(Partida *partidaAct)
