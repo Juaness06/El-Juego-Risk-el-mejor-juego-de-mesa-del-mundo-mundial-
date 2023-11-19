@@ -17,6 +17,7 @@ class SistemaApoyo
     void accionesTurno(Partida *partidaAct);
     void inicializarTablero();
     void actTableroInfoActual();
+    void costoConquista(std::string nombreTerriOrigen);
     void conquistaMasBarata(Partida* partidaAct);
 
 };

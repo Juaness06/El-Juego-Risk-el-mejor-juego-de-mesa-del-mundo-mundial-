@@ -1114,6 +1114,138 @@ void SistemaApoyo::actTableroInfoActual()
   this->partida->tablero = tablero;
 }
 
+void SistemaApoyo::costoConquista(std::string objetivoAtaque)
+{
+  actTableroInfoActual();
+
+  std::string jugadorAct = partida->jugadorActual->color;
+
+  // almacenar los nombres de todos los territorios del jugador actual
+  std::vector<std::string> conquistados;
+
+  for (Continente *continente : partida->continentes)
+  {
+    for (Territorio *territorio : continente->territorios)
+    {
+      if (territorio->duenoAct->color == jugadorAct)
+      {
+        conquistados.push_back(territorio->nombreTerri);
+      }
+    }
+  }
+
+  //verificar si el objetivo de ataque es un territorio del jugador actual
+  bool propio = false;
+  for (int i = 0; i < conquistados.size(); i++)
+  {
+    if (conquistados[i] == objetivoAtaque)
+    {
+      propio = true;
+    }
+  }
+
+  // si el objetivo de ataque es un territorio del jugador actual mensaje de que no se puede atacar y salir de la funcion
+  if (propio)
+  {
+    std::cout << "No puedes atacar a un territorio que ya es tuyo." << std::endl;
+    return;
+  }
+  else // si el objetivo de ataque no es un territorio del jugador actual
+  {
+    // verificar si el objetivo de ataque es un territorio del tablero
+    bool existe = false;
+    for (int i = 0; i < 42; i++)
+    {
+      if (tablero.territorios[i] == objetivoAtaque)
+      {
+        existe = true;
+        std::cout << "El territorio que ingresaste si existe." << std::endl;
+      }
+    }
+
+    // si el objetivo de ataque no es un territorio del tablero, mensaje de que no existe y salir de la funcion
+    if (existe == false)
+    {
+      std::cout << "El territorio que ingresaste no existe." << std::endl;
+      return;
+    }
+    else // si el objetivo de ataque es un territorio del tablero
+    {
+      // almacenar los caminos mas cortos entre los territorios conquistados y el objetivo de ataque
+      std::vector< std::vector< std::pair<std::string, std::string> > > caminosCortos;
+      for (int i = 0; i < conquistados.size(); i++)
+      {
+        std::cout << "Cantidad de territorios conquistados: " << conquistados.size() << std::endl;
+        std::vector<std::pair<std::string, std::string>> camCortosPais = tablero.dijkstra(conquistados[i]);
+
+        std::stack<std::pair<std::string, std::string>> caminosCortosInvertidos;
+        std::vector<std::pair<std::string, std::string>> final;
+
+        bool listo = false;
+        std::string destino = objetivoAtaque;
+
+        while(listo == false)
+        {
+          for (int i = 0; i < camCortosPais.size(); i++) //
+          {
+            if (camCortosPais[i].second.compare(destino) == 0) 
+            {
+              destino = camCortosPais[i].first;
+              caminosCortosInvertidos.push(camCortosPais[i]);
+            }
+          }
+
+          if (destino.compare(conquistados[i]) == 0) 
+          {
+            listo = true;
+          }
+        }
+
+        std::cout << "Salio del while de listo" << std::endl;
+
+        while (!caminosCortosInvertidos.empty())
+        {
+          final.push_back(caminosCortosInvertidos.top());
+          caminosCortosInvertidos.pop();
+        }
+
+        caminosCortos.push_back(final);
+          
+      }
+
+      std::cout << "Salio del 1er for" << std::endl;
+
+      int minPos = 0;
+      for(int i = 1; i < caminosCortos.size(); i++)
+      {
+        if (caminosCortos[i].size() < caminosCortos[minPos].size())
+        {
+          minPos = i;
+        }
+      }
+
+      std::cout << "El camino mas corto para conquistar el territorio \"" << objetivoAtaque << "\" es: " << std::endl;
+      for (int i = 0; i < caminosCortos[minPos].size(); i++)
+      {
+        std::cout << caminosCortos[minPos][i].first << " -> ";
+      }
+
+      int costo = 0;
+      for (int i = 0; i < caminosCortos[minPos].size(); i++)
+      {
+        std::string origen = caminosCortos[minPos][i].first;
+        std::string destino = caminosCortos[minPos][i].second;
+        int calConexion = tablero.valorConexion(origen, destino);
+        costo = costo + calConexion;
+      }
+
+      std::cout << "El costo de conquista es: " << costo << std::endl;
+
+    }
+  }
+
+}
+
 void SistemaApoyo::conquistaMasBarata(Partida *partidaAct)
 {
   for (Continente *continente : partidaAct->continentes)

@@ -212,7 +212,8 @@ void comandos(SistemaApoyo sistemaApoyo)
         }
         else if(command == "costo_conquista " + resto) // el resto representa <territorio>
         {
-            
+            sistemaApoyo.costoConquista(resto);
+            /*
             // Si no esta en una partida saldia esto
             std::cout <<"Esta partida no ha sido inicializada correctamente" << std::endl;
             
@@ -223,7 +224,7 @@ void comandos(SistemaApoyo sistemaApoyo)
             
             // Si esta en una partida ya iniciada se realizan los calculos para saber el costo de conquista de un territorio especifico dado por el usuario
             std::cout <<"Para conquistar el territorio <territorio>, debe atacar desde <territorio_1>, pasando por los territorios <territorio_2>, <territorio_3>, ..., <territorio_m>. Debe conquistar <n> unidades de ejército" << std::endl;
-            
+            */
         }
         else if (command == "conquista_mas_barata?") 
         {
