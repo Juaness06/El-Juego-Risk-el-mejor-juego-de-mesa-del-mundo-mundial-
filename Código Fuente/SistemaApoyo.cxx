@@ -1071,9 +1071,9 @@ void SistemaApoyo::inicializarTablero()
   tablero.InsertarCamino(("Australia Occidental"), ("Nueva Guinea"), 1);
   tablero.InsertarCamino(("Australia Occidental"), ("Australia Oriental"), 1);
 
-  std::cout << "-------------------------------------------------------------------------------" << std::endl;
-  tablero.imprimirMatriz();
-  std::cout << "-------------------------------------------------------------------------------" << std::endl;
+  std::cout<<std::endl;
+  std::cout << "------------- Tablero Creado -------------" << std::endl;
+  std::cout<<std::endl;
 }
 
 void SistemaApoyo::actTableroInfoActual()
@@ -1103,7 +1103,7 @@ void SistemaApoyo::actTableroInfoActual()
     }
   }
 
-  std::cout << "------------- Matriz de adyacencia actualizada -------------" << std::endl;
+  std::cout << "------------- Tablero Actualizado -------------" << std::endl;
   tablero.imprimirMatriz();
   std::cout << "------------------------------------------------------------" << std::endl;
 

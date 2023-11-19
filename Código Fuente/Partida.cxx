@@ -599,7 +599,8 @@ void Partida::actualizarMatrizTropas(std::string territorio, int cantidadTropas)
       }
     }
   }
-  std::cout << std::endl;
+
+ std::cout << "------------- Tablero Actualizado -------------" << std::endl;
   tablero.imprimirMatriz();
-  std::cout << std::endl;
+  std::cout << "------------------------------------------" << std::endl;
 }
